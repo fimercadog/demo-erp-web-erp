@@ -20,12 +20,15 @@ class Product extends Model
         'company_id', 'client_uuid', 'sku', 'name', 'description',
         'category_id', 'brand_id', 'unit_id',
         'unit_price', 'cost_price', 'reorder_level', 'status', 'is_public',
+        'requires_batch', 'requires_expiration',
     ];
 
     protected $casts = [
         'unit_price' => 'decimal:2',
         'cost_price' => 'decimal:2',
         'is_public' => 'boolean',
+        'requires_batch' => 'boolean',
+        'requires_expiration' => 'boolean',
     ];
 
     public function company(): BelongsTo
@@ -51,6 +54,11 @@ class Product extends Model
     public function stockMovements(): HasMany
     {
         return $this->hasMany(StockMovement::class);
+    }
+
+    public function batches(): HasMany
+    {
+        return $this->hasMany(ProductBatch::class);
     }
 
     /** Existencia actual = suma de movimientos, sin tabla de stock aparte. */

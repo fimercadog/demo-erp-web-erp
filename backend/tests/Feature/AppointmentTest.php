@@ -74,11 +74,11 @@ class AppointmentTest extends TestCase
             ->assertJsonPath('data.status', 'scheduled');
     }
 
-    public function test_appointments_table_has_no_client_id_column(): void
+    public function test_appointments_table_has_nullable_client_id_column(): void
     {
-        $this->assertFalse(
+        $this->assertTrue(
             Schema::hasColumn('appointments', 'client_id'),
-            'appointments no debe denormalizar client_id',
+            'appointments debe soportar client_id para citas transversales de clientes',
         );
     }
 

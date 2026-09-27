@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Invoice extends Model
 {
     protected $fillable = [
-        'company_id', 'client_id', 'order_id', 'warehouse_id', 'user_id', 'number',
+        'company_id', 'branch_id', 'client_id', 'order_id', 'warehouse_id', 'subscription_id', 'user_id', 'number',
         'issue_date', 'due_date', 'status', 'subtotal', 'discount', 'tax', 'total',
         'notes', 'idempotency_key',
     ];
@@ -27,6 +27,16 @@ class Invoice extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function subscription(): BelongsTo
+    {
+        return $this->belongsTo(Subscription::class);
     }
 
     public function order(): BelongsTo

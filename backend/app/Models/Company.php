@@ -12,6 +12,26 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'nit', 'email', 'phone', 'address', 'logo', 'timezone', 'locale', 'date_format', 'status',
+        'name',
+        'slug',
+        'nit',
+        'email',
+        'phone',
+        'address',
+        'city',
+        'logo',
+        'timezone',
+        'locale',
+        'currency',
+        'date_format',
+        'work_start_time',
+        'late_grace_minutes',
+        'vertical',
+        'status',
     ];
+
+    public function branches(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Branch::class);
+    }
 }

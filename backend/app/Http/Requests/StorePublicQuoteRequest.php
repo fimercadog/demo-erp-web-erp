@@ -16,7 +16,7 @@ class StorePublicQuoteRequest extends ApiFormRequest
     {
         // Mismo criterio que ResolvesCompany::companyId en el controlador, para
         // que la validacion y la escritura miren siempre la misma empresa.
-        $companyId = $this->user()?->company_id ?? Company::query()->value('id');
+        $companyId = app(\App\Services\PublicTenantResolverService::class)->resolveCompanyId($this);
 
         return [
             'name' => ['required', 'string', 'max:150'],

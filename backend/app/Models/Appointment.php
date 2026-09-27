@@ -12,8 +12,31 @@ class Appointment extends Model
     protected $attributes = ['status' => 'scheduled'];
 
     protected $fillable = [
-        'company_id', 'patient_id', 'service_id', 'practitioner_id',
-        'starts_at', 'ends_at', 'duration_minutes', 'resource', 'reason', 'status', 'notes',
+        'company_id',
+        'branch_id',
+        'patient_id',
+        'client_id',
+        'service_id',
+        'practitioner_id',
+        'invoice_id',
+        'account_receivable_id',
+        'starts_at',
+        'ends_at',
+        'duration_minutes',
+        'resource',
+        'reason',
+        'status',
+        'price',
+        'payment_status',
+        'reminder_sent',
+        'cancellation_reason',
+        'notes',
+        'is_domiciliary',
+        'address',
+        'city',
+        'neighborhood',
+        'address_reference',
+        'dispatch_status',
     ];
 
     protected function casts(): array
@@ -22,6 +45,9 @@ class Appointment extends Model
             'starts_at' => 'datetime',
             'ends_at' => 'datetime',
             'duration_minutes' => 'integer',
+            'price' => 'decimal:2',
+            'reminder_sent' => 'boolean',
+            'is_domiciliary' => 'boolean',
         ];
     }
 
@@ -49,9 +75,19 @@ class Appointment extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
     }
 
     public function service(): BelongsTo
@@ -62,5 +98,15 @@ class Appointment extends Model
     public function practitioner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'practitioner_id');
+    }
+
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function accountReceivable(): BelongsTo
+    {
+        return $this->belongsTo(AccountReceivable::class);
     }
 }

@@ -1,94 +1,104 @@
 /**
- * Configuración Centralizada de la IPS (Marca, Contacto, Sedes, Habilitación y Datos Demo).
- * Permite cambiar la marca, líneas de atención, datos de habilitación y sedes desde un solo lugar
- * sin hardcodear información en componentes de la vertical IPS.
+ * Configuración Centralizada de la Empresa (Marca, Contacto, Sedes, Habilitación).
+ * Permite cambiar la marca, líneas de atención y datos institucionales dinámicamente
+ * consumiendo la información provista por la API o configuración del tenant.
  */
 
+export interface CompanyBrandInfo {
+  name?: string;
+  slug?: string;
+  nit?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  logo?: string;
+  currency?: string;
+  locale?: string;
+}
+
+export interface SedeInfo {
+  id: string;
+  isDemo?: boolean;
+  name: string;
+  address: string;
+  phone: string;
+  services: string;
+  badge: string;
+}
+
 export const IPS_CONFIG = {
-  // Configuración de Marca y Estado Demo
-  isDemoMode: true,
-  demoNoticeText: "NOVA IPS · Demostración del Sistema ERP y Gestión Clínica (Datos Configurables)",
+  // Configuración por defecto (Datos institucionales configurables)
+  isDemoMode: false,
+  demoNoticeText: "Información institucional configurable desde el panel de administración",
 
   brand: {
-    name: "NOVA IPS",
-    shortName: "NOVA IPS",
-    tagline: "Institución Prestadora de Servicios de Salud · Atención Integral y Humana",
-    descriptor: "Prestador de Servicios de Salud",
-    accreditation: "Información institucional y servicios disponibles según la configuración institucional y habilitación aplicable",
+    name: "FidelOS",
+    shortName: "FidelOS",
+    tagline: "Atención Integral y Gestión Profesional",
+    descriptor: "Prestador de Servicios",
+    accreditation: "Información institucional y servicios disponibles según la configuración y habilitación aplicable",
   },
 
-  // Estructura para datos de habilitación de prestadores de salud
+  // Estructura para datos de habilitación
   reps: {
-    isDemo: true,
+    isDemo: false,
     notice: "Información de prestador y habilitación configurable en el ERP",
     codigoPrestador: "Configurable en ERP",
     codigoSedePrincipal: "Configurable por Sede",
-    entidadTerritorial: "Secretaría de Salud / Dirección Territorial",
-    estadoHabilitacion: "Configurable en ERP",
+    entidadTerritorial: "Dirección Territorial de Salud",
+    estadoHabilitacion: "Activo",
     serviciosHabilitados: [
-      "Consulta Externa General",
-      "Pediatría",
-      "Cardiología",
-      "Laboratorio Clínico",
-      "Imágenes Diagnósticas",
-      "Atención Prioritaria / Urgencias",
+      "Consulta Externa",
+      "Atención Especializada",
+      "Procedimientos & Diagnóstico",
     ],
   },
 
   contact: {
-    address: "Av. Carrera 45 # 108-20, Sede Chicó (Demo)",
-    city: "Bogotá, D.C. · Colombia",
-    phoneDisplay: "+57 (601) 745-9000",
-    phoneRaw: "+576017459000",
-    emergencyPhoneDisplay: "+57 (601) 745-9090",
-    emergencyPhoneRaw: "+576017459090",
-    whatsappDisplay: "+57 310 890 2020",
-    whatsappRaw: "573108902020",
-    email: "atencion.paciente@novaips.test",
-    schedule: "Consultas Externas: Lunes a Viernes: 6:00 a 20:00 · Sábados: 7:00 a 14:00",
-    scheduleEmergency: "Atención Prioritaria / Urgencias (Servicios disponibles según la configuración institucional y habilitación aplicable)",
+    address: "Dirección principal configurable",
+    city: "Ciudad configurable",
+    phoneDisplay: "Teléfono configurable",
+    phoneRaw: "",
+    emergencyPhoneDisplay: "",
+    emergencyPhoneRaw: "",
+    whatsappDisplay: "",
+    whatsappRaw: "",
+    email: "contacto@empresa.com",
+    schedule: "Horario de atención según configuración de sede",
+    scheduleEmergency: "Servicios disponibles según la configuración institucional",
   },
 
-  sedes: [
-    {
-      id: "sede-principal",
-      isDemo: true,
-      name: "Sede Principal Chicó (Demo)",
-      address: "Av. Carrera 45 # 108-20, Bogotá",
-      phone: "+57 (601) 745-9000",
-      services: "Medicina General, Especialidades, Triage, Laboratorio Central",
-      badge: "Sede Principal",
-    },
-    {
-      id: "sede-norte",
-      isDemo: true,
-      name: "Sede Norte Chía (Demo)",
-      address: "Km 2 Variante Chía - Cajicá, Centro Médico",
-      phone: "+57 (601) 745-9010",
-      services: "Consulta Externa, Pediatría, Odontología, Medicina Preventiva",
-      badge: "Consulta & Pediatría",
-    },
-    {
-      id: "sede-sur",
-      isDemo: true,
-      name: "Sede Américas (Demo)",
-      address: "Av. de las Américas # 68D-40, Bogotá",
-      phone: "+57 (601) 745-9020",
-      services: "Imágenes Diagnósticas, Fisioterapia & Rehabilitación, Toma de Muestras",
-      badge: "Diagnóstico & Rehabilitación",
-    },
-  ],
+  sedes: [] as SedeInfo[],
 
   social: {
-    linkedin: "https://linkedin.com/company/nova-ips",
-    facebook: "https://facebook.com/novaips",
-    whatsapp: "https://wa.me/573108902020?text=Hola,%20deseo%20solicitar%20una%20cita%20m%C3%A9dica%20en%20NOVA%20IPS",
+    linkedin: "",
+    facebook: "",
+    whatsapp: "",
   },
 
-  stats: [
-    { value: "+150.000", label: "atenciones médicas registradas", isDemo: true },
-    { value: "+45", label: "médicos especialistas en red", isDemo: true },
-    { value: "3", label: "sedes integrales de atención", isDemo: true },
-    { value: "98.5%", label: "satisfacción de pacientes", isDemo: true },
-  ],
+  stats: [] as { value: string; label: string; isDemo?: boolean }[],
 };
+
+/**
+ * Resuelve dinámicamente la configuración de marca a partir de los datos recibidos de la API.
+ */
+export function getCompanyBrandConfig(companyData?: CompanyBrandInfo | null) {
+  if (!companyData) return IPS_CONFIG;
+
+  return {
+    ...IPS_CONFIG,
+    brand: {
+      ...IPS_CONFIG.brand,
+      name: companyData.name || IPS_CONFIG.brand.name,
+      shortName: companyData.name || IPS_CONFIG.brand.shortName,
+    },
+    contact: {
+      ...IPS_CONFIG.contact,
+      address: companyData.address || IPS_CONFIG.contact.address,
+      city: companyData.city || IPS_CONFIG.contact.city,
+      phoneDisplay: companyData.phone || IPS_CONFIG.contact.phoneDisplay,
+      email: companyData.email || IPS_CONFIG.contact.email,
+    },
+  };
+}

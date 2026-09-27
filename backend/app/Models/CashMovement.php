@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class CashMovement extends Model
@@ -25,5 +26,10 @@ class CashMovement extends Model
     public function source(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function reconciliation(): MorphOne
+    {
+        return $this->morphOne(BankReconciliation::class, 'reconcilable');
     }
 }

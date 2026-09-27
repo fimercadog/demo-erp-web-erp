@@ -19,6 +19,26 @@ class AccountReceivable extends Model
         'due_date' => 'date',
     ];
 
+    protected $appends = ['is_overdue', 'days_overdue'];
+
+    public function getIsOverdueAttribute(): bool
+    {
+        if ((float) $this->balance <= 0 || ! $this->due_date) {
+            return false;
+        }
+
+        return $this->due_date->isPast() && ! $this->due_date->isToday();
+    }
+
+    public function getDaysOverdueAttribute(): int
+    {
+        if (! $this->is_overdue || ! $this->due_date) {
+            return 0;
+        }
+
+        return (int) $this->due_date->diffInDays(now()->startOfDay());
+    }
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);

@@ -15,7 +15,9 @@ class StoreAppointmentRequest extends ApiFormRequest
         $inCompany = fn (string $table) => Rule::exists($table, 'id')->where('company_id', $companyId);
 
         return [
-            'patient_id' => ['required', 'integer', $inCompany('patients')->whereNull('deleted_at')],
+            'patient_id' => ['required_without:client_id', 'nullable', 'integer', $inCompany('patients')->whereNull('deleted_at')],
+            'client_id' => ['required_without:patient_id', 'nullable', 'integer', $inCompany('clients')],
+            'branch_id' => ['nullable', 'integer', $inCompany('branches')],
             'service_id' => ['nullable', 'integer', $inCompany('services')],
             'practitioner_id' => ['nullable', 'integer', $inCompany('users')],
             'starts_at' => ['required', 'date'],
@@ -23,6 +25,8 @@ class StoreAppointmentRequest extends ApiFormRequest
             'duration_minutes' => ['nullable', 'integer', 'min:1', 'max:1440'],
             'resource' => ['nullable', 'string', 'max:80'],
             'reason' => ['nullable', 'string', 'max:255'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+            'payment_status' => ['nullable', 'string', 'in:unpaid,partially_paid,paid,waived'],
             // `status` NO se acepta acá: una cita nace 'scheduled' (default del
             // modelo) y solo avanza por confirm/cancel/attended/no-show, que
             // validan la transición. Aceptarlo acá saltaría esa máquina.

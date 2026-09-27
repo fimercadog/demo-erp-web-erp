@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'company_id',
+        'branch_id',
         'status',
     ];
 
@@ -55,5 +56,15 @@ class User extends Authenticatable
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function primaryBranch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
+    public function branches(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Branch::class, 'branch_user')->withTimestamps();
     }
 }

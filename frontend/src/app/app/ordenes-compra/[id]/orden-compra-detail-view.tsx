@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { api } from "@/lib/api";
 import { PurchaseOrder } from "@/lib/types";
+import { ThreeWayMatchWidget } from "@/components/purchases/ThreeWayMatchWidget";
+import { formatCurrency } from "@/lib/utils";
 
 const STATUS_LABEL: Record<PurchaseOrder["status"], string> = {
   draft: "Borrador",
@@ -105,6 +107,8 @@ export function OrdenCompraDetailView() {
         </div>
       </div>
 
+      <ThreeWayMatchWidget purchaseOrderId={order.id} />
+
       <Card>
         <CardHeader><CardTitle>Lineas</CardTitle></CardHeader>
         <CardContent className="space-y-4">
@@ -130,8 +134,8 @@ export function OrdenCompraDetailView() {
                     <td className="py-2">{item.quantity}</td>
                     <td className="py-2">{item.received_quantity ?? 0}</td>
                     <td className="py-2">{item.pending_quantity ?? item.quantity}</td>
-                    <td className="py-2">${Number(item.unit_cost).toLocaleString("es-CO")}</td>
-                    <td className="py-2">${Number(item.line_total ?? item.quantity * Number(item.unit_cost)).toLocaleString("es-CO")}</td>
+                    <td className="py-2">{formatCurrency(item.unit_cost)}</td>
+                    <td className="py-2">{formatCurrency(item.line_total ?? item.quantity * Number(item.unit_cost))}</td>
                     {order.status === "draft" ? (
                       <td className="py-2 text-right">
                         <Button variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
@@ -150,7 +154,7 @@ export function OrdenCompraDetailView() {
 
           <div className="flex items-center justify-between border-t pt-4">
             <span className="text-sm text-muted-foreground">Total</span>
-            <span className="text-lg font-semibold">${Number(order.total).toLocaleString("es-CO")}</span>
+            <span className="text-lg font-semibold">{formatCurrency(order.total)}</span>
           </div>
 
           {order.status === "draft" ? (

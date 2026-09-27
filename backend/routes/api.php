@@ -1,11 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\AccountingController;
 use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\DomiciliaryAppointmentController;
+use App\Http\Controllers\Api\PublicDomiciliarySchedulingController;
+use App\Http\Controllers\Api\BankReconciliationController;
+use App\Http\Controllers\Api\ThreeWayMatchingController;
 use App\Http\Controllers\Api\AccountPayableController;
 use App\Http\Controllers\Api\AccountReceivableController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\AuditLogController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\BreedController;
 use App\Http\Controllers\Api\CashMovementController;
@@ -20,8 +27,10 @@ use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\ContingencyController;
+use App\Http\Controllers\Api\CreditNoteController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DealController;
+use App\Http\Controllers\Api\DebitNoteController;
 use App\Http\Controllers\Api\DiagnosisController;
 use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\InvoiceController;
@@ -33,14 +42,17 @@ use App\Http\Controllers\Api\PortalAppointmentController;
 use App\Http\Controllers\Api\PortalAuthController;
 use App\Http\Controllers\Api\PrescriptionController;
 use App\Http\Controllers\Api\ProcedureController;
+use App\Http\Controllers\Api\ProductBatchController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\PublicAppointmentController;
 use App\Http\Controllers\Api\PublicCatalogController;
 use App\Http\Controllers\Api\PublicSchedulingController;
 use App\Http\Controllers\Api\PurchaseOrderController;
 use App\Http\Controllers\Api\PurchaseReceiptController;
+use App\Http\Controllers\Api\PurchaseReturnController;
 use App\Http\Controllers\Api\QuoteController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\SalesReturnController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SegmentController;
 use App\Http\Controllers\Api\ServiceController;
@@ -48,6 +60,8 @@ use App\Http\Controllers\Api\SpeciesController;
 use App\Http\Controllers\Api\StockAlertController;
 use App\Http\Controllers\Api\StockMovementController;
 use App\Http\Controllers\Api\StockTransferController;
+use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\SubscriptionPlanController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\UserController;
@@ -65,6 +79,7 @@ Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])-
 Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->middleware('throttle:6,1');
 
 // Formularios publicos del sitio de marketing (demo / contacto).
+Route::get('/public/company/info', [CompanyController::class, 'publicInfo'])->middleware('throttle:catalog-read');
 Route::post('/public/leads', [LeadController::class, 'store'])->middleware('throttle:5,1');
 
 // Portal publico "Solicita tu cita": genera un Lead (source=appointment).
@@ -93,6 +108,11 @@ Route::prefix('public/appointments')->group(function (): void {
         Route::get('/availability', [PublicSchedulingController::class, 'availability']);
     });
     Route::post('/book', [PublicSchedulingController::class, 'book'])->middleware('throttle:appointment-booking');
+});
+
+Route::prefix('public/domiciliary')->group(function (): void {
+    Route::get('/services', [PublicDomiciliarySchedulingController::class, 'services'])->middleware('throttle:catalog-read');
+    Route::post('/book', [PublicDomiciliarySchedulingController::class, 'book'])->middleware('throttle:appointment-booking');
 });
 
 // Portal del dueño (S14): login sin password por enlace mágico + CRUD de sus
@@ -137,6 +157,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/company', [CompanyController::class, 'show'])->middleware('can:settings.manage');
     Route::put('/company', [CompanyController::class, 'update'])->middleware('can:settings.manage');
 
+    Route::post('/branches/{id}/assign-user', [BranchController::class, 'assignUser'])->middleware('can:settings.manage')->whereNumber('id');
+    Route::apiResource('branches', BranchController::class)->middleware('can:settings.manage');
+
     // CRM
     // El borrado permanente de clientes exige su propio permiso: Ventas crea y
     // edita (clients.manage) pero no hace hard-delete (solo roles administrativos
@@ -159,6 +182,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/quotes/{quote}/convert', [QuoteController::class, 'convert'])->middleware('can:deals.manage');
 
     // Inventario
+    Route::get('/product-batches/expiring-report', [ProductBatchController::class, 'expiringReport'])->middleware('can:products.manage');
+    Route::get('/product-batches/{id}/traceability', [ProductBatchController::class, 'traceability'])->middleware('can:products.manage')->whereNumber('id');
+    Route::apiResource('product-batches', ProductBatchController::class)->only(['index', 'show', 'store'])->middleware('can:products.manage');
     Route::apiResource('products', ProductController::class)->middleware('can:products.manage');
     Route::post('/products/{id}/image', [ProductController::class, 'image'])->middleware('can:products.manage')->whereNumber('id');
     Route::apiResource('categories', CategoryController::class)->middleware('can:products.manage');
@@ -187,13 +213,58 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/invoices/{invoice}/issue', [InvoiceController::class, 'issue'])->middleware('can:invoices.manage');
     Route::post('/invoices/{invoice}/void', [InvoiceController::class, 'void'])->middleware('can:invoices.manage');
     Route::get('/invoices/{invoice}/print', [InvoiceController::class, 'print'])->middleware('can:invoices.manage');
+    Route::apiResource('credit-notes', CreditNoteController::class)->only(['index', 'show', 'store'])->middleware('can:invoices.manage');
+    Route::apiResource('debit-notes', DebitNoteController::class)->only(['index', 'show', 'store'])->middleware('can:invoices.manage');
+    Route::apiResource('sales-returns', SalesReturnController::class)->only(['index', 'show', 'store'])->middleware('can:invoices.manage');
+    Route::apiResource('subscription-plans', SubscriptionPlanController::class)->middleware('can:invoices.manage');
+    Route::post('/subscriptions/process-billing', [SubscriptionController::class, 'processBilling'])->middleware('can:invoices.manage');
+    Route::post('/subscriptions/{id}/pause', [SubscriptionController::class, 'pause'])->middleware('can:invoices.manage');
+    Route::post('/subscriptions/{id}/resume', [SubscriptionController::class, 'resume'])->middleware('can:invoices.manage');
+    Route::post('/subscriptions/{id}/cancel', [SubscriptionController::class, 'cancel'])->middleware('can:invoices.manage');
+    Route::apiResource('subscriptions', SubscriptionController::class)->middleware('can:invoices.manage');
+    Route::apiResource('purchase-returns', PurchaseReturnController::class)->only(['index', 'show', 'store'])->middleware('can:purchase_orders.manage');
+    Route::get('/accounts-receivable/aging', [AccountReceivableController::class, 'aging'])->middleware('can:accounts_receivable.view');
+    Route::get('/accounts-receivable/summary', [AccountReceivableController::class, 'summary'])->middleware('can:accounts_receivable.view');
     Route::apiResource('accounts-receivable', AccountReceivableController::class)->only(['index', 'show'])->middleware('can:accounts_receivable.view');
+    Route::get('/accounts-payable/aging', [AccountPayableController::class, 'aging'])->middleware('can:accounts_payable.view');
+    Route::get('/accounts-payable/summary', [AccountPayableController::class, 'summary'])->middleware('can:accounts_payable.view');
     Route::apiResource('accounts-payable', AccountPayableController::class)->only(['index', 'show'])->middleware('can:accounts_payable.view');
+    Route::get('/accounting/chart', [AccountingController::class, 'getChart']);
+    Route::post('/accounting/chart', [AccountingController::class, 'storeAccount']);
+    Route::get('/accounting/entries', [AccountingController::class, 'getEntries']);
+    Route::post('/accounting/entries', [AccountingController::class, 'storeEntry']);
+    Route::get('/accounting/trial-balance', [AccountingController::class, 'getTrialBalance']);
+    Route::get('/accounting/general-ledger', [AccountingController::class, 'getGeneralLedger']);
+
+    Route::get('/finance/bank-statements', [BankReconciliationController::class, 'index']);
+    Route::post('/finance/bank-statements/import', [BankReconciliationController::class, 'import']);
+    Route::get('/finance/bank-statements/{id}', [BankReconciliationController::class, 'show']);
+    Route::post('/finance/bank-statements/{id}/auto-match', [BankReconciliationController::class, 'autoMatch']);
+    Route::get('/finance/bank-statements/{id}/report', [BankReconciliationController::class, 'report']);
+    Route::post('/finance/bank-reconciliations/manual', [BankReconciliationController::class, 'manualMatch']);
+    Route::post('/finance/bank-reconciliations/{id}/unmatch', [BankReconciliationController::class, 'unmatch']);
+
+    Route::get('/purchases/{id}/three-way-match', [ThreeWayMatchingController::class, 'matchAnalysis'])->middleware('can:purchase_orders.manage');
+    Route::post('/purchases/{id}/three-way-match/evaluate', [ThreeWayMatchingController::class, 'evaluate'])->middleware('can:purchase_orders.manage');
     Route::apiResource('payments', PaymentController::class)->only(['index', 'show', 'store'])->middleware('can:payments.manage');
     Route::apiResource('cash-registers', CashRegisterController::class)->middleware('can:cash.manage');
     Route::apiResource('cash-sessions', CashSessionController::class)->only(['index', 'show', 'store'])->middleware('can:cash.manage');
     Route::post('/cash-sessions/{cash_session}/close', [CashSessionController::class, 'close'])->middleware('can:cash.manage');
     Route::apiResource('cash-movements', CashMovementController::class)->only(['index', 'show'])->middleware('can:cash.manage');
+
+    // RRHH - Asistencia Basica
+    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
+    Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut']);
+    Route::post('/attendance/novedad', [AttendanceController::class, 'registerNovedad']);
+    Route::get('/attendance', [AttendanceController::class, 'index']);
+    Route::get('/attendance/status', [AttendanceController::class, 'currentStatus']);
+    Route::get('/attendance/summary', [AttendanceController::class, 'summary']);
+
+    // Vertical Sueroterapia a Domicilio
+    Route::get('/domiciliary-appointments', [DomiciliaryAppointmentController::class, 'index'])->middleware('can:appointments.manage');
+    Route::post('/domiciliary-appointments', [DomiciliaryAppointmentController::class, 'store'])->middleware('can:appointments.manage');
+    Route::post('/domiciliary-appointments/{id}/dispatch', [DomiciliaryAppointmentController::class, 'updateDispatch'])->middleware('can:appointments.manage');
+    Route::post('/domiciliary-appointments/{id}/execute', [DomiciliaryAppointmentController::class, 'executeTherapy'])->middleware('can:appointments.manage');
 
     // --- Clínica veterinaria ---
     Route::apiResource('services', ServiceController::class)->middleware('can:services.manage');
@@ -220,11 +291,13 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/procedures/{id}/consent-document', [ProcedureController::class, 'consentDocument'])->middleware('can:procedures.manage')->whereNumber('id');
     Route::post('/procedures/{id}/restore', [ProcedureController::class, 'restore'])->middleware('can:procedures.manage')->whereNumber('id');
 
+    Route::get('/appointments/availability', [AppointmentController::class, 'availability'])->middleware('can:appointments.manage');
     Route::apiResource('appointments', AppointmentController::class)->middleware('can:appointments.manage');
     Route::post('/appointments/{id}/confirm', [AppointmentController::class, 'confirm'])->middleware('can:appointments.manage')->whereNumber('id');
     Route::post('/appointments/{id}/cancel', [AppointmentController::class, 'cancel'])->middleware('can:appointments.manage')->whereNumber('id');
     Route::post('/appointments/{id}/attended', [AppointmentController::class, 'markAttended'])->middleware('can:appointments.manage')->whereNumber('id');
     Route::post('/appointments/{id}/no-show', [AppointmentController::class, 'markNoShow'])->middleware('can:appointments.manage')->whereNumber('id');
+    Route::post('/appointments/{id}/reschedule', [AppointmentController::class, 'reschedule'])->middleware('can:appointments.manage')->whereNumber('id');
 
     Route::apiResource('audit-logs', AuditLogController::class)->only(['index', 'show'])->middleware('can:audit.view');
     Route::get('/permissions', [RoleController::class, 'permissions'])->middleware('can:roles.manage');

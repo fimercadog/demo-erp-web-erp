@@ -10,11 +10,11 @@ export function cn(...inputs: ClassValue[]) {
  * Los campos de fecha del backend llegan como medianoche UTC (`...T00:00:00Z`),
  * asi que se formatea en UTC para no correr el dia segun la zona del navegador.
  */
-export function formatDate(value: string | number | Date | null | undefined): string {
+export function formatDate(value: string | number | Date | null | undefined, locale: string = "es-CO"): string {
   if (!value) return "";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
-  return date.toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" });
+  return date.toLocaleDateString(locale, { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" });
 }
 
 /**
@@ -22,6 +22,29 @@ export function formatDate(value: string | number | Date | null | undefined): st
  * agenda y los rangos de reportes: `toISOString().slice(0,10)` corre el día de
  * noche en zonas con offset negativo. `en-CA` produce el formato ISO.
  */
-export function isoDateLocal(d: Date = new Date()): string {
-  return d.toLocaleDateString("en-CA");
+export function isoDateLocal(d: Date = new Date(), locale: string = "en-CA"): string {
+  return d.toLocaleDateString(locale);
+}
+
+/**
+ * Formato monetario dinámico por moneda y locale de la empresa.
+ */
+export function formatCurrency(
+  amount: number | string | null | undefined,
+  currency: string = "COP",
+  locale: string = "es-CO"
+): string {
+  if (amount === null || amount === undefined || Number.isNaN(Number(amount))) {
+    return "$0";
+  }
+  const num = Number(amount);
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: currency,
+      maximumFractionDigits: 0,
+    }).format(num);
+  } catch {
+    return `$${num.toLocaleString()}`;
+  }
 }

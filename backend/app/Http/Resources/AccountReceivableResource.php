@@ -20,6 +20,8 @@ class AccountReceivableResource extends JsonResource
             'balance' => $this->balance,
             'due_date' => $this->due_date?->toDateString(),
             'status' => $this->status,
+            'is_overdue' => $this->is_overdue,
+            'days_overdue' => $this->days_overdue,
             'created_at' => $this->created_at,
         ];
     }

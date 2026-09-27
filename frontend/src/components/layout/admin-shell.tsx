@@ -8,11 +8,13 @@ import {
   AlertTriangle,
   ArrowLeftRight,
   BarChart3,
+  BookOpen,
   Bot,
   Building2,
   CalendarClock,
   CalendarDays,
   ClipboardList,
+  Clock,
   Contact2,
   DollarSign,
   FileCheck,
@@ -136,6 +138,8 @@ const navGroups: NavGroup[] = [
       { href: "/app/reportes-comerciales", label: "Proceso RIPS", icon: FileCheck, permissions: ["reports.view"] },
       { href: "/app/cuentas-por-cobrar", label: "Cuentas Médicas", icon: DollarSign, permissions: ["accounts_receivable.view"] },
       { href: "/app/cuentas-por-pagar", label: "Cuentas por Pagar (Proveedores)", icon: FileText, permissions: ["accounts_payable.view"] },
+      { href: "/app/contabilidad", label: "Contabilidad Básica", icon: BookOpen },
+      { href: "/app/finanzas/conciliacion", label: "Conciliación Bancaria (Nivel 1)", icon: ArrowLeftRight },
     ],
   },
   {
@@ -147,6 +151,7 @@ const navGroups: NavGroup[] = [
       { href: "/app/alertas-stock", label: "Alertas de Dispositivos", icon: AlertTriangle, permissions: ["products.manage"] },
       { href: "/app/cajas", label: "Caja & Copagos", icon: Wallet, permissions: ["cash.manage"] },
       { href: "/app/sesiones-caja", label: "Turnos de Caja", icon: ClipboardList, permissions: ["cash.manage"] },
+      { href: "/app/sueroterapia", label: "Sueroterapia a Domicilio", icon: Syringe, permissions: ["appointments.manage"] },
     ],
   },
   {
@@ -155,6 +160,7 @@ const navGroups: NavGroup[] = [
       { href: "/app/reportes", label: "Reportes & KPIs IPS", icon: BarChart3, permissions: ["reports.view"] },
       { href: "/app/auditoria", label: "Auditoría de Historias Clínicas", icon: Shield, permissions: ["audit.view"] },
       { href: "/app/usuarios", label: "Usuarios & Roles Médicos", icon: UserCircle, permissions: ["users.manage"] },
+      { href: "/app/rrhh/asistencia", label: "Asistencia RRHH", icon: Clock, permissions: ["users.manage"] },
       { href: "/app/configuracion", label: "Configuración IPS & Habilitación", icon: Settings, permissions: ["settings.manage"] },
     ],
   },
@@ -351,8 +357,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-900 text-slate-100">
         <div className="text-center">
-          <p className="text-sm font-semibold tracking-wide">Validando sesión asistencial...</p>
-          <p className="mt-1 text-xs text-slate-400">NOVA IPS · ERP Salud</p>
+          <p className="text-sm font-semibold tracking-wide">Validando sesión...</p>
+          <p className="mt-1 text-xs text-slate-400">FidelOS · ERP Multi-Empresa</p>
         </div>
       </div>
     );
@@ -363,12 +369,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <LogoMark size="sm" />
       <div>
         <p className="flex items-center gap-1.5 text-sm font-bold tracking-tight text-white">
-          Demo<span className="text-sky-400">·</span>IPS
+          FidelOS<span className="text-sky-400">·</span>ERP
           <span className="rounded bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-sky-300">
-            ERP
+            PRO
           </span>
         </p>
-        <p className="text-[11px] text-slate-400">Portal Asistencial & ERP</p>
+        <p className="text-[11px] text-slate-400">Plataforma de Gestión</p>
       </div>
     </div>
   );
@@ -439,10 +445,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </Button>
             <div className="min-w-0 max-w-36 sm:max-w-none">
               <p className="truncate text-sm font-bold text-slate-900 dark:text-slate-100">
-                {user?.company?.name ?? "NOVA IPS"}
+                {user?.company?.name ?? "FidelOS"}
               </p>
               <p className="hidden truncate text-xs text-slate-500 sm:block dark:text-slate-400">
-                Gestión Asistencial, Admisiones & Cuentas Médicas
+                Gestión Empresarial Operativa
               </p>
             </div>
           </div>
@@ -450,8 +456,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <div className="hidden items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 sm:flex dark:border-slate-800 dark:bg-slate-800/60">
               <UserCircle className="h-4 w-4 text-sky-600 dark:text-sky-400" />
               <div className="min-w-0">
-                <p className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">{user?.name ?? "Dr. Alejandro Morales"}</p>
-                <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">{user?.roles?.[0] ?? "Director Médico (Demo)"}</p>
+                <p className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">{user?.name ?? "Usuario en sesión"}</p>
+                <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">{user?.roles?.[0] ?? "Administrador"}</p>
               </div>
             </div>
             <BetaNotice />

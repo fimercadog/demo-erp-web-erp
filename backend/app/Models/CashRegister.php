@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CashRegister extends Model
 {
-    protected $fillable = ['company_id', 'name', 'status'];
+    protected $fillable = ['company_id', 'branch_id', 'name', 'status'];
+
+    public function branch(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
 
     public function sessions(): HasMany
     {
