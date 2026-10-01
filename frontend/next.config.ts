@@ -4,6 +4,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
   output: "export",
+  trailingSlash: true,
   images: { unoptimized: true },
   devIndicators: false,
   allowedDevOrigins: ["*.ngrok-free.dev", "*.ngrok-free.app"],

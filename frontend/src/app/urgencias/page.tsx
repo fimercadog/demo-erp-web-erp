@@ -9,20 +9,20 @@ import { SplitHero } from "@/components/marketing/split-hero";
 import { WHATSAPP_URL } from "@/components/marketing/whatsapp-link";
 
 const signs = [
-  "Dificultad para respirar, dolor torácico o cianosis",
+  "Dificultad para respirar o respiración muy acelerada",
   "Vómito o diarrea persistente con signos de deshidratación",
-  "Convulsiones, alteración del estado de conciencia o síncope",
+  "Convulsiones o pérdida del estado de conciencia",
   "Traumatismo severo, caída o accidente de tránsito",
   "Sospecha de intoxicación o envenenamiento",
   "Sangrado activo que no cede o herida profunda",
-  "Dolor abdominal agudo o severo",
-  "Complicaciones en estado de gestación o parto",
+  "Dolor abdominal agudo, distensión o incapacidad de levantarse",
+  "Parto con complicaciones o más de 2h entre crías",
 ];
 
 const steps = [
-  { icon: PhoneCall, title: "Avisanos antes de venir", text: "Escribinos por WhatsApp o llamá al centro con el caso. El equipo de triaje se prepara mientras estás en camino." },
-  { icon: Stethoscope, title: "Estabilización inmediata", text: "Al llegar, la prioridad es la valoración de triaje y estabilizar: dolor, respiración, signos vitales." },
-  { icon: Clock, title: "Seguimiento hasta el alta", text: "Si el paciente requiere observación o remisión a salas, mantenemos informado al núcleo familiar." },
+  { icon: PhoneCall, title: "Avísanos antes de venir", text: "Escríbenos por WhatsApp o llama a la clínica con el caso. El equipo veterinario se prepara mientras estás en camino." },
+  { icon: Stethoscope, title: "Estabilización inmediata", text: "Al llegar, la prioridad es evaluar y estabilizar a tu mascota: respiración, dolor, signos vitales y estado de consciencia." },
+  { icon: Clock, title: "Seguimiento hasta el alta", text: "Si el paciente requiere observación, mantenemos informado al dueño en todo momento hasta el alta médica." },
 ];
 
 export default function UrgenciasPage() {
@@ -31,10 +31,10 @@ export default function UrgenciasPage() {
       {/* Hero: misma familia visual que Servicios/Productos/Equipo/Nosotros/Blog */}
       <SplitHero
         eyebrow="Urgencias Prioritarias"
-        title="Cuando no puede esperar, actuamos con rapidez y rigor médico"
-        lead="Ante un accidente, un cuadro agudo o dolor intenso, escribinos o llamá para que nuestro personal asistencial esté listo a tu llegada."
+        title="Cuando no puede esperar, actuamos con rapidez y rigor veterinario"
+        lead="Ante un accidente, un cuadro agudo o dolor intenso en tu mascota, escríbenos o llama para que nuestro equipo veterinario esté listo a tu llegada."
         image="/gallery/illustrations/illustration-8.png"
-        imageAlt="Médico de urgencias en atención médica"
+        imageAlt="Veterinario atendiendo una urgencia"
         actions={
           <CtaLink href={WHATSAPP_URL} variant="cta">
             <PhoneCall className="size-4" />
@@ -48,7 +48,7 @@ export default function UrgenciasPage() {
 
       <Section>
         <Reveal>
-          <SectionHeading eyebrow="¿Cuándo es una urgencia?" title="Señales que requieren atención médica inmediata" center={false} />
+          <SectionHeading eyebrow="¿Cuándo es una urgencia?" title="Señales que requieren atención veterinaria inmediata" center={false} />
         </Reveal>
         <div className="mt-10 rounded-[2rem] bg-card p-6 shadow-elevation-4 sm:p-10">
           <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
@@ -63,25 +63,25 @@ export default function UrgenciasPage() {
           </div>
         </div>
         <p className="mt-6 text-sm text-muted-foreground">
-          Ante la duda, escribinos: nuestro equipo de triaje valorará la prioridad de tu atención médica.
+          Ante la duda, escríbenos: nuestro equipo veterinario valorará la prioridad de atención de tu mascota.
         </p>
       </Section>
 
       <Section className="bg-section-cream">
         <PhotoFeatureStack
           image="/gallery/paw-procedure.jpg"
-          imageAlt="Procedimiento médico de urgencia prioritaria"
+          imageAlt="Procedimiento veterinario de urgencia"
           reverse
           features={[
-            { title: "Valoración de Triaje", text: "Una urgencia clasificada en triaje prioritario recibe atención de inmediato sin esperas innecesarias." },
-            { title: "Atención ágil", text: "Escribinos o llamá directo — coordinamos la recepción asistencial a tu llegada." },
+            { title: "Valoración prioritaria", text: "Una urgencia recibe atención de inmediato sin esperas innecesarias para tu mascota." },
+            { title: "Atención ágil", text: "Escríbenos o llama directo — coordinamos la recepción veterinaria a tu llegada." },
           ]}
         />
       </Section>
 
       <Section dark>
         <Reveal>
-          <SectionHeading eyebrow="Cómo funciona" title="Qué pasa cuando llegás con una urgencia" dark />
+          <SectionHeading eyebrow="Cómo funciona" title="Qué pasa cuando llegas con una urgencia" dark />
         </Reveal>
         <div className="mt-14 grid gap-8 sm:grid-cols-3">
           {steps.map((step, i) => {

@@ -72,7 +72,7 @@ function PortalEntrarContent() {
           ) : consumeError ? (
             <div className="flex items-center justify-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
               <AlertCircle className="size-4" />
-              Este enlace ya venció o no es válido. Pedí uno nuevo abajo.
+              Este enlace ya venció o no es válido. Pide uno nuevo abajo.
             </div>
           ) : null}
         </section>

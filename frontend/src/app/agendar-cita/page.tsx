@@ -423,8 +423,8 @@ export default function AgendarCitaPage() {
       const status = (err as { response?: { status?: number } }).response?.status;
       setError(
         status === 409 ? "Ese horario se acaba de ocupar. Volvé al paso anterior y elegí otro."
-        : status === 422 ? "Revisá los datos: todos los campos marcados con * son obligatorios."
-        : "No se pudo agendar. Intentá de nuevo o llamá a la clínica.",
+        : status === 422 ? "Revisa los datos: todos los campos marcados con * son obligatorios."
+        : "No se pudo agendar. Intenta de nuevo o llama a la clínica.",
       );
     } finally {
       setSubmitting(false);
@@ -490,7 +490,8 @@ export default function AgendarCitaPage() {
 
   return (
     <MarketingLayout>
-      <section className="mx-auto max-w-2xl px-4 pb-24 pt-10 sm:px-6">
+      <section className="bg-muted/40 py-10">
+      <div className="mx-auto max-w-2xl px-4 pb-14 sm:px-6">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-foreground">Agendar cita</h1>
           <p className="mt-1 text-sm text-muted-foreground">Disponibilidad real · Confirmación inmediata</p>
@@ -501,7 +502,7 @@ export default function AgendarCitaPage() {
         {/* ── STEP 1: servicio ──────────────────────────────────────────────── */}
         {step === 1 && (
           <div className="space-y-3">
-            <p className="text-sm font-medium text-foreground mb-4">¿Qué servicio necesitás?</p>
+            <p className="text-sm font-medium text-foreground mb-4">¿Qué servicio necesitas?</p>
             {services.length === 0 && (
               <p className="text-sm text-muted-foreground">Cargando servicios…</p>
             )}
@@ -651,7 +652,7 @@ export default function AgendarCitaPage() {
                     onChange={e => { setSpeciesId(e.target.value); setBreeds([]); }}
                     required
                   >
-                    <option value="">Elegí una especie</option>
+                    <option value="">Elige una especie</option>
                     {species.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                   </select>
                 </label>
@@ -725,6 +726,7 @@ export default function AgendarCitaPage() {
             </div>
           </form>
         )}
+      </div>
       </section>
     </MarketingLayout>
   );

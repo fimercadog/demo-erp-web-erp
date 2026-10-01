@@ -76,6 +76,8 @@ Route::prefix('webhooks/whatsapp')->group(function (): void {
     Route::post('/', [WhatsAppWebhookController::class, 'handle']);
 });
 
+Route::get('/health', fn () => response()->json(['status' => 'ok']));
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');

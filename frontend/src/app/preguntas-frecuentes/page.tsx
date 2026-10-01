@@ -11,7 +11,7 @@ export default function PreguntasFrecuentesPage() {
       <PageHero
         eyebrow="Preguntas frecuentes"
         title="Todo lo que suelen preguntarnos antes de la primera visita"
-        lead="Si tu duda no está acá, escribinos por WhatsApp o desde el formulario de contacto."
+        lead="Si tu duda no está aquí, escríbenos por WhatsApp o desde el formulario de contacto."
       />
 
       <Section className="pt-0">

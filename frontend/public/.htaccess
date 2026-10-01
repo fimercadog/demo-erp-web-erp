@@ -1,38 +1,19 @@
-# Configuración de Servidor para Hostinger (Apache / LiteSpeed)
-# Next.js Static Export SPA Routing
+Options -Indexes
 
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+RewriteEngine On
+RewriteBase /
 
-  # Redireccionar HTTP a HTTPS (Seguridad SSL en Hostinger)
-  RewriteCond %{HTTPS} off
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Serve existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
-  # Servir archivos estáticos existentes directamente (JS, CSS, imágenes)
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
-  # Servir archivo .html correspondiente si existe (ej. /login -> /login.html)
-  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
-  RewriteRule ^(.*)$ /$1.html [L]
-
-  # Enrutamiento de la SPA administrativa (/app/* -> /app.html)
-  RewriteCond %{REQUEST_URI} ^/app/
-  RewriteRule ^app/ /app.html [L]
-
-  # Fallback principal a index.html para rutas no encontradas
-  RewriteRule ^ index.html [L]
-</IfModule>
-
-# Optimización de Caché para Assets de Next.js (_next/static)
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-</IfModule>
+# SPA fallback: dynamic ERP routes → placeholder pre-rendered page
+RewriteRule ^app/consultas/([^/]+)(/.*)?$ /app/consultas/1/index.html [L]
+RewriteRule ^app/cotizaciones/([^/]+)(/.*)?$ /app/cotizaciones/1/index.html [L]
+RewriteRule ^app/facturas/([^/]+)(/.*)?$ /app/facturas/1/index.html [L]
+RewriteRule ^app/ordenes-compra/([^/]+)(/.*)?$ /app/ordenes-compra/1/index.html [L]
+RewriteRule ^app/pacientes/([^/]+)(/.*)?$ /app/pacientes/1/index.html [L]
+RewriteRule ^app/pedidos/([^/]+)(/.*)?$ /app/pedidos/1/index.html [L]
+RewriteRule ^app/roles/([^/]+)(/.*)?$ /app/roles/1/index.html [L]
+RewriteRule ^app/clientes/([^/]+)(/.*)?$ /app/clientes/1/index.html [L]

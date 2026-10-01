@@ -529,8 +529,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               variant="outline"
               size="icon"
               aria-label="Cambiar tema"
-              title={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              title={(theme as string) === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              onClick={() => setTheme(((theme as string) === "dark" ? "light" : "light") as "light")}
             >
               <Sun className="h-4 w-4 dark:hidden" />
               <Moon className="hidden h-4 w-4 dark:block" />

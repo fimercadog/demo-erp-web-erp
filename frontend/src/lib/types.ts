@@ -439,6 +439,7 @@ export type Procedure = {
   service?: string | null;
   vet_id?: number | null;
   vet?: string | null;
+  practitioner?: string | null;
   type: string;
   price?: number;
   status?: string;
@@ -493,6 +494,7 @@ export type Consultation = {
   appointment_id?: number | null;
   vet_id?: number | null;
   vet?: string | null;
+  practitioner?: string | null;
   service_id?: number | null;
   service?: string | null;
   price?: number;
@@ -542,4 +544,13 @@ export type Patient = {
   breed_id?: number | null;
   breed?: string | null;
   deleted_at?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  address?: string | null;
+  emergency_contact_name?: string | null;
+  emergency_contact_phone?: string | null;
+  document_type?: string | null;
+  document_number?: string | null;
+  eps?: string | null;
+  blood_type?: string | null;
 };

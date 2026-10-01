@@ -57,8 +57,8 @@ export function ContactForm() {
   return (
     <form onSubmit={submit} className="rounded-2xl bg-card p-6 shadow-elevation-3 sm:p-8">
       <LeadFields
-        messagePlaceholder="Contanos en qué podemos ayudarte con tu atención o cita médica"
-        secondaryField={{ placeholder: "Entidad / EPS (opcional)", label: "Entidad / EPS" }}
+        messagePlaceholder="Cuéntanos cómo podemos ayudarte con tu mascota"
+        secondaryField={{ placeholder: "Especie / Raza (opcional)", label: "Especie / Raza" }}
       />
       {error ? (
         <div className="mt-4 flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">

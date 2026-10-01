@@ -18,20 +18,6 @@ export function formatDate(value: string | number | Date | null | undefined, loc
 }
 
 /**
- * Formatea un valor numérico a moneda COP: `$ 120.000`
- */
-export function formatCurrency(value: number | string | null | undefined): string {
-  if (value === null || value === undefined || value === "") return "$0";
-  const num = Number(value);
-  if (Number.isNaN(num)) return "$0";
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  }).format(num);
-}
-
-/**
  * `YYYY-MM-DD` de una fecha en hora LOCAL (no UTC). Para el selector de día de la
  * agenda y los rangos de reportes: `toISOString().slice(0,10)` corre el día de
  * noche en zonas con offset negativo. `en-CA` produce el formato ISO.

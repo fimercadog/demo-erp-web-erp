@@ -37,7 +37,7 @@ export default function AboutPage() {
               Conocer al equipo
             </CtaLink>
             <CtaLink href={WHATSAPP_URL} variant="outline">
-              Escribinos por WhatsApp
+              Escríbenos por WhatsApp
             </CtaLink>
           </>
         }

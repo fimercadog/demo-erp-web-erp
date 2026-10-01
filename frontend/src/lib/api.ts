@@ -8,7 +8,7 @@ export const api = axios.create({
   withCredentials: true,
   headers: {
     Accept: "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(process.env.NODE_ENV === "development" && { "ngrok-skip-browser-warning": "true" }),
   },
 });
 

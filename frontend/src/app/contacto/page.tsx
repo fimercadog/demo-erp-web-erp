@@ -28,14 +28,14 @@ export default function ContactPage() {
 
           <Reveal mount>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-cta">Contacto</p>
-            <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">Escribinos</h1>
+            <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">Escríbenos</h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
-              Para agendar una cita usá el formulario de &ldquo;Agendar cita&rdquo;. Este canal es para consultas
-              generales; ante una urgencia, escribinos directo por WhatsApp.
+              Para agendar una cita usa el formulario de &ldquo;Agendar cita&rdquo;. Este canal es para consultas
+              generales; ante una urgencia, escríbenos directo por WhatsApp.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <CtaLink href={WHATSAPP_URL} variant="cta">
-                Escribinos por WhatsApp
+                Escríbenos por WhatsApp
               </CtaLink>
               <CtaLink href="/agendar-cita" variant="outline">
                 Agendar cita
@@ -46,12 +46,12 @@ export default function ContactPage() {
       </section>
 
       <div className="relative z-10 mx-auto -mt-8 max-w-5xl px-4 sm:px-6 lg:px-8">
-        <FloatingContactCard title="Escribinos cuando quieras" />
+        <FloatingContactCard title="Escríbenos cuando quieras" />
       </div>
 
       <Section className="bg-[#f9fafb]">
         <Reveal>
-          <h2 className="text-center text-2xl font-extrabold tracking-tight sm:text-3xl">Dejanos tu mensaje</h2>
+          <h2 className="text-center text-2xl font-extrabold tracking-tight sm:text-3xl">Déjanos tu mensaje</h2>
         </Reveal>
         {/* El formulario "sube" desde abajo -- el gesto natural de algo que se
             va a completar, distinto del fade lateral de la tarjeta de arriba. */}

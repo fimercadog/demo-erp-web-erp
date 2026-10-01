@@ -39,10 +39,10 @@ export default function SolicitarCitaPage() {
       const status = (err as { response?: { status?: number } }).response?.status;
       setError(
         status === 429
-          ? "Recibimos varias solicitudes seguidas. Esperá un momento e intentá de nuevo."
+          ? "Recibimos varias solicitudes seguidas. Espera un momento e intenta de nuevo."
           : status === 422
-            ? "Revisá los campos: nombre, un correo válido y la autorización de datos son obligatorios."
-            : "No se pudo enviar. Intentá de nuevo o llamá a la clínica.",
+            ? "Revisa los campos: nombre, un correo válido y la autorización de datos son obligatorios."
+            : "No se pudo enviar. Intenta de nuevo o llama a la clínica.",
       );
     } finally {
       setLoading(false);
@@ -52,9 +52,9 @@ export default function SolicitarCitaPage() {
   return (
     <MarketingLayout>
       <PageHero
-        eyebrow="Solicitá tu cita"
-        title="Pedí una cita médica"
-        lead="Dejanos tus datos y nuestro centro médico confirmará disponibilidad y te contactará para agendar."
+        eyebrow="Agenda tu cita"
+        title="Solicita una cita veterinaria"
+        lead="Déjanos tus datos y nuestra clínica confirmará disponibilidad y te contactará para agendar."
       />
 
       <section className="mx-auto max-w-2xl px-4 pb-24 sm:px-6">
@@ -62,7 +62,7 @@ export default function SolicitarCitaPage() {
           <div className="rounded-2xl border border-border bg-card p-6 shadow-elevation-2">
             <div className="flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2 text-sm text-success">
               <CheckCircle2 className="size-4" />
-              Recibimos tu solicitud. Nuestro centro médico confirmará disponibilidad y te contactará.
+              Recibimos tu solicitud. Nuestra clínica confirmará disponibilidad y te contactará.
             </div>
           </div>
         ) : (
