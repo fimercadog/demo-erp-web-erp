@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CtaLink } from "@/components/marketing/cta-link";
-import { FloatingContactCard } from "@/components/marketing/floating-contact-card";
+import { CLINIC_SHORT_NAME } from "@/components/marketing/clinic-brand";
 import { Reveal } from "@/components/marketing/reveal";
 
 /**
@@ -12,8 +12,8 @@ import { Reveal } from "@/components/marketing/reveal";
  */
 export function HomeHero() {
   return (
-    <section className="relative isolate">
-      <div className="relative h-[600px] w-full overflow-hidden sm:h-[680px] lg:h-[760px]">
+    <section className="relative isolate bg-[#f9fafb]">
+      <div className="relative min-h-screen w-full overflow-hidden">
         {/* Foto: fade + zoom muy suave (arranca en 1.05x y se asienta) --
             arranca primero, todo lo demas entra encima despues. */}
         <Reveal mount direction="zoom-out" duration={1.1} className="absolute inset-0">
@@ -36,7 +36,7 @@ export function HomeHero() {
             <Reveal mount delay={0.25}>
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/75">Clínica veterinaria</p>
               <h1 className="mt-4 text-6xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl">
-                Los Andes
+                {CLINIC_SHORT_NAME}
               </h1>
             </Reveal>
             <Reveal mount delay={0.38}>
@@ -68,11 +68,6 @@ export function HomeHero() {
         </div>
       </div>
 
-      {/* Tarjeta flotante: ultimo elemento en entrar, "se apoya" sobre el hero
-          una vez que ya esta todo asentado (choreografia propia adentro). */}
-      <div className="relative z-10 mx-auto -mt-16 max-w-5xl px-4 sm:-mt-20 sm:px-6 lg:px-8">
-        <FloatingContactCard mount delay={0.72} />
-      </div>
     </section>
   );
 }

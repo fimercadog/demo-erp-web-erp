@@ -18,7 +18,7 @@ export function ClinicWordmark({ className }: { className?: string }) {
         <PawPrint className="size-4.5" />
       </span>
       <span className="text-base font-extrabold leading-tight tracking-tight">
-        Los Andes
+        {CLINIC_SHORT_NAME}
         <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Veterinaria
         </span>

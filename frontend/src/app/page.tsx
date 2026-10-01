@@ -3,6 +3,7 @@ import { AppointmentCta } from "@/components/marketing/appointment-cta";
 import { CtaLink } from "@/components/marketing/cta-link";
 import { EmergencyBanner } from "@/components/marketing/emergency-banner";
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
+import { FloatingContactCard } from "@/components/marketing/floating-contact-card";
 import { HomeHero } from "@/components/marketing/home-hero";
 import { GradientBlob } from "@/components/marketing/gradient-blob";
 import { IconFeatureFloatCard } from "@/components/marketing/icon-feature-float-card";
@@ -36,8 +37,16 @@ export default function Home() {
     <MarketingLayout>
       <HomeHero />
 
+      {/* Tarjeta flotante: solapa el borde inferior del hero (min-h-screen)
+          y el borde superior de servicios. Vive FUERA del hero para que el
+          hero sea exactamente min-h-screen y la tarjeta sea visible en el
+          primer viewport sin scroll. */}
+      <div className="relative z-10 mx-auto -mt-16 max-w-5xl px-4 sm:-mt-20 sm:px-6 lg:px-8">
+        <FloatingContactCard mount delay={0.72} />
+      </div>
+
       {/* Servicios principales */}
-      <Section>
+      <Section className="bg-[#f9fafb] pt-8">
         <Reveal>
           <SectionHeading
             eyebrow="Servicios"
@@ -56,7 +65,7 @@ export default function Home() {
       </Section>
 
       {/* Presentación de la clínica */}
-      <Section className="bg-section-cream">
+      <Section className="bg-section-cream py-14 lg:py-20">
         <Reveal>
           <SectionHeading eyebrow="La clínica" title="Más de una década cuidando mascotas del barrio" center={false} />
         </Reveal>
@@ -79,7 +88,7 @@ export default function Home() {
       </Section>
 
       {/* Por qué elegirnos */}
-      <Section className="pb-0">
+      <Section className="bg-[#f9fafb] pt-14 pb-0 lg:pt-20">
         <Reveal>
           <SectionHeading
             eyebrow="Por qué elegirnos"
@@ -87,7 +96,9 @@ export default function Home() {
           />
         </Reveal>
       </Section>
-      <IconFeatureFloatCard items={whyUs} />
+      <div className="bg-[#f9fafb]">
+        <IconFeatureFloatCard items={whyUs} />
+      </div>
 
       {/* Equipo */}
       <Section dark>
@@ -149,7 +160,7 @@ export default function Home() {
       </Section>
 
       {/* Testimonios */}
-      <Section>
+      <Section className="bg-[#f9fafb]">
         <Reveal>
           <SectionHeading eyebrow="Testimonios" title="Lo que cuentan nuestros propietarios" />
         </Reveal>
@@ -164,7 +175,7 @@ export default function Home() {
       </Section>
 
       {/* Mascotas atendidas */}
-      <Section className="relative isolate overflow-hidden">
+      <Section className="relative isolate overflow-hidden bg-[#f9fafb]">
         <GradientBlob className="-right-24 -bottom-24 size-[110%] opacity-30" />
         <Reveal>
           <SectionHeading eyebrow="A quién atendemos" title="Mascotas de todo tipo, un mismo estándar de cuidado" />

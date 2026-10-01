@@ -2,6 +2,7 @@ import Image from "next/image";
 import { AppointmentCta } from "@/components/marketing/appointment-cta";
 import { container } from "@/components/marketing/page-hero";
 import { CtaLink } from "@/components/marketing/cta-link";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
 import { stats, team } from "@/components/marketing/marketing-data";
 import { Section, SectionHeading } from "@/components/marketing/marketing-ui";
@@ -27,7 +28,7 @@ export default function AboutPage() {
       <SplitHero
         eyebrow="Nosotros"
         title="Una clínica de barrio, con el equipamiento de una grande"
-        lead="Clínica Veterinaria Los Andes nació para que cada mascota tenga un equipo veterinario que la conozca de verdad, visita tras visita — no una cara distinta cada vez."
+        lead={`${CLINIC_NAME} nació para que cada mascota tenga un equipo veterinario que la conozca de verdad, visita tras visita — no una cara distinta cada vez.`}
         image="/gallery/illustrations/illustration-2.png"
         imageAlt="Veterinario con estetoscopio examinando a un gato"
         actions={
@@ -44,7 +45,7 @@ export default function AboutPage() {
 
       {/* Tira de 3 iconos plana, sin tarjeta flotante -- a diferencia del grid de
           "All Vet Services" de Services, el de About va directo sobre blanco. */}
-      <Section className="pb-0">
+      <Section className="bg-[#f9fafb] pb-0">
         <div className="grid gap-x-10 gap-y-10 sm:grid-cols-3">
           {values.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08}>
@@ -56,7 +57,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section>
+      <Section className="bg-section-cream">
         <PhotoFeatureStack
           image="/gallery/pet-7.jpg"
           imageAlt="Veterinario del equipo revisando a un bulldog en consulta"
@@ -95,11 +96,11 @@ export default function AboutPage() {
 
       {/* Parrafo ancho de storytelling -- patron "quienes somos" de About en el
           pack (bloque de texto grande, no una lista de bullets). */}
-      <Section className="pt-0">
+      <Section className="bg-[#f9fafb] pt-0">
         <Reveal>
           <div className={`${container} max-w-3xl space-y-5 text-base leading-8 text-muted-foreground`}>
             <p>
-              Clínica Veterinaria Los Andes empezó como un consultorio pequeño de barrio, con un solo veterinario
+              {CLINIC_NAME} empezó como un consultorio pequeño de barrio, con un solo veterinario
               y una sala de espera compartida con la recepción. Más de una década después, seguimos en el mismo
               barrio — pero con consultorios equipados, laboratorio propio y quirófano, sin haber perdido de vista
               lo que nos trajo hasta acá: conocer a cada mascota por su nombre.

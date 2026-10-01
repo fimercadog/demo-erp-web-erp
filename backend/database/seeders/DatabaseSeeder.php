@@ -223,6 +223,29 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Bolsa', 'abbreviation' => 'bls'],
         ])->mapWithKeys(fn ($d) => [$d['name'] => Unit::firstOrCreate(['company_id' => $company->id, 'name' => $d['name']], $d + ['status' => 'active'])]);
 
+        // Imágenes de ejemplo por SKU (placehold.co, color por categoría)
+        $images = [
+            'VAC-DHPPI'   => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-DHPPi',
+            'VAC-RABIA'   => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Rabia',
+            'VAC-TRIPLE-F'=> 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Triple+F',
+            'VAC-TOS'     => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Tos',
+            'ANTI-INT'    => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-INT',
+            'ANTI-EXT'    => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-EXT',
+            'ANTI-PIPE'   => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-PIPE',
+            'FARM-AMOXI'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Amoxicilina',
+            'FARM-MELOX'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Meloxicam',
+            'FARM-SUERO'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Suero+0.9%25',
+            'FARM-GABA'   => 'https://placehold.co/640x480/f1f5f9/334155?text=Gabapentina',
+            'ALIM-GASTRO' => 'https://placehold.co/640x480/ffedd5/9a3412?text=Gastro+2kg',
+            'ALIM-RENAL'  => 'https://placehold.co/640x480/ffedd5/9a3412?text=Renal+2kg',
+            'ALIM-RECOV'  => 'https://placehold.co/640x480/ffedd5/9a3412?text=Recovery',
+            'ACC-COLLAR'  => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Collar+M',
+            'ACC-SHAMP'   => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Shampoo',
+            'ACC-DENTAL'  => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Kit+Dental',
+            'INS-JERINGA' => 'https://placehold.co/640x480/f3f4f6/4b5563?text=Jeringa+3ml',
+            'INS-GUANTE'  => 'https://placehold.co/640x480/f3f4f6/4b5563?text=Guantes+x100',
+        ];
+
         // [sku, nombre, categoría, marca, unidad, costo, precio, reorden, público, descripción]
         $rows = [
             ['VAC-DHPPI', 'Vacuna polivalente canina (DHPPi)', 'Biológicos', 'Zoetis', 'Dosis', 22000, 45000, 15, false, 'Vacuna múltiple para moquillo, hepatitis, parvovirus y parainfluenza. Refuerzo anual.'],
@@ -246,14 +269,15 @@ class DatabaseSeeder extends Seeder
             ['INS-GUANTE', 'Guantes de examen (caja x100)', 'Insumos médicos', 'Genérico', 'Unidad', 22000, 0, 20, false, 'Nitrilo sin polvo. Uso interno de consulta y cirugía.'],
         ];
 
-        $products = collect($rows)->map(function (array $r) use ($company, $categories, $brands, $units) {
+        $products = collect($rows)->map(function (array $r) use ($company, $categories, $brands, $units, $images) {
             [$sku, $name, $cat, $brand, $unit, $cost, $price, $reorder, $public, $desc] = $r;
 
-            return Product::firstOrCreate(
+            $product = Product::firstOrCreate(
                 ['company_id' => $company->id, 'sku' => $sku],
                 [
                     'name' => $name,
                     'description' => $desc,
+                    'image_url' => $images[$sku] ?? null,
                     'category_id' => $categories[$cat]->id,
                     'brand_id' => $brands[$brand]->id,
                     'unit_id' => $units[$unit]->id ?? $units['Unidad']->id,
@@ -264,6 +288,13 @@ class DatabaseSeeder extends Seeder
                     'is_public' => $public,
                 ],
             );
+
+            // Actualiza la imagen aunque el producto ya existiera (idempotente)
+            if (! $product->image_url && isset($images[$sku])) {
+                $product->update(['image_url' => $images[$sku]]);
+            }
+
+            return $product;
         });
 
         $publicProducts = $products->filter(fn (Product $p) => $p->is_public)->values();

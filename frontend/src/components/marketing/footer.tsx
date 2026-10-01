@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { ClinicWordmark } from "@/components/marketing/clinic-brand";
+import { ClinicWordmark, CLINIC_NAME } from "@/components/marketing/clinic-brand";
 
 const columns: { title: string; links: [string, string][] }[] = [
   {
@@ -84,7 +84,7 @@ export function MarketingFooter() {
 
       <div className="bg-ink text-ink-foreground">
         <div className="mx-auto max-w-7xl px-4 py-5 text-xs text-white/60 sm:px-6 lg:px-8">
-          © {new Date().getFullYear()} Clínica Veterinaria Los Andes.
+          © {new Date().getFullYear()} {CLINIC_NAME}.
         </div>
       </div>
     </footer>

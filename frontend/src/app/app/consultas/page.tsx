@@ -14,7 +14,7 @@ const columns: AppColumnDef<Consultation>[] = [
     header: "Paciente",
     cell: ({ row }) => (
       <Link href={`/app/pacientes/${row.original.patient_id}`} className="text-primary hover:underline">
-        {row.original.patient ?? "—"}
+        {(row.original.patient?.name ?? row.original.patient) || "—"}
       </Link>
     ),
   },

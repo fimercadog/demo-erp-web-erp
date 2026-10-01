@@ -7,7 +7,6 @@ use App\Models\Company;
 use App\Models\User;
 use App\Services\LogSanitizer;
 use App\Services\ObservabilityService;
-use App\Services\SupportPayloadService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
@@ -131,34 +130,6 @@ class TechnicalLoggingTest extends TestCase
         $this->assertEquals('OK', $sanitized['public_info']);
     }
 
-    public function test_support_payload_service_builds_decoupled_ticket_structure(): void
-    {
-        $company = Company::firstOrCreate(['name' => 'Empresa ERP Test'], ['nit' => '900.123.456-7']);
-        $user = User::create([
-            'company_id' => $company->id,
-            'name' => 'Admin Test',
-            'email' => 'admin@example.com',
-            'password' => '$2y$12$abcdefg',
-        ]);
-
-        $service = new SupportPayloadService;
-        $request = \Illuminate\Http\Request::create('/api/app/dashboard', 'GET');
-        $request->headers->set('X-Request-ID', 'req-support-test-999');
-        $request->setUserResolver(fn () => $user);
-
-        $payload = $service->buildPayload($request, 'Problema al cargar reporte', ['section' => 'finance']);
-
-        $this->assertEquals('req-support-test-999', $payload['request_id']);
-        $this->assertEquals($user->id, $payload['user_id']);
-        $this->assertEquals($company->id, $payload['company_id']);
-        $this->assertEquals(config('observability.vertical_extensions.module_name', 'core_erp'), $payload['module']);
-        $this->assertEquals('Problema al cargar reporte', $payload['feedback_message']);
-        $this->assertEquals('finance', $payload['meta']['section']);
-        $this->assertArrayHasKey('app_version', $payload);
-        $this->assertArrayHasKey('environment', $payload);
-        $this->assertArrayHasKey('timestamp', $payload);
-    }
-
     public function test_business_audit_log_continues_functioning(): void
     {
         $company = Company::firstOrCreate(['name' => 'Empresa ERP Audit'], ['nit' => '900.123.456-8']);
@@ -201,10 +172,8 @@ class TechnicalLoggingTest extends TestCase
     {
         $filesToCheck = [
             base_path('config/observability.php'),
-            base_path('app/Contracts/SupportContextInterface.php'),
             base_path('app/Services/ObservabilityService.php'),
             base_path('app/Services/LogSanitizer.php'),
-            base_path('app/Services/SupportPayloadService.php'),
             base_path('app/Http/Middleware/RequestIdMiddleware.php'),
             base_path('docs/observability-module.md'),
         ];

@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -36,7 +37,7 @@ export default function OpengraphImage() {
           LA
         </div>
         <div style={{ display: "flex", fontSize: 60, fontWeight: 900, color: "#241f19" }}>
-          Clínica Veterinaria Los Andes
+          {CLINIC_NAME}
         </div>
         <div style={{ display: "flex", marginTop: 20, fontSize: 32, color: "#6b6355", maxWidth: 860 }}>
           Consulta, vacunación, cirugía y urgencias para tu mascota, con un equipo que la conoce desde la primera visita.

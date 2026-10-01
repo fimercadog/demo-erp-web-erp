@@ -40,7 +40,7 @@ export function HeroBackdrop({
           "absolute right-[-14%] top-[4%] size-[34rem] animate-marketing-aurora rounded-full blur-[80px] [animation-delay:-6s] max-sm:opacity-20",
           navy ? "opacity-50" : "opacity-35",
         )}
-        style={{ background: "radial-gradient(circle at 60% 40%, var(--chart-3), transparent 68%)" }}
+        style={{ background: navy ? "radial-gradient(circle at 60% 40%, var(--cta, var(--chart-3)), transparent 68%)" : "radial-gradient(circle at 60% 40%, var(--chart-3), transparent 68%)" }}
       />
       <div
         className={cn(

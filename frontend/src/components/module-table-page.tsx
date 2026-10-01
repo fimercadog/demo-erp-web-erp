@@ -130,6 +130,8 @@ export function ModuleTablePage<T extends object & RowWithId>({
         onSearchChange={table.setSearch}
         page={table.page}
         onPageChange={table.setPage}
+        perPage={table.perPage}
+        onPerPageChange={table.setPerPage}
         loading={table.loading}
         error={table.error}
       />

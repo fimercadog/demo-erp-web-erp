@@ -33,6 +33,7 @@ import {
   ShieldAlert,
   ListTodo,
   ShoppingCart,
+  Wrench,
   Stethoscope,
   StickyNote,
   Sun,
@@ -258,7 +259,7 @@ const PREMIUM_INFO: Record<string, { title: string; body: React.ReactNode }> = {
   },
 };
 
-function NavLink({ item }: { item: NavItem }) {
+function NavLink({ item, stripe }: { item: NavItem; stripe?: boolean }) {
   const pathname = usePathname();
   const Icon = item.icon;
   const { isActive: contingencyActive, pendingCount } = useContingency();
@@ -271,7 +272,7 @@ function NavLink({ item }: { item: NavItem }) {
         href={item.href}
         className={cn(
           "flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium text-warning transition-colors hover:bg-warning/10",
-          active && "bg-warning/10",
+          active ? "bg-warning/10" : stripe && "bg-muted",
         )}
       >
         <Icon className="h-4 w-4" />
@@ -292,7 +293,7 @@ function NavLink({ item }: { item: NavItem }) {
         <DialogTrigger asChild>
           <button
             type="button"
-            className="flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground/60 transition-colors hover:bg-muted hover:text-foreground"
+            className={cn("flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground/60 transition-colors hover:bg-accent hover:text-foreground", stripe && "bg-muted")}
           >
             <Icon className="h-4 w-4" />
             <span>{item.label}</span>
@@ -316,7 +317,7 @@ function NavLink({ item }: { item: NavItem }) {
       href={item.href}
       className={cn(
         "flex h-9 items-center gap-3 rounded-md px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-        active && "bg-accent text-foreground",
+        active ? "bg-primary/10 font-semibold text-primary" : stripe && "bg-muted",
       )}
     >
       <Icon className="h-4 w-4" />
@@ -436,25 +437,32 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   );
 
   const navBody = (
-    <nav className="flex-1 space-y-5 overflow-y-auto p-4">
-      {visibleGroups.map((group) => (
-        <div key={group.label || "general"} className="space-y-1">
-          {group.label ? (
-            <p className="mb-1.5 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
-              {group.label}
-            </p>
-          ) : null}
-          {group.items.map((item) => (
-            <NavLink key={item.href} item={item} />
-          ))}
-        </div>
-      ))}
+    <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+      {(() => {
+        let rowIdx = 0;
+        return visibleGroups.map((group, i) => (
+          <div
+            key={group.label || "general"}
+            className={i > 0 ? "mt-2 space-y-0 border-t border-border pt-2" : "space-y-0"}
+          >
+            {group.label ? (
+              <p className="mb-1 px-3 pt-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                {group.label}
+              </p>
+            ) : null}
+            {group.items.map((item) => {
+              const stripe = rowIdx++ % 2 === 0;
+              return <NavLink key={item.href} item={item} stripe={stripe} />;
+            })}
+          </div>
+        ));
+      })()}
     </nav>
   );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <aside className="fixed inset-y-0 left-0 hidden w-72 border-r border-border bg-card lg:flex lg:flex-col">
+      <aside className="fixed inset-y-0 left-0 hidden w-72 border-r border-border bg-card shadow-[1px_0_12px_0_rgb(0_0_0/0.06)] lg:flex lg:flex-col">
         {sidebarHeader}
         {navBody}
       </aside>
@@ -486,7 +494,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       ) : null}
 
       <div className="lg:pl-72">
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-2 border-b border-border bg-background/95 px-4 backdrop-blur lg:px-6">
+        <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-2 border-b border-border bg-card/95 px-4 backdrop-blur shadow-sm lg:px-6">
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
@@ -511,7 +519,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <UserCircle className="h-4 w-4 text-primary" />
               <div className="min-w-0">
                 <p className="truncate text-xs font-medium">{user?.name ?? "Usuario"}</p>
-                <p className="truncate text-[11px] text-muted-foreground">{user?.roles?.[0] ?? user?.email}</p>
+                <p className="truncate text-[11px] text-muted-foreground">
+                  {user?.roles?.[0] ?? user?.email}
+                </p>
               </div>
             </div>
             <BetaNotice />

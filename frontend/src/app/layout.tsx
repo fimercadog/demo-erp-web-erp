@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Open_Sans, Poppins, Roboto, Roboto_Mono } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -40,13 +41,13 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Clínica Veterinaria Los Andes | Veterinaria en Bogotá",
-    template: "%s | Clínica Veterinaria Los Andes",
+    default: `${CLINIC_NAME} | Veterinaria en Bogotá`,
+    template: `%s | ${CLINIC_NAME}`,
   },
   description:
     "Clínica veterinaria en Bogotá: consulta general, vacunación, cirugía, laboratorio clínico y urgencias para perros, gatos y otras mascotas. Agendá tu cita online o por WhatsApp.",
   openGraph: {
-    title: "Clínica Veterinaria Los Andes — Veterinaria en Bogotá",
+    title: `${CLINIC_NAME} — Veterinaria en Bogotá`,
     description: "Consulta, vacunación, cirugía y urgencias para tu mascota, con historia clínica digital por paciente.",
     type: "website",
     locale: "es_CO",
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clínica Veterinaria Los Andes — Veterinaria en Bogotá",
+    title: `${CLINIC_NAME} — Veterinaria en Bogotá`,
     description: "Consulta, vacunación, cirugía y urgencias para tu mascota.",
   },
 };

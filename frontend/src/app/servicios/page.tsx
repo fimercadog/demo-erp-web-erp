@@ -52,7 +52,7 @@ export default function ServiciosPage() {
         </div>
       </Section>
 
-      <div id="todos-los-servicios">
+      <div id="todos-los-servicios" className="bg-[#f9fafb]">
         <IconFeatureFloatCard
           items={services.map((s) => ({
             icon: SERVICE_ICON[s.slug],
