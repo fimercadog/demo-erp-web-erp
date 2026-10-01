@@ -98,8 +98,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </Section>
 
       <AppointmentCta
-        title="¿Tenés dudas sobre tu salud o un diagnóstico particular?"
-        lead="Un artículo es informativo y no reemplaza la valoración médica. Agendá tu consulta con nuestros especialistas."
+        title="¿Tienes dudas sobre la salud de tu mascota?"
+        lead="Un artículo es informativo y no reemplaza la valoración médica. Agenda tu consulta con nuestros especialistas."
       />
     </MarketingLayout>
   );

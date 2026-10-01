@@ -49,7 +49,7 @@ export function MarketingFooter() {
             </li>
             <li className="flex items-center gap-2.5">
               <Phone className="size-4 shrink-0 text-primary" />
-              +57 601 555 0188
+              <a href="tel:+576015550188" className="hover:text-primary">+57 601 555 0188</a>
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="size-4 shrink-0 text-primary" />

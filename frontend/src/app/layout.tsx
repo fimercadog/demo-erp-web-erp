@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: `%s | ${CLINIC_NAME}`,
   },
   description:
-    "Clínica veterinaria en Bogotá: consulta general, vacunación, cirugía, laboratorio clínico y urgencias para perros, gatos y otras mascotas. Agendá tu cita online o por WhatsApp.",
+    "Clínica veterinaria en Bogotá: consulta general, vacunación, cirugía, laboratorio clínico y urgencias para perros, gatos y otras mascotas. Agenda tu cita online o por WhatsApp.",
   openGraph: {
     title: `${CLINIC_NAME} — Veterinaria en Bogotá`,
     description: "Consulta, vacunación, cirugía y urgencias para tu mascota, con historia clínica digital por paciente.",

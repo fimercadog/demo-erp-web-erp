@@ -53,9 +53,9 @@ export default function CotizacionPage() {
   return (
     <MarketingLayout>
       <PageHero
-        eyebrow="Cotizacion"
-        title="Solicita tu cotizacion"
-        lead="Revisa tu lista, dejanos tus datos y un asesor te envia precios y disponibilidad."
+        eyebrow="Cotización"
+        title="Solicita tu cotización"
+        lead="Revisa tu lista, déjanos tus datos y un asesor te envía precios y disponibilidad."
       />
 
       <Section className="pt-0">

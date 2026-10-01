@@ -19,14 +19,14 @@ export default function ServiciosPage() {
     <MarketingLayout>
       <SplitHero
         eyebrow="Servicios"
-        title="Portafolio de servicios médicos e IPS especializada"
-        lead="Consulta médica general, especialidades, vacunación e inmunización, laboratorio clínico y procedimientos ambulatorios — con historia clínica digital por paciente."
+        title="Servicios veterinarios especializados"
+        lead="Consulta veterinaria, vacunación, cirugía, laboratorio clínico y urgencias — con historia clínica digital por paciente."
         image="/gallery/illustrations/illustration-7.png"
-        imageAlt="Médico en valoración clínica"
+        imageAlt="Veterinario en consulta"
         actions={
           <>
             <CtaLink href="/agendar-cita" variant="cta">
-              Agendar cita médica
+              Agendar cita
             </CtaLink>
             <CtaLink href="#todos-los-servicios" variant="outline">
               Ver todos los servicios
@@ -44,11 +44,11 @@ export default function ServiciosPage() {
         >
           <p>
             Ante un cuadro agudo, fiebre persistente o dolor intenso, la prioridad es estabilizar y valorar.
-            Escribinos antes de venir para que nuestro equipo asistencial esté listo a tu llegada.
+            Escríbenos antes de venir para que nuestro equipo veterinario esté listo a tu llegada.
           </p>
         </CircularPhotoAbout>
         <div className="mt-10">
-          <PriorityBanner label="Atención prioritaria, escribinos" detail="+57 601 555 0188" />
+          <PriorityBanner label="Atención prioritaria, escríbenos" detail="+57 601 555 0188" />
         </div>
       </Section>
 
@@ -71,7 +71,7 @@ export default function ServiciosPage() {
       />
 
       <div className="relative z-10 mx-auto -mt-16 max-w-5xl px-4 sm:px-6 lg:px-8">
-        <FloatingContactCard title="Escribinos cuando quieras" />
+        <FloatingContactCard title="Escríbenos cuando quieras" />
       </div>
 
       <Section>

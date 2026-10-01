@@ -191,7 +191,7 @@ export default function PortalPage() {
           <p className="text-sm text-muted-foreground">Cargando tus citas…</p>
         ) : appointments.length === 0 ? (
           <div className="rounded-2xl border border-border bg-card p-6 text-sm text-muted-foreground">
-            Todavía no tenés citas. <a href="/agendar-cita" className="text-primary underline">Agendá una</a>.
+            Todavía no tienes citas. <a href="/agendar-cita" className="text-primary underline">Agenda una</a>.
           </div>
         ) : (
           <div className="space-y-3">

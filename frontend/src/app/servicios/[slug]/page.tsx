@@ -112,8 +112,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       </Section>
 
       <AppointmentCta
-        title={`¿Agendamos ${service.title.toLowerCase()} para tu cita médica?`}
-        lead="Elegí el horario que más te convenga y te confirmamos disponibilidad al instante. Para urgencias, escribinos directo por WhatsApp."
+        title={`¿Agendamos ${service.title.toLowerCase()} para tu mascota?`}
+        lead="Elige el horario que más te convenga y te confirmamos disponibilidad al instante. Para urgencias, escríbenos directo por WhatsApp."
       />
     </MarketingLayout>
   );

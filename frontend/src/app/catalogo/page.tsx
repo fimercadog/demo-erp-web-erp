@@ -75,8 +75,8 @@ export default function CatalogoPage() {
     <MarketingLayout>
       <SplitHero
         eyebrow="Catálogo"
-        title="Farmacia & Insumos Hospitalarios de NOVA IPS"
-        lead="Explorá nuestro catálogo de medicamentos e insumos médicos, armá tu lista y solicitá cotización o disponibilidad."
+        title="Farmacia & Productos Veterinarios"
+        lead="Explora nuestro catálogo de medicamentos y productos veterinarios, arma tu lista y solicita cotización o disponibilidad."
         image="/gallery/illustrations/illustration-1.png"
         imageAlt="Profesional de farmacia hospitalaria"
         actions={
@@ -85,7 +85,7 @@ export default function CatalogoPage() {
               Solicitar cotización
             </CtaLink>
             <CtaLink href={WHATSAPP_URL} variant="outline">
-              Escribinos por WhatsApp
+              Escríbenos por WhatsApp
             </CtaLink>
           </>
         }
@@ -126,7 +126,7 @@ export default function CatalogoPage() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Buscar por nombre o SKU"
-              aria-label="Buscar en el catalogo"
+              aria-label="Buscar en el catálogo"
               className="h-11 w-full rounded-lg border border-input bg-card pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
             />
           </label>
@@ -134,12 +134,12 @@ export default function CatalogoPage() {
 
         {error ? (
           <div className="mt-10 flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            <AlertCircle className="size-4" /> No se pudo cargar el catalogo. Recarga la pagina.
+            <AlertCircle className="size-4" /> No se pudo cargar el catálogo. Recarga la página.
           </div>
         ) : loading && products.length === 0 ? (
-          <p className="mt-10 text-sm text-muted-foreground">Cargando catalogo...</p>
+          <p className="mt-10 text-sm text-muted-foreground">Cargando catálogo...</p>
         ) : products.length === 0 ? (
-          <p className="mt-10 text-sm text-muted-foreground">No hay productos que coincidan con tu busqueda.</p>
+          <p className="mt-10 text-sm text-muted-foreground">No hay productos que coincidan con tu búsqueda.</p>
         ) : (
           <>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -155,7 +155,7 @@ export default function CatalogoPage() {
                   disabled={loading}
                   className="inline-flex h-11 items-center rounded-full border-2 border-current px-6 text-sm font-semibold disabled:opacity-60"
                 >
-                  {loading ? "Cargando..." : "Ver mas productos"}
+                  {loading ? "Cargando..." : "Ver más productos"}
                 </button>
               </div>
             ) : null}

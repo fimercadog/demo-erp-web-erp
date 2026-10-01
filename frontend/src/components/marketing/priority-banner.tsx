@@ -7,7 +7,7 @@ import { WHATSAPP_URL } from "@/components/marketing/whatsapp-link";
  * perderse nunca en la página (urgencias).
  */
 export function PriorityBanner({
-  label = "Para urgencias, escribinos ya",
+  label = "Para urgencias, escríbenos ya",
   detail = "+57 601 555 0188",
 }: {
   label?: string;
@@ -20,7 +20,7 @@ export function PriorityBanner({
     <div className="flex flex-col items-center justify-between gap-4 rounded-3xl bg-ink px-6 py-5 text-center text-white shadow-elevation-3 sm:flex-row sm:rounded-full sm:px-10 sm:py-4 sm:text-left">
       <p className="flex flex-col items-center gap-1 text-sm font-bold uppercase tracking-[0.14em] sm:flex-row sm:gap-2 sm:text-base">
         <span>{label}</span>
-        <span className="whitespace-nowrap font-extrabold text-cta">{detail}</span>
+        <a href={`tel:${detail.replace(/\s+/g, "")}`} className="whitespace-nowrap font-extrabold text-cta hover:underline">{detail}</a>
       </p>
       <CtaLink href={WHATSAPP_URL} variant="cta" size="sm">
         Escribir por WhatsApp

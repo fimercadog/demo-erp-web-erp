@@ -108,7 +108,7 @@ class PublicSchedulingController extends Controller
 
         $config = config('scheduling');
         $duration = $service->estimated_duration_minutes ?: $config['default_duration_minutes'];
-        $startsAt = Carbon::createFromFormat('Y-m-d H:i', $data['date'].' '.$data['start_time']);
+        $startsAt = Carbon::createFromFormat('Y-m-d H:i', $data['date'].' '.$data['start_time'], 'America/Bogota');
         $endsAt = $startsAt->copy()->addMinutes($duration);
 
         $this->scheduling->assertWithinBusinessWindow($startsAt, $endsAt);

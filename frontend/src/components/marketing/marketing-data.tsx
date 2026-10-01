@@ -1,23 +1,16 @@
 import {
   Activity,
-  Building2,
   CalendarDays,
-  Clock,
-  Cross,
-  FileText,
   FlaskConical,
   HeartPulse,
-  Hospital,
+  PawPrint,
   Pill,
-  Scan,
+  Scissors,
   ShieldCheck,
   Siren,
-  Smile,
   Sparkles,
   Stethoscope,
   Syringe,
-  UserCheck,
-  Users,
   type LucideIcon,
 } from "lucide-react";
 
@@ -33,120 +26,120 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    slug: "consulta-medica-general",
+    slug: "consulta-veterinaria",
     icon: Stethoscope,
-    title: "Consulta Medicina General",
-    short: "Evaluación clínica integral, diagnósticos precisos y seguimiento continúo por médicos de planta.",
+    title: "Consulta Veterinaria General",
+    short: "Evaluación clínica completa de tu mascota: diagnóstico, tratamiento y seguimiento personalizado.",
     description:
-      "Atención médica primaria para pacientes de todas las edades. Examen físico detallado, revisión de antecedentes y emisión de órdenes médicas o derivaciones a especialidades en nuestra red de sedes.",
+      "Atención médica primaria para perros, gatos y animales exóticos. Examen físico detallado, revisión de historia clínica y formulación del plan de tratamiento adecuado para cada paciente.",
     bullets: [
-      "Examen físico completo y toma de signos vitales",
-      "Historia clínica digital unificada",
-      "Expedición de fórmulas médicas e incapacidades",
-      "Derivación directa a médicos especialistas",
+      "Examen físico completo y valoración de signos vitales",
+      "Historia clínica digital por paciente",
+      "Formulación de tratamientos y remisión a especialistas",
+      "Seguimiento post-consulta por WhatsApp",
     ],
     featured: true,
   },
   {
-    slug: "pediatria-neonatologia",
-    icon: HeartPulse,
-    title: "Pediatría & Neonatología",
-    short: "Control del desarrollo, vacunación y atención médica cálida para lactantes, niños y adolescentes.",
+    slug: "vacunacion-medicina-preventiva",
+    icon: Syringe,
+    title: "Vacunación y Medicina Preventiva",
+    short: "Esquemas de vacunación completos y planes de desparasitación para una mascota sana y protegida.",
     description:
-      "Acompañamiento médico especializado en el crecimiento y desarrollo infantil. Evaluaciones pediátricas periódicas, esquemas de vacunación y manejo de patologías pediátricas frecuentes.",
+      "Programa preventivo adaptado a la especie, raza y estilo de vida de tu mascota. Incluye vacunas esenciales y opcionales, desparasitación interna y externa, y carnet de vacunación digital.",
     bullets: [
-      "Control de crecimiento y desarrollo pediátrico",
-      "Esquema oficial de vacunación PAI",
-      "Atención prioritaria pediátrica",
-      "Orientación nutricional infantil",
+      "Vacuna séxtuple, rabia y bordetella (perros)",
+      "Vacuna triple felina y leucemia (gatos)",
+      "Desparasitación interna y antiparasitario externo",
+      "Carnet digital de vacunación y recordatorios",
     ],
     featured: true,
   },
   {
-    slug: "laboratorio-clinico",
-    icon: FlaskConical,
-    title: "Laboratorio Clínico Especializado",
-    short: "Toma de muestras y procesamiento de exámenes hematológicos, bioquímicos y microbiológicos con alta precisión.",
-    description:
-      "Laboratorio clínico automatizado con entrega rápida de resultados en línea. Procesamiento de pruebas de rutina y especializadas bajo rigurosos estándares de control de calidad.",
-    bullets: [
-      "Hemogramas, perfil lipídico y glicemia",
-      "Pruebas hormonales y marcadores tumorales",
-      "Resultados digitales en línea el mismo día",
-      "Toma de muestras domiciliaria coordinada",
-    ],
-    featured: true,
-  },
-  {
-    slug: "urgencias-triage",
-    icon: Siren,
-    title: "Atención Prioritaria / Urgencias",
-    short: "Atención médica inmediata y clasificación por Triage en situaciones agudas (Configurable según habilitación).",
-    description:
-      "Servicio de atención prioritaria y Triage médico según la configuración de servicios habilitados del prestador.",
-    bullets: [
-      "Clasificación médica por Triage estándar",
-      "Sala de observación y nebulizaciones",
-      "Estabilización médica asistencial",
-      "Remisión y coordinación de traslado",
-    ],
-    featured: true,
-  },
-  {
-    slug: "cardiologia-ekg",
+    slug: "cirugia-veterinaria",
     icon: Activity,
-    title: "Cardiología & Electrocardiografía",
-    short: "Evaluación de la salud cardiovascular, electrocardiogramas y lectura especializada de hallazgos.",
+    title: "Cirugía Veterinaria",
+    short: "Procedimientos quirúrgicos con anestesia monitoreada, instrumentación moderna y recuperación supervisada.",
     description:
-      "Diagnóstico y control de hipertensión, arritmias y enfermedades cardiovasculares. Monitoreo especializado con equipos de electrocardiografía digital de última generación.",
+      "Realizamos cirugías de tejidos blandos, esterilizaciones y procedimientos ortopédicos bajo los más altos estándares de asepsia y monitoreo anestésico.",
     bullets: [
-      "Electrocardiograma de 12 derivadas",
-      "Control de riesgo cardiovascular",
-      "Evaluación preoperatoria cardiológica",
-      "Lectura e informe por cardiólogo",
+      "Esterilización (ovariohisterectomía / orquiectomía)",
+      "Cirugía de tejidos blandos y heridas",
+      "Monitoreo anestésico completo",
+      "Hospitalización y cuidados postoperatorios",
     ],
     featured: true,
   },
   {
-    slug: "imagenes-diagnosticas",
-    icon: Scan,
-    title: "Imágenes Diagnósticas & Ecografía",
-    short: "Ecografía general, articular, ginecológica y radiografía digital interpretada por radiólogos.",
+    slug: "laboratorio-clinico-veterinario",
+    icon: FlaskConical,
+    title: "Laboratorio Clínico Veterinario",
+    short: "Hemogramas, bioquímicas, cultivos y pruebas rápidas con resultados el mismo día.",
     description:
-      "Servicio de ayuda diagnóstica no invasiva para la detección oportuna de condiciones abdominales, pélvicas, musculares y osteoarticulares.",
+      "Laboratorio en sede con equipos automatizados para diagnóstico rápido y preciso. Resultados entregados digitalmente y con interpretación del médico tratante.",
     bullets: [
-      "Ecografía abdominal, pélvica y tiroidea",
-      "Radiografía digital de alta resolución",
-      "Informes radiológicos detallados",
-      "Priorización de hallazgos críticos",
+      "Hemograma completo y diferencial",
+      "Perfil bioquímico y hepático/renal",
+      "Pruebas de Ehrlichia, Parvo y Leishmania",
+      "Urianálisis y copro-parasitológico",
+    ],
+    featured: true,
+  },
+  {
+    slug: "urgencias-veterinarias",
+    icon: Siren,
+    title: "Urgencias Veterinarias",
+    short: "Atención de emergencias los 7 días de la semana para situaciones que no pueden esperar.",
+    description:
+      "Servicio de urgencias con médico veterinario de turno, UCI veterinaria básica y coordinación de traslados especializados cuando se requiera.",
+    bullets: [
+      "Atención inmediata por urgencias",
+      "Soporte de fluidos, oxigenoterapia y monitoreo",
+      "Estabilización y manejo del dolor agudo",
+      "Coordinación con clínicas especializadas",
+    ],
+    featured: true,
+  },
+  {
+    slug: "imagenes-diagnosticas-veterinarias",
+    icon: HeartPulse,
+    title: "Imágenes Diagnósticas",
+    short: "Radiografía digital y ecografía abdominal para diagnóstico no invasivo.",
+    description:
+      "Servicio de ayuda diagnóstica con radiografía digital de alta resolución y ecografía general. Informes interpretados por el médico veterinario tratante.",
+    bullets: [
+      "Radiografía digital de tórax, abdomen y huesos",
+      "Ecografía abdominal y reproductiva",
+      "Ecocardiografía básica",
+      "Informes con imágenes adjuntas",
     ],
   },
   {
-    slug: "odontologia-integral",
-    icon: Smile,
-    title: "Odontología & Salud Oral",
-    short: "Odontología general, prevención, higiene oral y tratamientos restauradores para toda la familia.",
+    slug: "peluqueria-estetica-veterinaria",
+    icon: Scissors,
+    title: "Peluquería y Estética",
+    short: "Baño medicado, corte de pelo y limpieza de oídos con productos dermatológicos seguros.",
     description:
-      "Cuidado integral de la cavidad oral: profilaxis, calzas estéticas, endodoncia básica y valoración odontológica preventiva.",
+      "Servicio de estética y bienestar con personal entrenado. Utilizamos shampoos y productos dermatológicos adecuados para cada tipo de piel y pelaje.",
     bullets: [
-      "Limpieza y profilaxis ultrasonido",
-      "Operatoria y resinas estéticas",
-      "Valoración preventiva y fluorización",
-      "Odontopediatría",
+      "Baño con shampoo medicado o neutro",
+      "Corte de pelo según estándar de raza",
+      "Limpieza de oídos y corte de uñas",
+      "Tratamiento antiparasitario tópico",
     ],
   },
   {
-    slug: "fisioterapia-rehabilitacion",
-    icon: Sparkles,
-    title: "Fisioterapia & Rehabilitación",
-    short: "Planes de rehabilitación física, manejo del dolor muscular y recuperación postquirúrgica o traumática.",
+    slug: "medicina-preventiva",
+    icon: ShieldCheck,
+    title: "Medicina Preventiva",
+    short: "Chequeos anuales, control de peso, salud dental y nutrición para una vida larga y saludable.",
     description:
-      "Tratamiento especializado por fisioterapeutas certificados. Sesiones orientadas al alivio del dolor, reacondicionamiento motor y rehabilitación neuromuscular.",
+      "Programa de salud preventiva diseñado para detectar tempranamente enfermedades y mantener a tu mascota en óptimas condiciones a lo largo de su vida.",
     bullets: [
-      "Rehabilitación osteomuscular y articular",
-      "Manejo del dolor crónico y agudo",
-      "Terapia física postquirúrgica",
-      "Ejercicios terapéuticos guiados",
+      "Chequeo geriátrico y control anual",
+      "Profilaxis dental con ultrasonido",
+      "Asesoría nutricional por etapa de vida",
+      "Microchip e identificación oficial",
     ],
   },
 ];
@@ -169,43 +162,43 @@ export type TeamMember = {
 
 export const team: TeamMember[] = [
   {
-    slug: "alejandro-morales",
-    name: "Dr. Alejandro Morales",
-    role: "Director Médico (Demo)",
-    specialty: "Medicina Interna & Salud Pública",
-    bio: "Experiencia en dirección asistencial, atención primaria y medicina preventiva.",
+    slug: "carlos-medina",
+    name: "Dr. Carlos Medina",
+    role: "Director Médico Veterinario (Demo)",
+    specialty: "Medicina Interna & Cirugía de Tejidos Blandos",
+    bio: "Más de 10 años de experiencia en medicina interna veterinaria y cirugía de tejidos blandos en perros y gatos.",
     longBio:
-      "El Dr. Alejandro Morales coordina el equipo médico y la calidad asistencial de NOVA IPS. Su enfoque combina el rigor de la medicina interna con un trato humano y cercano hacia cada paciente.",
+      "El Dr. Carlos Medina dirige el equipo médico de la Clínica Veterinaria Los Andes. Su enfoque combina el rigor diagnóstico de la medicina interna con un trato cercano y empático hacia las mascotas y sus familias. Especializado en casos complejos de gastroenterología y hepatología veterinaria.",
     isDemo: true,
   },
   {
-    slug: "natalia-cardenas",
-    name: "Dra. Natalia Cárdenas",
-    role: "Médica Especialista (Demo)",
-    specialty: "Pediatría & Puericultura",
-    bio: "Especialista en desarrollo infantil, esquemas de vacunación y nutrición en la infancia.",
+    slug: "laura-pena",
+    name: "Dra. Laura Peña",
+    role: "Médica Veterinaria Especialista (Demo)",
+    specialty: "Dermatología & Medicina Felina",
+    bio: "Especialista en enfermedades dermatológicas, alergias y medicina especializada en gatos.",
     longBio:
-      "La Dra. Natalia Cárdenas lidera la consulta pediátrica y los programas de promoción de la salud infantil. Apasionada por brindar consultas tranquilas y explicaciones claras a los padres.",
+      "La Dra. Laura Peña lidera la consulta de dermatología veterinaria y la atención de pacientes felinos. Apasionada por la medicina felina, ofrece consultas tranquilas con manejo mínimo de estrés para los gatos, y asesora a los propietarios en nutrición y enriquecimiento ambiental.",
     isDemo: true,
   },
   {
-    slug: "gabriel-restrepo",
-    name: "Dr. Gabriel Restrepo",
-    role: "Médico Especialista (Demo)",
-    specialty: "Cardiología & Riesgo Cardiovascular",
-    bio: "Especialista en electrocardiografía, ecocardiograma y control preventivo cardiovascular.",
+    slug: "sofia-mercado",
+    name: "Dra. Sofía Mercado",
+    role: "Veterinaria de Urgencias (Demo)",
+    specialty: "Urgencias & Cuidados Críticos",
+    bio: "Especializada en manejo de emergencias, soporte vital y estabilización de pacientes críticos.",
     longBio:
-      "El Dr. Gabriel Restrepo es responsable de la unidad de cardiología y diagnóstico no invasivo. Trabaja en la prevención primaria de eventos cardiovasculares mediante chequeos y monitoreo continuo.",
+      "La Dra. Sofía Mercado coordina el servicio de urgencias de la clínica. Con formación en cuidados críticos veterinarios, garantiza que cada paciente de emergencia reciba atención inmediata y protocolar.",
     isDemo: true,
   },
   {
-    slug: "andrea-gomez",
-    name: "Lic. Andrea Gómez",
-    role: "Coordinadora de Atenciones (Demo)",
-    specialty: "Gestión de Pacientes & Admisiones",
-    bio: "Primer punto de contacto para agendamiento, trámites asistenciales y orientación al paciente.",
+    slug: "marcela-duarte",
+    name: "Marcela Duarte",
+    role: "Coordinadora de Recepción (Demo)",
+    specialty: "Atención al Cliente & Agendamiento",
+    bio: "Primer punto de contacto para agendamiento, orientación a los propietarios y coordinación de citas.",
     longBio:
-      "Andrea coordina las líneas de atención, admisiones y turnos de consulta. Se asegura de que cada paciente reciba atención ágil y sin complicaciones administrativas.",
+      "Marcela coordina la agenda, admisiones y comunicación con los propietarios. Se asegura de que cada visita sea eficiente y que los dueños de mascotas salgan con toda la información que necesitan para el cuidado en casa.",
     isDemo: true,
   },
 ];
@@ -223,27 +216,27 @@ export type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    name: "Carlos Eduardo Mendoza",
-    pet: "Paciente en Consulta Externa (Demo)",
-    text: "Excelente atención en la Sede Chicó. El Dr. Morales me atendió puntual, explicó mi diagnóstico con calma y la fórmula me llegó de inmediato al correo.",
+    name: "Valentina Rodríguez",
+    pet: "Propietaria de Max, Golden Retriever (Demo)",
+    text: "El Dr. Medina operó a Max de una hernia y el seguimiento fue impecable. Nos explicaron todo el proceso con mucha calma y Max se recuperó en tiempo récord.",
     rating: 5,
   },
   {
-    name: "María Fernanda Suárez",
-    pet: "Madre de paciente pediátrico (Demo)",
-    text: "Llevo a mis dos hijos con la Dra. Cárdenas para sus controles. Las instalaciones son impecables y el área pediátrica transmite mucha tranquilidad.",
+    name: "Andrés Castillo",
+    pet: "Propietario de Luna y Mochi, gatos (Demo)",
+    text: "La Dra. Peña es increíble con los gatos. Maneja a Luna con mucha suavidad y por fin logramos un diagnóstico correcto para su alergia crónica.",
     rating: 5,
   },
   {
-    name: "Roberto Gómez Trujillo",
-    pet: "Paciente servicio Prioritario (Demo)",
-    text: "Tuve una consulta prioritaria un domingo por la noche. El proceso de Triage fue rápido, me estabilizaron en observación y salí con el tratamiento completo.",
+    name: "Carolina Mejía",
+    pet: "Propietaria de Teo, Bulldog Francés (Demo)",
+    text: "Llevé a Teo a urgencias un domingo a las 10 pm. La atención fue inmediata, lo estabilizaron esa noche y al día siguiente ya estaba en casa recuperándose.",
     rating: 5,
   },
   {
-    name: "Patricia Alarcón",
-    pet: "Paciente de Cardiología (Demo)",
-    text: "El electrocardiograma y la consulta de control me permitieron ajustar mi medicación a tiempo. Todo el personal de enfermería es sumamente profesional.",
+    name: "Felipe Vargas",
+    pet: "Propietario de Cleo, Beagle (Demo)",
+    text: "Gracias al programa preventivo detectamos a tiempo que Cleo tenía una infección renal leve. El seguimiento online por WhatsApp es muy conveniente.",
     rating: 5,
   },
 ];
@@ -252,39 +245,39 @@ export type Faq = { question: string; answer: string };
 
 export const faqs: Faq[] = [
   {
-    question: "¿Cómo puedo agendar una cita médica en NOVA IPS?",
+    question: "¿Cómo puedo agendar una cita en la Clínica Veterinaria Los Andes?",
     answer:
-      "Puedes agendar directamente a través de nuestro sitio web en 'Solicitar Cita', comunicándote a nuestro PBX +57 (601) 745-9000 o por WhatsApp al +57 310 890 2020.",
+      "Puedes agendar directamente desde nuestro sitio web en 'Agendar Cita', por WhatsApp al +57 305 814 8918 o llamando al +57 601 555 0188 en horario de atención.",
   },
   {
-    question: "¿Qué servicios de salud están habilitados en esta IPS?",
+    question: "¿Atienden urgencias veterinarias fuera del horario normal?",
     answer:
-      "Los servicios habilitados dependen de la configuración REPS registrada por el prestador. En el sistema demo se incluyen Consulta Externa General, Pediatría, Cardiología, Laboratorio Clínico y Atención Prioritaria.",
+      "Sí. Contamos con servicio de urgencias los 7 días de la semana. Para urgencias nocturnas comunícate al +57 305 814 8918 antes de venir para coordinar la atención.",
   },
   {
-    question: "¿Cómo funciona el servicio de Triage y Consulta Prioritaria?",
+    question: "¿Qué necesito llevar a la primera consulta?",
     answer:
-      "El servicio opera según la habilitación de la sede principal. El médico de Triage clasifica la prioridad clínica según el protocolo asistencial.",
+      "Lleva el carnet de vacunación de tu mascota (si lo tiene), cualquier medicamento que esté tomando actualmente y, si es posible, una muestra de orina o heces cuando lo solicitemos previamente.",
   },
   {
-    question: "¿En cuánto tiempo puedo consultar mis resultados de laboratorio?",
+    question: "¿Cuánto tiempo tarda en estar disponible el resultado de laboratorio?",
     answer:
-      "La mayoría de los exámenes de laboratorio de rutina están disponibles el mismo día a través del Portal de Pacientes o mediante envío al correo electrónico registrado.",
+      "Los exámenes de rutina (hemograma, bioquímica) están disponibles el mismo día, generalmente en 2-4 horas. Los cultivos y pruebas especiales pueden tardar 24-72 horas.",
   },
   {
-    question: "¿Tienen servicio de vacunación y esquema PAI?",
+    question: "¿Realizan esterilizaciones y cuál es el proceso?",
     answer:
-      "Sí, aplicamos el esquema oficial de vacunación pediátrica y de adultos, además de vacunas adicionales con registro oficial.",
+      "Sí. Realizamos esterilizaciones en perros y gatos a partir de los 6 meses. El proceso incluye examen prequirúrgico, análisis de sangre previo, cirugía y hospitalización de observación. Consúltanos por el protocolo completo.",
   },
 ];
 
 export type Stat = { value: string; label: string };
 
 export const stats: Stat[] = [
-  { value: "+150.000", label: "atenciones médicas registradas" },
-  { value: "+45", label: "médicos especialistas en red" },
-  { value: "3", label: "sedes integrales de atención" },
-  { value: "98.5%", label: "satisfacción de pacientes" },
+  { value: "+8.000", label: "mascotas atendidas" },
+  { value: "+12", label: "veterinarios y especialistas" },
+  { value: "7 días", label: "servicio de urgencias" },
+  { value: "98%", label: "satisfacción de propietarios" },
 ];
 
 export type BlogPost = {
@@ -299,50 +292,55 @@ export type BlogPost = {
   body: string[];
 };
 
-export const blogCategories = ["Salud Preventiva", "Pediatría", "Cardiología", "Laboratorio", "Atención Prioritaria"];
+export const blogCategories = ["Medicina Preventiva", "Nutrición", "Cirugía", "Dermatología", "Urgencias"];
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: "check-up-preventivo-anual-salud",
-    title: "Por qué el chequeo médico preventivo anual es tu mejor inversión en salud",
-    category: "Salud Preventiva",
-    excerpt: "La hipertensión, la diabetes y otras patologías suelen ser asintomáticas en sus fases iniciales. Conoce qué exámenes deberías realizarte cada año.",
-    image: "/gallery/ips/consulta_medica.jpg",
-    authorSlug: "alejandro-morales",
-    date: "2026-09-01",
+    slug: "chequeo-anual-mascotas",
+    title: "Por qué el chequeo anual puede salvarle la vida a tu mascota",
+    category: "Medicina Preventiva",
+    excerpt:
+      "Muchas enfermedades en perros y gatos no muestran síntomas hasta etapas avanzadas. Conoce qué incluye un chequeo preventivo completo y por qué hacerlo cada año.",
+    image: "/gallery/veterinarian-3.jpg",
+    authorSlug: "carlos-medina",
+    date: "2026-09-10",
     readMinutes: 4,
     body: [
-      "Muchas patologías crónicas no generan dolor ni síntomas evidentes en sus etapas tempranas. Realizar un chequeo médico preventivo anual es la herramienta fundamental de la salud pública moderna para identificar factores de riesgo y actuar a tiempo.",
-      "Un chequeo integral incluye la evaluación clínica por medicina general, la medición rigurosa de la presión arterial, cálculo de índice de masa corporal y un panel básico de laboratorio (glicemia, perfil lipídico, función renal).",
-      "En NOVA IPS priorizamos la medicina preventiva porque reducir el riesgo de eventos mayores es el pilar de una vida longeva y saludable.",
+      "Enfermedades como la insuficiencia renal, el hipotiroidismo o las cardiopatías en mascotas suelen ser silenciosas durante meses. Un chequeo preventivo anual permite detectarlas a tiempo con un examen físico completo y análisis de laboratorio.",
+      "En un chequeo anual revisamos peso e índice corporal, salud dental, estado de la piel y pelaje, función cardíaca y pulmonar, y realizamos hemograma y bioquímica básica. En mascotas mayores de 7 años recomendamos un perfil geriátrico más completo.",
+      "La medicina preventiva es la inversión más inteligente que puedes hacer por tu mascota. Detectar una alteración renal leve hoy cuesta mucho menos —en dinero y en sufrimiento— que tratar una insuficiencia avanzada mañana.",
     ],
   },
   {
-    slug: "vacunacion-infantil-esquema-completo",
-    title: "La importancia de mantener el esquema de vacunación infantil al día",
-    category: "Pediatría",
-    excerpt: "Guía clara para padres sobre cada dosis del esquema oficial y cómo protegen a los niños en sus primeros años de vida.",
-    image: "/gallery/ips/hero_ips.jpg",
-    authorSlug: "natalia-cardenas",
-    date: "2026-08-15",
+    slug: "vacunacion-perros-gatos-colombia",
+    title: "Guía completa de vacunación para perros y gatos en Colombia",
+    category: "Medicina Preventiva",
+    excerpt:
+      "¿Cuáles vacunas son obligatorias? ¿Cada cuánto se refuerzan? Todo lo que debes saber para mantener el esquema de tu mascota al día.",
+    image: "/gallery/pet-1.jpg",
+    authorSlug: "laura-pena",
+    date: "2026-08-20",
     readMinutes: 5,
     body: [
-      "Las vacunas son el descubrimiento más trascendental en la historia de la pediatría. Cumplir oportunamente con las fechas del esquema oficial garantiza que los anticuerpos del niño se desarrollen antes de exponerse a patógenos severos.",
-      "Es primordial no postergar las dosis de refuerzo. Cada refuerzo consolida la memoria inmunológica necesaria para proteger contra enfermedades respiratorias, virales y bacterianas.",
+      "En Colombia la vacuna antirrábica es de carácter obligatorio para perros y gatos por ley. Sin embargo, un esquema completo protege contra muchas más enfermedades graves.",
+      "Para perros recomendamos: vacuna séxtuple (Distemper, Hepatitis, Parvovirus, Parainfluenza, Leptospirosis y Coronavirus) desde las 6-8 semanas con refuerzos cada 3-4 semanas hasta las 16 semanas, y luego anual. La rabia se aplica a partir de los 3 meses y se refuerza anualmente.",
+      "Para gatos: vacuna triple felina (Rinotraqueitis, Calicivirus, Panleucopenia) desde las 8 semanas con refuerzo a las 12 y 16 semanas, y luego anual. La vacuna de leucemia felina es especialmente importante en gatos con acceso al exterior.",
     ],
   },
   {
-    slug: "tecnologia-diagnostica-ips-moderna",
-    title: "Tecnología en Imágenes Diagnósticas y Laboratorio al Servicio del Paciente",
-    category: "Laboratorio",
-    excerpt: "Cómo la automatización y la digitalización de resultados reducen los tiempos de diagnóstico médico.",
-    image: "/gallery/ips/urgencias_prioritaria.jpg",
-    authorSlug: "gabriel-restrepo",
-    date: "2026-07-20",
-    readMinutes: 3,
+    slug: "cuidados-postoperatorios-mascotas",
+    title: "Cuidados esenciales en casa después de una cirugía veterinaria",
+    category: "Cirugía",
+    excerpt:
+      "Una buena recuperación en casa es tan importante como la cirugía misma. Aquí está todo lo que debes hacer —y evitar— en los primeros 10 días.",
+    image: "/gallery/paw-procedure.jpg",
+    authorSlug: "sofia-mercado",
+    date: "2026-07-15",
+    readMinutes: 4,
     body: [
-      "El uso de analizadores bioquímicos de última generación permite procesar muestras con márgenes de precisión excepcionales y tiempos de respuesta reducidos a pocas horas.",
-      "En NOVA IPS nos mantenemos a la vanguardia diagnóstica para brindar soporte confiable a las decisiones clínicas de nuestro cuerpo médico.",
+      "Las primeras 24 horas después de una cirugía son críticas. Tu mascota puede estar desorientada por la anestesia residual, con somnolencia y poco apetito. Esto es completamente normal.",
+      "Lo más importante: mantener la herida limpia y seca, usar el collar isabelino sin excepción, administrar los medicamentos exactamente como te los indicamos y evitar que tu mascota salte o haga ejercicio intenso durante al menos 10 días.",
+      "Señales de alarma que requieren consulta inmediata: enrojecimiento o secreción en la herida, fiebre, decaimiento profundo después de las primeras 24 horas, o que el animal no coma nada después de 48 horas.",
     ],
   },
 ];
