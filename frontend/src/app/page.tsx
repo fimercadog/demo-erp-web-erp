@@ -245,7 +245,7 @@ export default function Home() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
-                title="Ubicación de Clínica Veterinaria Los Andes en Google Maps"
+                title="Ubicación de Clínica Veterinaria VetDemo en Google Maps"
                 className="size-full"
               />
             </div>

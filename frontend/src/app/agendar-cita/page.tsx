@@ -144,7 +144,7 @@ async function downloadCitaPDF(data: ConfirmedPDF) {
   doc.setFontSize(7.5);
   doc.setFont("helvetica", "normal");
   doc.text(
-    "Calle 93 #14-20, Bogotá  ·  +57 601 555 0188  ·  recepcion@vetlosandes.co",
+    "Calle 93 #14-20, Bogotá  ·  +57 601 555 0188  ·  recepcion@vetdemo.co",
     W / 2 + 4, 287, { align: "center" },
   );
   doc.setTextColor(255, 255, 255);

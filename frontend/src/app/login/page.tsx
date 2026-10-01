@@ -8,13 +8,13 @@ import { LoginForm } from "./login-form";
 const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE !== "false";
 
 const demoEmails: Record<string, string> = {
-  superadmin: "superadmin@vetlosandes.co",
-  admin: "admin@vetlosandes.co",
-  veterinario: "veterinario@vetlosandes.co",
-  veterinaria: "veterinaria@vetlosandes.co",
-  recepcion: "recepcion@vetlosandes.co",
-  inventario: "inventario@vetlosandes.co",
-  ventas: "ventas@vetlosandes.co",
+  superadmin: "superadmin@vetdemo.co",
+  admin: "admin@vetdemo.co",
+  veterinario: "veterinario@vetdemo.co",
+  veterinaria: "veterinaria@vetdemo.co",
+  recepcion: "recepcion@vetdemo.co",
+  inventario: "inventario@vetdemo.co",
+  ventas: "ventas@vetdemo.co",
 };
 
 function LoginContent() {

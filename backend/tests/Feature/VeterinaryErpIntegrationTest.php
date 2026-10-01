@@ -42,9 +42,9 @@ class VeterinaryErpIntegrationTest extends TestCase
         parent::setUp();
 
         $this->company = Company::create([
-            'name' => 'Clínica Veterinaria Los Andes',
+            'name' => 'Clínica Veterinaria VetDemo',
             'nit' => '901.245.880-3',
-            'email' => 'vet@losandes.test',
+            'email' => 'vet@vetdemo.test',
         ]);
 
         $permissions = [
@@ -62,7 +62,7 @@ class VeterinaryErpIntegrationTest extends TestCase
         $this->vet = User::factory()->create([
             'company_id' => $this->company->id,
             'name' => 'Dr. Carlos Medina',
-            'email' => 'carlos.vet@losandes.test',
+            'email' => 'carlos.vet@vetdemo.test',
         ]);
         $this->vet->assignRole($role);
 

@@ -67,7 +67,7 @@ vacuna (baja stock) → receta PDF → dashboard.**
 | **Frontend** | `NEXT_PUBLIC_*` de la vet; `login-form` `demoUsers` → usuarios vet; `metadataBase`/`sitemap`/`robots`/`site.ts`; `logo.tsx` + `icon`/`apple-icon`/`og`; paleta si el cliente la pide (si no, se mantiene el verde SaaS); wordmark |
 | **Permisos** | ninguno |
 | **Tests** | baseline completo en la rama (`scripts/baseline.ps1`) |
-| **Criterios de aceptación** | baseline 100% verde en `vertical/veterinaria`; no queda ninguna referencia a "CRM+Inventario"/"Andes Distribuciones" en marketing ni en el shell |
+| **Criterios de aceptación** | baseline 100% verde en `vertical/veterinaria`; no queda ninguna referencia a "CRM+Inventario"/"VetDemo" en marketing ni en el shell |
 
 ---
 

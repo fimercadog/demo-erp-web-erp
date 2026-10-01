@@ -239,7 +239,7 @@ XSRF=$(sed -n 's/.*XSRF-TOKEN\t\(.*\)/\1/p' /tmp/cj)
 curl -s -b /tmp/cj -w '\n%{http_code}\n' -X POST $API/api/auth/login \
   -H "Origin: $ORIGIN" -H 'Content-Type: application/json' -H 'Accept: application/json' \
   -H "X-XSRF-TOKEN: $(python -c 'import urllib.parse,sys;print(urllib.parse.unquote(sys.argv[1]))' "$XSRF")" \
-  -d '{"email":"superadmin@andescomercial.co","password":"password"}'                       # 200 + user con roles/permisos
+  -d '{"email":"superadmin@vetdemo.co","password":"password"}'                       # 200 + user con roles/permisos
 ```
 
 En el navegador, además: cargar el frontend, hacer login real, abrir un producto
@@ -267,7 +267,7 @@ del catálogo con imagen (que la imagen cargue desde
 
 ## Credenciales demo
 
-Los usuarios sembrados (`superadmin@andescomercial.co` … `password`, ver
+Los usuarios sembrados (`superadmin@vetdemo.co` … `password`, ver
 [demo-users.md](demo-users.md)) son **públicos de demostración**: está bien para
 un entorno con datos ficticios y visible en internet. **No** reutilizar esa
 contraseña —ni el seeder— cuando un despliegue empiece a tener datos reales de

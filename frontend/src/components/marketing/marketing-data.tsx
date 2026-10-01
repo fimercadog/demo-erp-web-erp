@@ -168,7 +168,7 @@ export const team: TeamMember[] = [
     specialty: "Medicina Interna & Cirugía de Tejidos Blandos",
     bio: "Más de 10 años de experiencia en medicina interna veterinaria y cirugía de tejidos blandos en perros y gatos.",
     longBio:
-      "El Dr. Carlos Medina dirige el equipo médico de la Clínica Veterinaria Los Andes. Su enfoque combina el rigor diagnóstico de la medicina interna con un trato cercano y empático hacia las mascotas y sus familias. Especializado en casos complejos de gastroenterología y hepatología veterinaria.",
+      "El Dr. Carlos Medina dirige el equipo médico de la Clínica Veterinaria VetDemo. Su enfoque combina el rigor diagnóstico de la medicina interna con un trato cercano y empático hacia las mascotas y sus familias. Especializado en casos complejos de gastroenterología y hepatología veterinaria.",
     isDemo: true,
   },
   {
@@ -245,7 +245,7 @@ export type Faq = { question: string; answer: string };
 
 export const faqs: Faq[] = [
   {
-    question: "¿Cómo puedo agendar una cita en la Clínica Veterinaria Los Andes?",
+    question: "¿Cómo puedo agendar una cita en la Clínica Veterinaria VetDemo?",
     answer:
       "Puedes agendar directamente desde nuestro sitio web en 'Agendar Cita', por WhatsApp al +57 305 814 8918 o llamando al +57 601 555 0188 en horario de atención.",
   },

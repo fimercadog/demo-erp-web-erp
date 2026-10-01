@@ -9,12 +9,12 @@ import { api, primeCsrfCookie } from "@/lib/api";
 import { AuthUser, storeAuthSession } from "@/lib/auth";
 
 const demoUsers = [
-  ["Super Admin", "superadmin@vetlosandes.co"],
-  ["Admin veterinaria", "admin@vetlosandes.co"],
-  ["Veterinario/a", "veterinario@vetlosandes.co"],
-  ["Recepción", "recepcion@vetlosandes.co"],
-  ["Inventario / farmacia", "inventario@vetlosandes.co"],
-  ["Ventas", "ventas@vetlosandes.co"],
+  ["Super Admin", "superadmin@vetdemo.co"],
+  ["Admin veterinaria", "admin@vetdemo.co"],
+  ["Veterinario/a", "veterinario@vetdemo.co"],
+  ["Recepción", "recepcion@vetdemo.co"],
+  ["Inventario / farmacia", "inventario@vetdemo.co"],
+  ["Ventas", "ventas@vetdemo.co"],
 ];
 
 const inputClass =

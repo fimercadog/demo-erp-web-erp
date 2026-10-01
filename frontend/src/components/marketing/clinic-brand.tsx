@@ -3,13 +3,13 @@ import { PawPrint } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Identidad del sitio publico: la CLINICA ("Los Andes"), no el software.
+ * Identidad del sitio publico: la CLINICA ("VetDemo"), no el software.
  * Distinta a proposito de `components/brand/logo.tsx` (marca "VetPanel" que
  * usa el panel admin) — evita que el sitio publico y el panel se vean como la
  * misma marca.
  */
-export const CLINIC_NAME = "Clínica Veterinaria Los Andes";
-export const CLINIC_SHORT_NAME = "Los Andes";
+export const CLINIC_NAME = "Clínica Veterinaria VetDemo";
+export const CLINIC_SHORT_NAME = "VetDemo";
 
 export function ClinicWordmark({ className }: { className?: string }) {
   return (

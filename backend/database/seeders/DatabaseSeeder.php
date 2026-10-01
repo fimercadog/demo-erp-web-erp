@@ -52,7 +52,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 /**
- * Dataset demo de la vertical veterinaria — "Clínica Veterinaria Los Andes".
+ * Dataset demo de la vertical veterinaria — "Clínica Veterinaria VetDemo".
  *
  * Todo el contenido es ficticio y coherente con una clínica de una sola sede:
  * propietarios y mascotas, agenda con citas pasadas/hoy/futuras, historia
@@ -69,10 +69,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $company = Company::firstOrCreate([
-            'name' => 'Clínica Veterinaria Los Andes',
+            'name' => 'Clínica Veterinaria VetDemo',
         ], [
             'nit' => '901.245.880-3',
-            'email' => 'recepcion@vetlosandes.co',
+            'email' => 'recepcion@vetdemo.co',
             'phone' => '+57 601 555 0188',
             'address' => 'Calle 93 #14-20, Bogotá',
             'timezone' => 'America/Bogota',
@@ -80,8 +80,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         [$users, $vets] = $this->seedRolesAndUsers($company);
-        $admin = $users['admin@vetlosandes.co'];
-        $reception = $users['recepcion@vetlosandes.co'];
+        $admin = $users['admin@vetdemo.co'];
+        $reception = $users['recepcion@vetdemo.co'];
 
         $warehouses = $this->seedWarehouses($company);
         $mainWarehouse = $warehouses['Farmacia / Vitrina'];
@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
         $this->seedLeads($company);
         $this->seedProductSales($company, $clients, $publicProducts, $mainWarehouse, $reception);
         $this->seedSurgeryQuotes($company, $clients, $services);
-        $this->seedWellnessDeals($company, $clients, $admin, $users['ventas@vetlosandes.co']);
+        $this->seedWellnessDeals($company, $clients, $admin, $users['ventas@vetdemo.co']);
         $this->seedClientNotesAndTasks($company, $clients, $patients, $admin, $reception);
         $this->seedAuditLog($company, $admin, $clients, $patients);
 
@@ -168,13 +168,13 @@ class DatabaseSeeder extends Seeder
         }
 
         $demo = [
-            ['superadmin@vetlosandes.co', 'Sofía Mercado', 'Super Admin'],
-            ['admin@vetlosandes.co', 'Camila Rojas', 'Administrador de empresa'],
-            ['veterinario@vetlosandes.co', 'Dr. Carlos Medina', 'Veterinario/a'],
-            ['veterinaria@vetlosandes.co', 'Dra. Laura Peña', 'Veterinario/a'],
-            ['recepcion@vetlosandes.co', 'Marcela Duarte', 'Recepción'],
-            ['inventario@vetlosandes.co', 'Valentina Castro', 'Inventario'],
-            ['ventas@vetlosandes.co', 'Sebastián Moreno', 'Ventas'],
+            ['superadmin@vetdemo.co', 'Sofía Mercado', 'Super Admin'],
+            ['admin@vetdemo.co', 'Camila Rojas', 'Administrador de empresa'],
+            ['veterinario@vetdemo.co', 'Dr. Carlos Medina', 'Veterinario/a'],
+            ['veterinaria@vetdemo.co', 'Dra. Laura Peña', 'Veterinario/a'],
+            ['recepcion@vetdemo.co', 'Marcela Duarte', 'Recepción'],
+            ['inventario@vetdemo.co', 'Valentina Castro', 'Inventario'],
+            ['ventas@vetdemo.co', 'Sebastián Moreno', 'Ventas'],
         ];
 
         $users = [];
@@ -187,7 +187,7 @@ class DatabaseSeeder extends Seeder
             $users[$email] = $user;
         }
 
-        $vets = [$users['veterinario@vetlosandes.co'], $users['veterinaria@vetlosandes.co']];
+        $vets = [$users['veterinario@vetdemo.co'], $users['veterinaria@vetdemo.co']];
 
         return [$users, $vets];
     }
@@ -223,28 +223,18 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Bolsa', 'abbreviation' => 'bls'],
         ])->mapWithKeys(fn ($d) => [$d['name'] => Unit::firstOrCreate(['company_id' => $company->id, 'name' => $d['name']], $d + ['status' => 'active'])]);
 
-        // Imágenes de ejemplo por SKU (placehold.co, color por categoría)
-        $images = [
-            'VAC-DHPPI'   => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-DHPPi',
-            'VAC-RABIA'   => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Rabia',
-            'VAC-TRIPLE-F'=> 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Triple+F',
-            'VAC-TOS'     => 'https://placehold.co/640x480/dbeafe/1e40af?text=VAC-Tos',
-            'ANTI-INT'    => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-INT',
-            'ANTI-EXT'    => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-EXT',
-            'ANTI-PIPE'   => 'https://placehold.co/640x480/dcfce7/15803d?text=ANTI-PIPE',
-            'FARM-AMOXI'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Amoxicilina',
-            'FARM-MELOX'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Meloxicam',
-            'FARM-SUERO'  => 'https://placehold.co/640x480/f1f5f9/334155?text=Suero+0.9%25',
-            'FARM-GABA'   => 'https://placehold.co/640x480/f1f5f9/334155?text=Gabapentina',
-            'ALIM-GASTRO' => 'https://placehold.co/640x480/ffedd5/9a3412?text=Gastro+2kg',
-            'ALIM-RENAL'  => 'https://placehold.co/640x480/ffedd5/9a3412?text=Renal+2kg',
-            'ALIM-RECOV'  => 'https://placehold.co/640x480/ffedd5/9a3412?text=Recovery',
-            'ACC-COLLAR'  => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Collar+M',
-            'ACC-SHAMP'   => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Shampoo',
-            'ACC-DENTAL'  => 'https://placehold.co/640x480/ede9fe/6d28d9?text=Kit+Dental',
-            'INS-JERINGA' => 'https://placehold.co/640x480/f3f4f6/4b5563?text=Jeringa+3ml',
-            'INS-GUANTE'  => 'https://placehold.co/640x480/f3f4f6/4b5563?text=Guantes+x100',
+        // Imágenes reales del catálogo veterinario (storage/app/public/products/seed/)
+        $skus = [
+            'VAC-DHPPI', 'VAC-RABIA', 'VAC-TRIPLE-F', 'VAC-TOS',
+            'ANTI-INT', 'ANTI-EXT', 'ANTI-PIPE',
+            'FARM-AMOXI', 'FARM-MELOX', 'FARM-SUERO', 'FARM-GABA',
+            'ALIM-GASTRO', 'ALIM-RENAL', 'ALIM-RECOV',
+            'ACC-COLLAR', 'ACC-SHAMP', 'ACC-DENTAL',
+            'INS-JERINGA', 'INS-GUANTE',
         ];
+        $images = collect($skus)->mapWithKeys(fn ($sku) => [
+            $sku => \Illuminate\Support\Facades\Storage::disk('public')->url("products/seed/{$sku}.png"),
+        ])->all();
 
         // [sku, nombre, categoría, marca, unidad, costo, precio, reorden, público, descripción]
         $rows = [
@@ -289,9 +279,9 @@ class DatabaseSeeder extends Seeder
                 ],
             );
 
-            // Actualiza la imagen aunque el producto ya existiera (idempotente)
-            if (! $product->image_url && isset($images[$sku])) {
-                $product->update(['image_url' => $images[$sku]]);
+            // Siempre sincroniza la imagen real (sobreescribe placeholders viejos)
+            if (isset($images[$sku]) && $product->image_url !== $images[$sku]) {
+                $product->forceFill(['image_url' => $images[$sku]])->save();
             }
 
             return $product;

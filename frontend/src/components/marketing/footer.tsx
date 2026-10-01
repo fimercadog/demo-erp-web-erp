@@ -53,7 +53,7 @@ export function MarketingFooter() {
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="size-4 shrink-0 text-primary" />
-              recepcion@vetlosandes.co
+              recepcion@vetdemo.co
             </li>
             <li className="flex items-start gap-2.5">
               <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
