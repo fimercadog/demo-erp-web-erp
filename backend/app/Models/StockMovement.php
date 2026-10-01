@@ -17,6 +17,10 @@ class StockMovement extends Model
         'reason', 'reference', 'idempotency_key',
     ];
 
+    protected $casts = [
+        'quantity' => 'float',
+    ];
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

@@ -7,9 +7,9 @@ import { Product } from "@/lib/types";
 
 function stockBadge(product: Product) {
   const stock = product.stock_on_hand ?? 0;
-  if (stock <= 0) return <StatusBadge status="destructive" label="Agotado" />;
-  if (stock < product.reorder_level) return <StatusBadge status="warning" label="Bajo" />;
-  return <StatusBadge status="info" label="Sobrestock" />;
+  if (stock <= 0) return <StatusBadge status="out_of_stock" label="Agotado" />;
+  if (stock < product.reorder_level) return <StatusBadge status="low_stock" label="Bajo stock" />;
+  return <StatusBadge status="overstock" label="Sobrestock" />;
 }
 
 const columns: AppColumnDef<Product>[] = [

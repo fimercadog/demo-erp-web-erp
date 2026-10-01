@@ -137,7 +137,7 @@ class InvoiceService
                 'product_id' => $product?->id,
                 'product_name' => $item['product_name'] ?? $product?->name ?? 'Servicio',
                 'sku' => $product?->sku,
-                'quantity' => (int) $item['quantity'],
+                'quantity' => (float) $item['quantity'],
                 'unit_price' => (float) ($item['unit_price'] ?? $product?->unit_price ?? 0),
                 'discount' => (float) ($item['discount'] ?? 0),
                 'tax' => (float) ($item['tax'] ?? 0),

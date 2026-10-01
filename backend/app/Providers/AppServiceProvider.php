@@ -15,7 +15,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            \App\Services\WhatsApp\Contracts\IntentResolverInterface::class,
+            \App\Services\WhatsApp\DeterministicIntentResolver::class
+        );
+        $this->app->bind(
+            \App\Services\WhatsApp\Contracts\WhatsAppMediaAdapterInterface::class,
+            \App\Services\WhatsApp\NullWhatsAppMediaAdapter::class
+        );
     }
 
     /**

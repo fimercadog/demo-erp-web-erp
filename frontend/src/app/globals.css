@@ -3,44 +3,44 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ *
- * Paleta IPS Health ERP & Portal — superficies limpias,
- * tinta oscura, azul primario asistencial (Sky), acentos verdes (Success).
- * El sitio publico, el login y el panel comparten tokens de color coherentes
- * manteniendo contraste visual impecable entre acciones primarias y estados de exito.
+ * Paleta Divi "SaaS Product" (Elegant Themes) — superficies blancas,
+ * tinta casi negra, acento verde, bandas/tarjetas navy. Una sola
+ * paleta para el sitio publico, el login y el panel. El sitio y el
+ * login se congelan en claro via `.site-theme`.
  * ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
+  --background: #f3f4f6;
   --foreground: #0f1012;
   --card: #ffffff;
   --card-foreground: #0f1012;
   --popover: #ffffff;
   --popover-foreground: #0f1012;
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
+  --primary: #15803d;
+  --primary-hover: #166534;
   --primary-foreground: #ffffff;
-  --secondary: #f0f9ff;
-  --secondary-foreground: #0369a1;
+  --secondary: #f1f5f0;
+  --secondary-foreground: #14532d;
   --muted: #f4f4f5;
   --muted-foreground: #6b7280;
-  --accent: #e0f2fe;
-  --accent-foreground: #0369a1;
+  --accent: #ecfdf3;
+  --accent-foreground: #15803d;
   --destructive: #dc2626;
-  --success: #16a34a;
-  --warning: #d97706;
+  --success: #15803d;
+  --warning: #b45309;
   --border: #e6e7ea;
   --input: #d9dade;
-  --ring: #0284c7;
-  --navy: #0f172a;
+  --ring: #15803d;
+  --navy: #0f1012;
   --navy-foreground: #f4f4f5;
-  --ink: #0f172a;
+  --ink: #0f1012;
   --ink-foreground: #f4f4f5;
-  --chart-1: #0284c7;
-  --chart-2: #0f172a;
+  --chart-1: #15803d;
+  --chart-2: #0f1012;
   --chart-3: #f59e0b;
   --chart-4: #3b82f6;
   --chart-5: #ec4899;
   --radius: 0.875rem;
-  --blob: linear-gradient(140deg, #0284c7 0%, #38bdf8 35%, #818cf8 70%, #c084fc 100%);
+  --blob: linear-gradient(140deg, #16a34a 0%, #4ade80 35%, #a3e635 70%, #e3f0a0 100%);
   --blob-warm: linear-gradient(140deg, #f59e0b 0%, #fb923c 45%, #fda4af 100%);
   --elevation-1: 0 1px 2px 0 rgb(15 16 18 / 0.06), 0 1px 3px 1px rgb(15 16 18 / 0.04);
   --elevation-2: 0 2px 4px 0 rgb(15 16 18 / 0.06), 0 4px 12px 2px rgb(15 16 18 / 0.06);
@@ -57,26 +57,26 @@
   --card-foreground: #f4f4f5;
   --popover: #161618;
   --popover-foreground: #f4f4f5;
-  --primary: #38bdf8;
-  --primary-hover: #0ea5e9;
-  --primary-foreground: #082f49;
-  --secondary: #0f172a;
+  --primary: #4ade80;
+  --primary-hover: #22c55e;
+  --primary-foreground: #052e14;
+  --secondary: #1f1f22;
   --secondary-foreground: #f4f4f5;
   --muted: #1c1c1f;
   --muted-foreground: #a1a1aa;
-  --accent: #0c4a6e;
-  --accent-foreground: #7dd3fc;
+  --accent: #14311f;
+  --accent-foreground: #86efac;
   --destructive: #f2555a;
   --success: #4ade80;
   --warning: #fbbf24;
   --border: #2a2a2e;
   --input: #323236;
-  --ring: #38bdf8;
+  --ring: #4ade80;
   --navy: #000000;
   --navy-foreground: #f4f4f5;
   --ink: #000000;
   --ink-foreground: #f4f4f5;
-  --chart-1: #38bdf8;
+  --chart-1: #4ade80;
   --chart-2: #f4f4f5;
   --chart-3: #fbbf24;
   --chart-4: #60a5fa;
@@ -89,47 +89,74 @@
   --marketing-shadow: 0 24px 70px rgb(0 0 0 / 0.45);
 }
 
+/* El sitio publico + login viven en su propia identidad de "clinica
+   veterinaria" (teal calido + ambar), aislada del verde SaaS del panel: esta
+   clase re-declara la paleta completa para que ni el toggle oscuro del panel
+   ni el `:root` de arriba lleguen hasta aca. */
 .site-theme {
   color-scheme: light;
+  /* Re-aplica color/fondo con las variables ya sobrescritas: sin esto, si el
+     SO/panel esta en oscuro, el subarbol hereda el `color` claro del body. */
   background-color: var(--background);
   color: var(--foreground);
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #ffffff;
+  --foreground: #241f19;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #241f19;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
+  --popover-foreground: #241f19;
+  /* Paleta real del pack Divi "Veterinarian" (DiviVet), extraida del
+     live-demo (https://www.elegantthemes.com/layouts/business/veterinarian-home-page/live-demo)
+     via getComputedStyle + muestreo de pixel sobre captura del propio
+     live-demo. Reemplaza el teal/ambar inventado que se usaba antes -- ver
+     referencia-visual-veterinaria.md. Navy del boton "View All Services" del
+     hero ~rgb(47,92,147); azul del boton "Click Here" (.et_pb_promo_button)
+     getComputedStyle exacto rgb(43,135,218); fondo crema de seccion alterna
+     ("What We Do") getComputedStyle exacto rgb(255,246,239); texto de nav
+     getComputedStyle exacto rgb(32,41,47). */
+  --primary: #2f5c93;
+  --primary-hover: #204774;
   --primary-foreground: #ffffff;
-  --secondary: #e0f2fe;
-  --secondary-foreground: #0369a1;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #e0f2fe;
-  --accent-foreground: #0369a1;
+  --secondary: #eaf1f8;
+  --secondary-foreground: #2f5c93;
+  --muted: #f4f1ea;
+  --muted-foreground: #666666;
+  --accent: #ffe9e4;
+  --accent-foreground: #c2410c;
   --destructive: #dc2626;
-  --success: #16a34a;
-  --warning: #d97706;
-  --border: #e2e8f0;
-  --input: #cbd5e1;
-  --ring: #0284c7;
-  --navy: #0f172a;
-  --navy-foreground: #f8fafc;
-  --ink: #0f172a;
-  --ink-foreground: #f8fafc;
-  --chart-1: #0284c7;
-  --chart-2: #0f172a;
-  --chart-3: #d97706;
-  --chart-4: #38bdf8;
-  --chart-5: #f43f5e;
-  --blob: linear-gradient(140deg, #0284c7 0%, #38bdf8 55%, #bae6fd 100%);
+  --success: #15803d;
+  --warning: #b45309;
+  --border: #e8e2d6;
+  --input: #dcd4c4;
+  --ring: #2f5c93;
+  --navy: #121f60;
+  --navy-foreground: #f2efe8;
+  --ink: #14232a;
+  --ink-foreground: #f2efe8;
+  --chart-1: #2f5c93;
+  --chart-2: #241f19;
+  --chart-3: #ea580c;
+  --chart-4: #2b87da;
+  --chart-5: #fb7a68;
+  --blob: linear-gradient(140deg, #1e4d82 0%, #2b87da 55%, #bfe3fb 100%);
   --blob-warm: linear-gradient(140deg, #fb8a68 0%, #fea79e 55%, #ffd9c9 100%);
-  --section-cream: #f1f5f9;
-  --cta: #0284c7;
-  --cta-hover: #0369a1;
+  /* Fondo crema de seccion alterna (getComputedStyle exacto del live-demo,
+     seccion "What We Do": rgb(255,246,239)) -- Divi alterna blanco/crema
+     entre secciones en vez de usar cards con borde para separar contenido. */
+  --section-cream: #fff6ef;
+  /* Acento calido secundario para CTAs (Agendar cita / WhatsApp) que necesitan
+     destacar por encima del navy primario. Valor exacto extraido del boton
+     real del pack Divi via getComputedStyle (rgb(255,112,0)), no aproximado. */
+  --cta: #ff7000;
+  --cta-hover: #d95f00;
   --cta-foreground: #ffffff;
 
+  /* Tipografia real del pack Divi "Veterinarian" (extraida del live-demo):
+     Nunito para titulos/botones (peso 700-800), Open Sans para cuerpo.
+     Solo dentro de `.site-theme` -- el panel /app/* sigue en Roboto. Redefinir
+     la custom property NO alcanza (nada la relee en el subarbol): hay que
+     re-aplicar `font-family` aca mismo, mismo patron que `background-color`/
+     `color` arriba. */
   --font-sans: var(--font-body-marketing);
   --font-heading: var(--font-heading-marketing);
   --font-nav: var(--font-nav-marketing);

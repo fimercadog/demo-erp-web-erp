@@ -4,24 +4,17 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  Activity,
   AlertTriangle,
   ArrowLeftRight,
   BarChart3,
-  BookOpen,
   Bot,
-  Building2,
   CalendarClock,
   CalendarDays,
   ClipboardList,
-  Clock,
   Contact2,
-  DollarSign,
-  FileCheck,
+  Dna,
   FileText,
   Handshake,
-  HeartPulse,
-  Hospital,
   Inbox,
   LayoutDashboard,
   ListChecks,
@@ -30,25 +23,27 @@ import {
   Menu,
   Moon,
   Package,
-  Pill,
+  PawPrint,
+  Rabbit,
   Receipt,
   Repeat,
   Ruler,
   Settings,
   Shield,
   ShieldAlert,
-  Siren,
+  ListTodo,
+  ShoppingCart,
+  Wrench,
   Stethoscope,
+  StickyNote,
   Sun,
   Syringe,
   Tag,
   Tags,
   TrendingUp,
   Truck,
-  UserCheck,
   UserCircle,
   Users,
-  Wallet,
   Warehouse,
   WifiOff,
   X,
@@ -73,6 +68,8 @@ import {
 } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
+// Una sola peticion /auth/me compartida: si el efecto se monta dos veces
+// (StrictMode en dev, o doble render) no se dispara el request dos veces.
 let meRequest: Promise<{ data: { user: AuthUser } }> | null = null;
 function fetchMe() {
   meRequest ??= api
@@ -89,86 +86,111 @@ type NavItem = {
   icon: LucideIcon;
   permissions?: string[];
   premium?: boolean;
+  /** Control critico: color de alerta fijo aunque este inactivo. */
   alert?: boolean;
 };
 
 type NavGroup = { label: string; items: NavItem[] };
 
-/**
- * Reorganización del Sidebar Admin ERP para Vertical IPS:
- * Separación rigurosa de Historias Clínicas, Facturación Electrónica, RIPS y Cuentas Médicas.
- */
 const navGroups: NavGroup[] = [
   {
     label: "",
-    items: [{ href: "/app/dashboard", label: "Dashboard IPS", icon: LayoutDashboard, permissions: ["dashboard.view"] }],
+    items: [{ href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard, permissions: ["dashboard.view"] }],
   },
   {
     label: "Clínica",
     items: [
-      { href: "/app/agenda", label: "Citas del Día", icon: CalendarDays, permissions: ["appointments.manage"] },
-      { href: "/app/citas", label: "Agenda & Consultas", icon: CalendarClock, permissions: ["appointments.manage"] },
-      { href: "/app/pacientes", label: "Directorio de Pacientes", icon: Users, permissions: ["patients.manage"] },
-      { href: "/app/consultas", label: "Historias Clínicas", icon: Stethoscope, permissions: ["medical_records.manage"] },
-      { href: "/app/procedimientos", label: "Procedimientos", icon: Activity, permissions: ["procedures.manage"] },
-      { href: "/app/urgencias", label: "Triage / Consulta Prioritaria", icon: Siren, permissions: ["medical_records.manage"] },
+      { href: "/app/agenda", label: "Citas del día", icon: CalendarDays, permissions: ["appointments.manage"] },
+      { href: "/app/citas", label: "Citas", icon: CalendarClock, permissions: ["appointments.manage"] },
+      { href: "/app/pacientes", label: "Pacientes", icon: PawPrint, permissions: ["patients.manage"] },
+      { href: "/app/consultas", label: "Historia clínica", icon: Stethoscope, permissions: ["medical_records.manage"] },
+      { href: "/app/vacunas", label: "Vacunas", icon: Syringe, permissions: ["vaccinations.manage"] },
+      { href: "/app/vacunas-pendientes", label: "Vacunas por vencer", icon: AlertTriangle, permissions: ["vaccinations.manage"] },
+      { href: "/app/recetas", label: "Recetas", icon: FileText, permissions: ["prescriptions.manage"] },
+      { href: "/app/procedimientos", label: "Procedimientos", icon: ClipboardList, permissions: ["procedures.manage"] },
+      { href: "/app/diagnosticos", label: "Diagnósticos", icon: ListChecks, permissions: ["medical_records.manage"] },
+      { href: "/app/reportes-clinicos", label: "Reportes clínicos", icon: BarChart3, permissions: ["clinical_reports.view"] },
+      { href: "/app/servicios", label: "Servicios", icon: Tag, permissions: ["services.manage"] },
+      { href: "/app/especies", label: "Especies", icon: Rabbit, permissions: ["patients.manage"] },
+      { href: "/app/razas", label: "Razas", icon: Dna, permissions: ["patients.manage"] },
     ],
   },
   {
-    label: "Asistencial",
+    label: "CRM",
     items: [
-      { href: "/app/equipo", label: "Médicos & Especialistas", icon: UserCheck, permissions: ["users.manage"] },
-      { href: "/app/recetas", label: "Órdenes & Prescripciones", icon: FileText, permissions: ["prescriptions.manage"] },
-      { href: "/app/diagnosticos", label: "Diagnósticos CIE-10", icon: ListChecks, permissions: ["medical_records.manage"] },
-      { href: "/app/servicios", label: "Portafolio de Servicios", icon: Hospital, permissions: ["services.manage"] },
+      { href: "/app/leads", label: "Solicitudes (Leads)", icon: Inbox, permissions: ["leads.view"] },
+      { href: "/app/clientes", label: "Clientes / Propietarios", icon: Users, permissions: ["clients.manage"] },
+      { href: "/app/contactos", label: "Contactos", icon: Contact2, permissions: ["clients.manage"] },
+      { href: "/app/segmentos", label: "Segmentos", icon: Tags, permissions: ["clients.manage"] },
+      { href: "/app/notas", label: "Notas", icon: StickyNote, permissions: ["clients.manage"] },
+      { href: "/app/deals", label: "Planes y oportunidades", icon: Handshake, permissions: ["deals.manage"] },
+      { href: "/app/cotizaciones", label: "Cotizaciones / Presupuestos", icon: FileText, permissions: ["deals.manage"] },
+      { href: "/app/actividades", label: "Actividades", icon: ListChecks, permissions: ["activities.manage"] },
+      { href: "/app/tareas", label: "Tareas", icon: ListTodo, permissions: ["activities.manage"] },
+      { href: "/app/seguimientos", label: "Seguimientos", icon: CalendarClock, permissions: ["activities.manage"] },
+      { href: "/app/calendario", label: "Calendario", icon: CalendarDays, permissions: ["activities.manage"] },
+      { href: "/app/pedidos", label: "Pedidos", icon: Receipt, permissions: ["orders.manage"] },
     ],
   },
   {
-    label: "Comercial & Convenios",
+    label: "Ventas",
     items: [
-      { href: "/app/leads", label: "Solicitudes & Convenios", icon: Inbox, permissions: ["leads.view"] },
-      { href: "/app/clientes", label: "Afiliados & Entidades", icon: Building2, permissions: ["clients.manage"] },
-      { href: "/app/cotizaciones", label: "Cotizaciones & Presupuestos", icon: FileText, permissions: ["deals.manage"] },
+      { href: "/app/facturas", label: "Facturas", icon: FileText, permissions: ["invoices.manage"] },
+      { href: "/app/pagos", label: "Pagos y abonos", icon: Receipt, permissions: ["payments.manage"] },
     ],
   },
   {
-    label: "Facturación & RIPS",
+    label: "Inventario",
     items: [
-      { href: "/app/facturas", label: "Facturación Electrónica", icon: Receipt, permissions: ["invoices.manage"] },
-      { href: "/app/reportes-comerciales", label: "Proceso RIPS", icon: FileCheck, permissions: ["reports.view"] },
-      { href: "/app/cuentas-por-cobrar", label: "Cuentas Médicas", icon: DollarSign, permissions: ["accounts_receivable.view"] },
-      { href: "/app/cuentas-por-pagar", label: "Cuentas por Pagar (Proveedores)", icon: FileText, permissions: ["accounts_payable.view"] },
-      { href: "/app/contabilidad", label: "Contabilidad Básica", icon: BookOpen },
-      { href: "/app/finanzas/conciliacion", label: "Conciliación Bancaria (Nivel 1)", icon: ArrowLeftRight },
+      { href: "/app/productos", label: "Productos", icon: Package, permissions: ["products.manage"] },
+      { href: "/app/categorias", label: "Categorias", icon: Tags, permissions: ["products.manage"] },
+      { href: "/app/marcas", label: "Marcas", icon: Tag, permissions: ["products.manage"] },
+      { href: "/app/unidades", label: "Unidades", icon: Ruler, permissions: ["products.manage"] },
+      { href: "/app/bodegas", label: "Bodegas", icon: Warehouse, permissions: ["warehouses.manage"] },
+      { href: "/app/movimientos-inventario", label: "Movimientos", icon: ArrowLeftRight, permissions: ["stock.manage"] },
+      { href: "/app/transferencias", label: "Transferencias", icon: Repeat, permissions: ["stock.manage"] },
+      { href: "/app/alertas-stock", label: "Alertas de stock", icon: AlertTriangle, permissions: ["products.manage"] },
     ],
   },
   {
-    label: "Operaciones & Farmacia",
+    label: "Compras",
     items: [
-      { href: "/app/productos", label: "Farmacia & Insumos Hospitalarios", icon: Pill, permissions: ["products.manage"] },
-      { href: "/app/bodegas", label: "Bodegas Hospitalarias", icon: Warehouse, permissions: ["warehouses.manage"] },
-      { href: "/app/movimientos-inventario", label: "Kardex de Farmacia", icon: ArrowLeftRight, permissions: ["stock.manage"] },
-      { href: "/app/alertas-stock", label: "Alertas de Dispositivos", icon: AlertTriangle, permissions: ["products.manage"] },
-      { href: "/app/cajas", label: "Caja & Copagos", icon: Wallet, permissions: ["cash.manage"] },
-      { href: "/app/sesiones-caja", label: "Turnos de Caja", icon: ClipboardList, permissions: ["cash.manage"] },
-      { href: "/app/sueroterapia", label: "Sueroterapia a Domicilio", icon: Syringe, permissions: ["appointments.manage"] },
+      { href: "/app/proveedores", label: "Proveedores", icon: Truck, permissions: ["suppliers.manage"] },
+      { href: "/app/ordenes-compra", label: "Ordenes de compra", icon: ShoppingCart, permissions: ["purchase_orders.manage"] },
+      { href: "/app/recepciones-compra", label: "Recepciones", icon: ClipboardList, permissions: ["purchase_receipts.manage"] },
     ],
   },
   {
-    label: "Administración IPS",
+    label: "Finanzas",
     items: [
-      { href: "/app/reportes", label: "Reportes & KPIs IPS", icon: BarChart3, permissions: ["reports.view"] },
-      { href: "/app/auditoria", label: "Auditoría de Historias Clínicas", icon: Shield, permissions: ["audit.view"] },
-      { href: "/app/usuarios", label: "Usuarios & Roles Médicos", icon: UserCircle, permissions: ["users.manage"] },
-      { href: "/app/rrhh/asistencia", label: "Asistencia RRHH", icon: Clock, permissions: ["users.manage"] },
-      { href: "/app/configuracion", label: "Configuración IPS & Habilitación", icon: Settings, permissions: ["settings.manage"] },
+      { href: "/app/cuentas-por-cobrar", label: "Cuentas por cobrar", icon: Receipt, permissions: ["accounts_receivable.view"] },
+      { href: "/app/cuentas-por-pagar", label: "Cuentas por pagar", icon: FileText, permissions: ["accounts_payable.view"] },
+      { href: "/app/cajas", label: "Cajas", icon: Warehouse, permissions: ["cash.manage"] },
+      { href: "/app/sesiones-caja", label: "Sesiones de caja", icon: ClipboardList, permissions: ["cash.manage"] },
+      { href: "/app/movimientos-caja", label: "Movimientos de caja", icon: ArrowLeftRight, permissions: ["cash.manage"] },
     ],
   },
   {
-    label: "Herramientas IPS",
+    label: "Analitica",
     items: [
-      { href: "/app/contingencia", label: "Modo Contingencia Asistencial", icon: WifiOff, alert: true },
-      { href: "/app/ia", label: "Asistente Médico IA (Demo)", icon: Bot, premium: true },
+      { href: "/app/reportes", label: "Reportes", icon: BarChart3, permissions: ["reports.view"] },
+      { href: "/app/reportes-comerciales", label: "Reportes comerciales", icon: TrendingUp, permissions: ["reports.view"] },
+    ],
+  },
+  {
+    label: "Herramientas",
+    items: [
+      { href: "/app/contingencia", label: "Modo contingencia", icon: WifiOff, alert: true },
+      { href: "/app/ia", label: "Asistente IA", icon: Bot, premium: true },
+    ],
+  },
+  {
+    label: "Administracion",
+    items: [
+      { href: "/app/auditoria", label: "Auditoria", icon: ClipboardList, permissions: ["audit.view"] },
+      { href: "/app/usuarios", label: "Usuarios", icon: UserCircle, permissions: ["users.manage"] },
+      { href: "/app/roles", label: "Roles", icon: Shield, permissions: ["roles.manage"] },
+      { href: "/app/configuracion", label: "Configuracion", icon: Settings, permissions: ["settings.manage"] },
     ],
   },
 ];
@@ -177,45 +199,67 @@ const allNavItems: NavItem[] = navGroups.flatMap((g) => g.items);
 
 function PremiumBadge() {
   return (
-    <span className="ml-auto shrink-0 flex items-center gap-1 rounded bg-sky-500/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-600 dark:bg-sky-500/20 dark:text-sky-400">
-      <Lock className="h-3 w-3 shrink-0" /> Premium
+    <span className="ml-auto flex items-center gap-1 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+      <Lock className="h-3 w-3" /> Premium
     </span>
   );
 }
 
+// Contenido del modal "Premium" segun el modulo. Sin entrada => cae al de IA.
 const PREMIUM_INFO: Record<string, { title: string; body: React.ReactNode }> = {
   "/app/contingencia": {
-    title: "Modo Contingencia Asistencial (Continuidad sin Conexión)",
+    title: "Modo contingencia (continuidad sin conexion)",
     body: (
       <>
         <p>
           El modo contingencia permite{" "}
-          <strong className="font-semibold text-foreground">registrar admisiones e historias clínicas localmente</strong> cuando hay contingencias de red.
+          <strong className="font-semibold text-foreground">seguir atendiendo cuando se cae internet</strong>: las
+          consultas, ventas de mostrador y movimientos de inventario se registran localmente y quedan en una cola.
         </p>
         <p>
-          Al restablecerse la conectividad, las atenciones encoladas se{" "}
-          <strong className="font-semibold text-foreground">sincronizan automáticamente con el ERP de la IPS</strong> resguardando la trazabilidad.
+          Al volver la conexion, todo lo encolado se{" "}
+          <strong className="font-semibold text-foreground">sincroniza con el sistema</strong> y se resuelven los
+          conflictos (por ejemplo, stock que cambio mientras estabas sin senal).
+        </p>
+        <p className="font-medium text-foreground">
+          Esta funcionalidad esta disponible en el plan Premium. Para activarla o conocer las opciones, comunicate
+          con el administrador de tu sistema.
         </p>
       </>
     ),
   },
   "/app/ia": {
-    title: "Asistente Clínico de Inteligencia Artificial IPS",
+    title: "Inteligencia Artificial para la clínica",
     body: (
       <>
         <p>
-          Herramienta de apoyo asistencial para{" "}
+          Potenciá la gestión clínica con una herramienta de inteligencia artificial diseñada para{" "}
           <strong className="font-semibold text-foreground">
-            consulta de catálogo CIE-10, resúmenes de atenciones e indicadores de farmacia
+            apoyar la atención, facilitar el análisis de información y ayudarte en la toma de decisiones
           </strong>
           .
+        </p>
+        <p>
+          Podés utilizarla para consultar la historia de un paciente, identificar vacunas por vencer, revisar la
+          ocupación de la agenda, resumir datos relevantes y obtener apoyo para interpretar indicadores como
+          rotación de inventario de medicamentos y desempeño de la clínica.
+        </p>
+        <p>
+          La inteligencia artificial funciona como un{" "}
+          <strong className="font-semibold text-foreground">asistente para el equipo de la clínica</strong>,
+          permitiendo trabajar de forma más ágil y obtener información útil a partir de los datos disponibles
+          en el sistema.
+        </p>
+        <p className="font-medium text-foreground">
+          Esta funcionalidad está disponible en el plan Premium. Para activarla o conocer las opciones
+          disponibles, comunicate con el administrador de tu sistema.
         </p>
       </>
     ),
   },
 };
 
-function NavLink({ item }: { item: NavItem }) {
+function NavLink({ item, stripe }: { item: NavItem; stripe?: boolean }) {
   const pathname = usePathname();
   const Icon = item.icon;
   const { isActive: contingencyActive, pendingCount } = useContingency();
@@ -227,14 +271,14 @@ function NavLink({ item }: { item: NavItem }) {
       <Link
         href={item.href}
         className={cn(
-          "flex min-h-[36px] h-auto items-center gap-2.5 rounded-md px-3 py-1.5 text-xs sm:text-sm font-medium text-amber-600 transition-colors hover:bg-amber-500/10 dark:text-amber-400",
-          active && "bg-amber-500/10",
+          "flex h-9 items-center gap-3 rounded-md px-3 text-sm font-medium text-warning transition-colors hover:bg-warning/10",
+          active ? "bg-warning/10" : stripe && "bg-muted",
         )}
       >
-        <Icon className="h-4 w-4 shrink-0" />
-        <span className="min-w-0 flex-1 leading-tight">{item.label}</span>
+        <Icon className="h-4 w-4" />
+        <span>{item.label}</span>
         {contingencyActive ? (
-          <span className="ml-auto shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">
+          <span className="ml-auto rounded bg-warning/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">
             Activo{pendingCount ? ` · ${pendingCount}` : ""}
           </span>
         ) : null}
@@ -249,10 +293,10 @@ function NavLink({ item }: { item: NavItem }) {
         <DialogTrigger asChild>
           <button
             type="button"
-            className="flex min-h-[36px] h-auto w-full items-center gap-2.5 rounded-md px-3 py-1.5 text-xs sm:text-sm text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+            className={cn("flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm text-muted-foreground/60 transition-colors hover:bg-accent hover:text-foreground", stripe && "bg-muted")}
           >
-            <Icon className="h-4 w-4 shrink-0" />
-            <span className="min-w-0 flex-1 text-left leading-tight">{item.label}</span>
+            <Icon className="h-4 w-4" />
+            <span>{item.label}</span>
             <PremiumBadge />
           </button>
         </DialogTrigger>
@@ -272,12 +316,12 @@ function NavLink({ item }: { item: NavItem }) {
     <Link
       href={item.href}
       className={cn(
-        "flex min-h-[36px] h-auto items-center gap-2.5 rounded-md px-3 py-1.5 text-xs sm:text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100",
-        active && "bg-sky-50 font-semibold text-sky-700 dark:bg-sky-950/60 dark:text-sky-300",
+        "flex h-9 items-center gap-3 rounded-md px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+        active ? "bg-primary/10 font-semibold text-primary" : stripe && "bg-muted",
       )}
     >
-      <Icon className="h-4 w-4 shrink-0" />
-      <span className="min-w-0 flex-1 leading-tight">{item.label}</span>
+      <Icon className="h-4 w-4" />
+      <span>{item.label}</span>
     </Link>
   );
 }
@@ -286,10 +330,15 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  // Arranca en null: el server no tiene localStorage, sembrar el estado desde
+  // getStoredUser() en el render inicial rompe la hidratacion (React #418).
+  // El usuario cacheado se carga en el efecto, ya en cliente.
   const [user, setUser] = React.useState<AuthUser | null>(null);
   const [checkingSession, setCheckingSession] = React.useState(true);
   const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
 
+  // Cierra el menu movil al navegar a otra ruta. `queueMicrotask` para no
+  // hacer setState sincrono dentro del efecto (evita renders en cascada).
   React.useEffect(() => {
     queueMicrotask(() => setMobileNavOpen(false));
   }, [pathname]);
@@ -298,7 +347,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     try {
       await api.post("/auth/logout");
     } catch {
-      // Session local cleanup
+      // The local session should still be cleared if the token is already invalid.
     } finally {
       clearAuthSession();
       router.replace("/login");
@@ -306,8 +355,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   React.useEffect(() => {
+    // La sesion vive en una cookie httpOnly (invisible a JS): no hay forma de
+    // saber local si existe sin preguntarle a /auth/me. Pinta ya desde la
+    // cache (cliente) mientras se resuelve, y redirige si /auth/me falla.
     const cached = getStoredUser();
     if (cached) {
+      // Deferido: no hacer setState sincrono dentro del efecto.
       queueMicrotask(() => {
         setUser(cached);
         setCheckingSession(false);
@@ -320,6 +373,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         setUser(response.data.user);
       })
       .catch(() => {
+        // El interceptor 401 ya limpio la sesion; aqui solo redirigimos.
         clearAuthSession();
         router.replace("/login");
       })
@@ -345,6 +399,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     }))
     .filter((group) => group.items.length > 0);
 
+  // Guard por ruta: si la ruta actual corresponde a un modulo del menu y el
+  // usuario no tiene su permiso, se muestra una pantalla de acceso denegado.
+  // El backend igual responde 403; esto es UX (evita tabla rota + 403 en rojo).
   const activeNav = allNavItems
     .filter((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
     .sort((a, b) => b.href.length - a.href.length)[0];
@@ -355,50 +412,57 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (checkingSession && !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-900 text-slate-100">
+      <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
         <div className="text-center">
-          <p className="text-sm font-semibold tracking-wide">Validando sesión...</p>
-          <p className="mt-1 text-xs text-slate-400">FidelOS · ERP Multi-Empresa</p>
+          <p className="text-sm font-medium">Validando sesion</p>
+          <p className="mt-1 text-xs text-muted-foreground">Preparando el panel privado...</p>
         </div>
       </div>
     );
   }
 
   const sidebarHeader = (
-    <div className="flex h-16 items-center gap-3 border-b border-slate-200 bg-slate-900 px-5 dark:border-slate-800">
+    <div className="flex h-16 items-center gap-3 border-b border-border px-5">
       <LogoMark size="sm" />
       <div>
-        <p className="flex items-center gap-1.5 text-sm font-bold tracking-tight text-white">
-          FidelOS<span className="text-sky-400">·</span>ERP
-          <span className="rounded bg-sky-500/20 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-sky-300">
-            PRO
+        <p className="flex items-center gap-1.5 text-sm font-black tracking-tight text-foreground">
+          Vet<span className="text-primary">·</span>Panel
+          <span className="rounded bg-warning/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-warning">
+            Beta
           </span>
         </p>
-        <p className="text-[11px] text-slate-400">Plataforma de Gestión</p>
+        <p className="text-xs text-muted-foreground">Panel privado</p>
       </div>
     </div>
   );
 
   const navBody = (
-    <nav className="flex-1 space-y-4 overflow-y-auto p-4">
-      {visibleGroups.map((group) => (
-        <div key={group.label || "general"} className="space-y-1">
-          {group.label ? (
-            <p className="mb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              {group.label}
-            </p>
-          ) : null}
-          {group.items.map((item) => (
-            <NavLink key={item.href} item={item} />
-          ))}
-        </div>
-      ))}
+    <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+      {(() => {
+        let rowIdx = 0;
+        return visibleGroups.map((group, i) => (
+          <div
+            key={group.label || "general"}
+            className={i > 0 ? "mt-2 space-y-0 border-t border-border pt-2" : "space-y-0"}
+          >
+            {group.label ? (
+              <p className="mb-1 px-3 pt-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                {group.label}
+              </p>
+            ) : null}
+            {group.items.map((item) => {
+              const stripe = rowIdx++ % 2 === 0;
+              return <NavLink key={item.href} item={item} stripe={stripe} />;
+            })}
+          </div>
+        ));
+      })()}
     </nav>
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <aside className="fixed inset-y-0 left-0 hidden w-72 border-r border-slate-200 bg-white lg:flex lg:flex-col dark:border-slate-800 dark:bg-slate-900">
+    <div className="min-h-screen bg-background text-foreground">
+      <aside className="fixed inset-y-0 left-0 hidden w-72 border-r border-border bg-card shadow-[1px_0_12px_0_rgb(0_0_0/0.06)] lg:flex lg:flex-col">
         {sidebarHeader}
         {navBody}
       </aside>
@@ -406,18 +470,18 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       {mobileNavOpen ? (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50"
             onClick={() => setMobileNavOpen(false)}
             aria-hidden
           />
-          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85%] flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[82%] flex-col border-r border-border bg-card">
             <div className="relative">
               {sidebarHeader}
               <Button
                 variant="outline"
                 size="icon"
-                aria-label="Cerrar menú"
-                title="Cerrar menú"
+                aria-label="Cerrar menu"
+                title="Cerrar menu"
                 onClick={() => setMobileNavOpen(false)}
                 className="absolute right-3 top-1/2 -translate-y-1/2"
               >
@@ -430,38 +494,48 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       ) : null}
 
       <div className="lg:pl-72">
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-2 border-b border-slate-200 bg-white/95 px-4 backdrop-blur lg:px-6 dark:border-slate-800 dark:bg-slate-900/95">
+        <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-2 border-b border-border bg-card/95 px-4 backdrop-blur shadow-sm lg:px-6">
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
               size="icon"
               className="lg:hidden"
-              aria-label="Abrir menú"
-              title="Abrir menú"
+              aria-label="Abrir menu"
+              title="Abrir menu"
               aria-expanded={mobileNavOpen}
               onClick={() => setMobileNavOpen(true)}
             >
               <Menu className="h-4 w-4" />
             </Button>
-            <div className="min-w-0 max-w-36 sm:max-w-none">
-              <p className="truncate text-sm font-bold text-slate-900 dark:text-slate-100">
-                {user?.company?.name ?? "FidelOS"}
-              </p>
-              <p className="hidden truncate text-xs text-slate-500 sm:block dark:text-slate-400">
-                Gestión Empresarial Operativa
+            <div className="min-w-0 max-w-32 sm:max-w-none">
+              <p className="truncate text-sm font-medium">{user?.company?.name ?? "VetPanel"}</p>
+              <p className="hidden truncate text-xs text-muted-foreground sm:block">
+                Panel de gestión veterinaria
               </p>
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-            <div className="hidden items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 sm:flex dark:border-slate-800 dark:bg-slate-800/60">
-              <UserCircle className="h-4 w-4 text-sky-600 dark:text-sky-400" />
+            <div className="hidden items-center gap-2 rounded-md border border-border bg-card px-3 py-2 sm:flex">
+              <UserCircle className="h-4 w-4 text-primary" />
               <div className="min-w-0">
-                <p className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">{user?.name ?? "Usuario en sesión"}</p>
-                <p className="truncate text-[11px] text-slate-500 dark:text-slate-400">{user?.roles?.[0] ?? "Administrador"}</p>
+                <p className="truncate text-xs font-medium">{user?.name ?? "Usuario"}</p>
+                <p className="truncate text-[11px] text-muted-foreground">
+                  {user?.roles?.[0] ?? user?.email}
+                </p>
               </div>
             </div>
             <BetaNotice />
-            <Button variant="outline" size="icon" aria-label="Cerrar sesión" title="Cerrar sesión" onClick={logout}>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="Cambiar tema"
+              title={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <Sun className="h-4 w-4 dark:hidden" />
+              <Moon className="hidden h-4 w-4 dark:block" />
+            </Button>
+            <Button variant="outline" size="icon" aria-label="Cerrar sesion" title="Cerrar sesion" onClick={logout}>
               <LogOut className="h-4 w-4" />
             </Button>
           </div>
@@ -472,13 +546,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             children
           ) : (
             <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-              <ShieldAlert className="h-10 w-10 text-slate-400" />
-              <h1 className="mt-4 text-lg font-semibold">No tienes acceso a esta sección médica</h1>
-              <p className="mt-1 max-w-sm text-sm text-slate-500">
-                Tu perfil de usuario no cuenta con los permisos asistenciales requeridos.
+              <ShieldAlert className="h-10 w-10 text-muted-foreground" />
+              <h1 className="mt-4 text-lg font-semibold">No tienes acceso a esta seccion</h1>
+              <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                Tu rol no incluye los permisos necesarios. Si crees que es un error, contacta a un administrador.
               </p>
-              <Link href="/app/dashboard" className="mt-6 inline-flex h-9 items-center rounded-md bg-sky-600 px-4 text-sm font-medium text-white hover:bg-sky-700">
-                Ir al Dashboard IPS
+              <Link href="/app/dashboard" className="mt-6 inline-flex h-9 items-center rounded-md bg-primary px-4 text-sm font-medium text-white">
+                Ir al dashboard
               </Link>
             </div>
           )}

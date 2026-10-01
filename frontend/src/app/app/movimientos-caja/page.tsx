@@ -7,7 +7,7 @@ import { CashMovement } from "@/lib/types";
 
 const columns: AppColumnDef<CashMovement>[] = [
   { header: "Sesión", cell: ({ row }) => `#${row.original.cash_session_id}` },
-  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type === "in" ? "success" : "warning"} label={row.original.type === "in" ? "Entrada" : "Salida"} /> },
+  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type} label={row.original.type === "in" ? "Entrada" : "Salida"} /> },
   { header: "Método", accessorKey: "method" },
   { header: "Referencia", cell: ({ row }) => row.original.reference ?? "—" },
   { header: "Valor", cell: ({ row }) => `$${Number(row.original.amount).toLocaleString("es-CO")}` },

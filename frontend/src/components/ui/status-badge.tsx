@@ -10,7 +10,7 @@ export type StatusDefinition = {
 };
 
 /**
- * Diccionario maestro y estricto de estados técnicos del ERP Transversal e IPS.
+ * Diccionario maestro y estricto de estados técnicos del ERP Transversal y Veterinaria.
  * Todos los badges utilizan el estándar visual de fondo sólido medio/claro con texto negro (text-zinc-950).
  */
 export const STATUS_DICTIONARY: Record<string, StatusDefinition> = {
@@ -32,7 +32,7 @@ export const STATUS_DICTIONARY: Record<string, StatusDefinition> = {
   rejected: { label: "Rechazada", category: "destructive", className: "bg-red-300 text-zinc-950 border-none font-bold dark:bg-red-900 dark:text-red-100" },
   overdue: { label: "Vencida", category: "destructive", className: "bg-red-300 text-zinc-950 border-none font-extrabold uppercase tracking-wider dark:bg-red-900 dark:text-red-100" },
 
-  // --- Citas, Asistencia & Salud IPS ---
+  // --- Citas, Asistencia & Salud ---
   scheduled: { label: "Programada", category: "info", className: "bg-sky-200 text-zinc-950 border-none font-medium dark:bg-sky-800 dark:text-sky-100" },
   attended: { label: "Atendida", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-semibold dark:bg-emerald-800 dark:text-emerald-100" },
   "no-show": { label: "No asistió", category: "warning", className: "bg-orange-200 text-zinc-950 border-none font-medium dark:bg-orange-800 dark:text-orange-100" },
@@ -41,35 +41,11 @@ export const STATUS_DICTIONARY: Record<string, StatusDefinition> = {
   discharged: { label: "Egresado", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-semibold dark:bg-emerald-800 dark:text-emerald-100" },
   auth_pending: { label: "Autorización pendiente", category: "warning", className: "bg-amber-200 text-zinc-950 border-none font-medium dark:bg-amber-800 dark:text-amber-100" },
 
-  // --- Clínica Estética ---
-  assessment_pending: { label: "Valoración pendiente", category: "warning", className: "bg-amber-200 text-zinc-950 border-none font-medium dark:bg-amber-800 dark:text-amber-100" },
-  in_treatment: { label: "Tratamiento activo", category: "info", className: "bg-blue-200 text-zinc-950 border-none font-bold dark:bg-blue-800 dark:text-blue-100" },
-  session_completed: { label: "Sesión completada", category: "success", className: "bg-lime-200 text-zinc-950 border-none font-bold dark:bg-lime-800 dark:text-lime-100" },
-  consent_pending: { label: "Consentimiento pendiente", category: "warning", className: "bg-amber-200 text-zinc-950 border-none font-medium dark:bg-amber-800 dark:text-amber-100" },
-
   // --- Veterinaria ---
   vaccinated: { label: "Vacunado", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-semibold dark:bg-emerald-800 dark:text-emerald-100" },
   vaccine_due: { label: "Vacuna pendiente", category: "warning", className: "bg-amber-200 text-zinc-950 border-none font-bold dark:bg-amber-800 dark:text-amber-100" },
   active_treatment: { label: "Tratamiento activo", category: "info", className: "bg-blue-200 text-zinc-950 border-none font-bold dark:bg-blue-800 dark:text-blue-100" },
   medical_discharge: { label: "Alta médica", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-semibold dark:bg-emerald-800 dark:text-emerald-100" },
-
-  // --- RRHH & Selección ---
-  candidate: { label: "Candidato", category: "secondary", className: "bg-zinc-200 text-zinc-950 border-none font-medium dark:bg-zinc-700 dark:text-zinc-100" },
-  in_selection: { label: "En selección", category: "info", className: "bg-sky-200 text-zinc-950 border-none font-medium dark:bg-sky-900 dark:text-sky-100" },
-  hired: { label: "Contratado", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-bold dark:bg-emerald-800 dark:text-emerald-100" },
-  candidate_rejected: { label: "Descartado", category: "destructive", className: "bg-red-300 text-zinc-950 border-none font-bold dark:bg-red-900 dark:text-red-100" },
-
-  // --- Inmobiliaria ---
-  available: { label: "Disponible", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-semibold dark:bg-emerald-800 dark:text-emerald-100" },
-  reserved: { label: "Reservado", category: "warning", className: "bg-amber-200 text-zinc-950 border-none font-bold dark:bg-amber-800 dark:text-amber-100" },
-  rented: { label: "Arrendado", category: "info", className: "bg-sky-200 text-zinc-950 border-none font-semibold dark:bg-sky-800 dark:text-sky-100" },
-  sold: { label: "Vendido", category: "purple", className: "bg-purple-200 text-zinc-950 border-none font-bold dark:bg-purple-800 dark:text-purple-100" },
-
-  // --- CareNote (IA & Transcripción) ---
-  session_open: { label: "Sesión abierta", category: "info", className: "bg-sky-200 text-zinc-950 border-none font-bold dark:bg-sky-800 dark:text-sky-100" },
-  transcribing: { label: "Transcribiendo", category: "purple", className: "bg-purple-200 text-zinc-950 border-none font-bold dark:bg-purple-800 dark:text-purple-100" },
-  ready: { label: "Nota lista", category: "success", className: "bg-emerald-200 text-zinc-950 border-none font-bold dark:bg-emerald-800 dark:text-emerald-100" },
-  transcription_failed: { label: "Transcripción fallida", category: "destructive", className: "bg-red-300 text-zinc-950 border-none font-bold dark:bg-red-900 dark:text-red-100" },
 
   // --- CRM, Leads & Oportunidades ---
   new: { label: "Nuevo", category: "info", className: "bg-sky-200 text-zinc-950 border-none font-bold dark:bg-sky-800 dark:text-sky-100" },
@@ -149,11 +125,9 @@ export function getCategoryFromText(text: string): StatusCategory {
     norm.includes("ganad") ||
     norm.includes("completad") ||
     norm.includes("sincronizad") ||
-    norm.includes("disponible") ||
     norm.includes("vacunado") ||
+    norm.includes("vacunac") ||
     norm.includes("alta") ||
-    norm.includes("contratado") ||
-    norm.includes("nota lista") ||
     norm === "activo" ||
     norm === "activa" ||
     norm === "abierta" ||
@@ -168,6 +142,8 @@ export function getCategoryFromText(text: string): StatusCategory {
     norm.includes("enviad") ||
     norm.includes("emitid") ||
     norm.includes("programad") ||
+    norm.includes("en curso") ||
+    norm.includes("tratamiento") ||
     norm.includes("sitio web") ||
     norm.includes("prospeccion") ||
     norm.includes("prospección") ||
@@ -177,12 +153,7 @@ export function getCategoryFromText(text: string): StatusCategory {
     norm.includes("conectad") ||
     norm.includes("sobrestock") ||
     norm.includes("atención") ||
-    norm.includes("atencion") ||
-    norm.includes("arrendado") ||
-    norm.includes("en selección") ||
-    norm.includes("en seleccion") ||
-    norm.includes("sesión abierta") ||
-    norm.includes("sesion abierta")
+    norm.includes("atencion")
   ) {
     return "info";
   }
@@ -198,11 +169,7 @@ export function getCategoryFromText(text: string): StatusCategory {
     norm.includes("negociación") ||
     norm.includes("no asistió") ||
     norm.includes("bajo") ||
-    norm.includes("salida") ||
-    norm.includes("reservado") ||
-    norm.includes("valoración") ||
-    norm.includes("valoracion") ||
-    norm.includes("consentimiento")
+    norm.includes("salida")
   ) {
     return "warning";
   }
@@ -226,13 +193,7 @@ export function getCategoryFromText(text: string): StatusCategory {
     return "destructive";
   }
 
-  if (
-    norm.includes("ia") ||
-    norm.includes("premium") ||
-    norm.includes("automatizad") ||
-    norm.includes("transcribiendo") ||
-    norm.includes("vendido")
-  ) {
+  if (norm.includes("ia") || norm.includes("premium") || norm.includes("automatizad")) {
     return "purple";
   }
 

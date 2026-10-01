@@ -15,7 +15,7 @@ const columns: AppColumnDef<Client>[] = [
   { header: "Segmento", cell: ({ row }) => row.original.segment ?? "—" },
   { header: "Correo", cell: ({ row }) => row.original.email ?? "—" },
   { header: "Telefono", cell: ({ row }) => row.original.phone ?? "—" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [
@@ -41,14 +41,14 @@ const fields: CrudField[] = [
 export default function ClientsPage() {
   return (
     <ModuleTablePage<Client>
-      title="Afiliados & Entidades"
-      description="Afiliados y entidades de la IPS. Desde el detalle puedes ver los pacientes a cargo y su historial."
+      title="Propietarios"
+      description="Propietarios de la clínica. Desde el detalle ves sus mascotas y su historial."
       resource="/clients"
       exportResource="clients"
       columns={columns}
       fields={fields}
-      actionLabel="Nuevo afiliado / titular"
-      modalDescription="Datos de contacto del afiliado o titular."
+      actionLabel="Nuevo propietario"
+      modalDescription="Datos de contacto del propietario."
       extraRowActions={(row) => (
         <>
           <WhatsAppAction phone={row.phone} name={row.name} />

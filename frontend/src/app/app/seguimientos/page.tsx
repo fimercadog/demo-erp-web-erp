@@ -11,7 +11,7 @@ const columns: AppColumnDef<ActivityRow>[] = [
   { accessorKey: "subject", header: "Asunto" },
   { header: "Cliente", cell: ({ row }) => row.original.client?.name ?? "—" },
   dateColumn<ActivityRow>("due_date", "Proximo contacto"),
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.completed ? "success" : "warning"} label={row.original.completed ? "Hecho" : "Pendiente"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.completed ? "completed" : "pending"} label={row.original.completed ? "Hecho" : "Pendiente"} /> },
 ];
 
 export default function FollowUpsPage() {

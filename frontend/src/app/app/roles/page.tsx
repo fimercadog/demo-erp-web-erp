@@ -12,7 +12,7 @@ import { Role } from "@/lib/types";
 const columns: AppColumnDef<Role>[] = [
   { accessorKey: "name", header: "Rol" },
   { header: "Permisos", cell: ({ row }) => row.original.permissions_count ?? 0 },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

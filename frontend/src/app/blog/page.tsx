@@ -27,7 +27,7 @@ export default function BlogPage() {
         imageAlt="Paciente consultando un portal médico de salud"
       />
 
-      <Section className="pt-0">
+      <Section className="bg-[#f9fafb] pt-0">
         <div className="flex flex-wrap justify-center gap-2">
           <button
             type="button"

@@ -30,7 +30,7 @@ const columns: AppColumnDef<Service>[] = [
     cell: ({ row }) => (row.original.estimated_duration_minutes ? `${row.original.estimated_duration_minutes} min` : "—"),
   },
   { header: "Precio", cell: ({ row }) => cop(row.original.price) },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

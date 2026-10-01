@@ -9,7 +9,7 @@ import { Brand } from "@/lib/types";
 const columns: AppColumnDef<Brand>[] = [
   { accessorKey: "name", header: "Nombre" },
   { header: "Productos", cell: ({ row }) => row.original.products_count ?? 0 },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activa" : "Inactiva"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

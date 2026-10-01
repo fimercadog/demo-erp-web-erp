@@ -11,12 +11,16 @@ class Procedure extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'company_id', 'patient_id', 'service_id', 'vet_id', 'type', 'performed_at', 'notes', 'consent_document_url',
+        'company_id', 'patient_id', 'service_id', 'consultation_id', 'vet_id', 'type',
+        'price', 'status', 'performed_at', 'notes', 'consent_document_url',
     ];
 
     protected function casts(): array
     {
-        return ['performed_at' => 'date'];
+        return [
+            'performed_at' => 'date',
+            'price' => 'decimal:2',
+        ];
     }
 
     public function company(): BelongsTo
@@ -32,6 +36,11 @@ class Procedure extends Model
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function consultation(): BelongsTo
+    {
+        return $this->belongsTo(Consultation::class);
     }
 
     public function vet(): BelongsTo

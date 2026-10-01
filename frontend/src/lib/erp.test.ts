@@ -128,11 +128,12 @@ describe("ERP Cash Session & Arqueo Calculations (Frontend Unit)", () => {
 });
 
 describe("ERP Inventory & Purchase Logic (Frontend Unit)", () => {
-  it("computes cumulative stock from various movement types", () => {
+  it("computes cumulative stock from various movement types including CONSUMO_CLINICO", () => {
     const initialStock = 80;
     const movements = [
       { type: "COMPRA", qty: 40 },
       { type: "VENTA", qty: -25 },
+      { type: "CONSUMO_CLINICO", qty: -5 },
       { type: "DEVOLUCION_VENTA", qty: 5 },
       { type: "DEVOLUCION_COMPRA", qty: -10 },
       { type: "AJUSTE_ENTRADA", qty: 10 },
@@ -140,8 +141,8 @@ describe("ERP Inventory & Purchase Logic (Frontend Unit)", () => {
     ];
 
     const finalStock = movements.reduce((acc, m) => acc + m.qty, initialStock);
-    // 80 + 40 - 25 + 5 - 10 + 10 - 15 = 85
-    expect(finalStock).toBe(85);
+    // 80 + 40 - 25 - 5 + 5 - 10 + 10 - 15 = 80
+    expect(finalStock).toBe(80);
   });
 
   it("calculates purchase order item pending quantity and order status", () => {
@@ -153,5 +154,28 @@ describe("ERP Inventory & Purchase Logic (Frontend Unit)", () => {
 
     const status = pending === 0 ? "received" : receivedQuantity > 0 ? "partial" : "confirmed";
     expect(status).toBe("partial");
+  });
+});
+
+describe("Veterinary Clinical & ERP Billing Logic (Frontend Unit)", () => {
+  it("calculates consultation billable totals accurately separating billable vs included items", () => {
+    const consultationFee = 75000;
+    const clinicalItems = [
+      { name: "Antibiótico inyectable", unit_price: 28000, quantity: 1, is_billable: true, is_inventoriable: true },
+      { name: "Jeringa 3ml", unit_price: 0, quantity: 2, is_billable: false, is_inventoriable: true },
+      { name: "Curación herida", unit_price: 30000, quantity: 1, is_billable: true, is_inventoriable: false },
+      { name: "Guantes examen", unit_price: 0, quantity: 1, is_billable: false, is_inventoriable: true },
+    ];
+
+    const billableSum = clinicalItems.reduce((acc, it) => acc + (it.is_billable ? it.unit_price * it.quantity : 0), 0);
+    const totalInvoice = consultationFee + billableSum;
+
+    // 75000 + 28000 + 30000 = 133000
+    expect(billableSum).toBe(58000);
+    expect(totalInvoice).toBe(133000);
+
+    // Contar cuántos ítems descuentan inventario
+    const stockOutCount = clinicalItems.filter((it) => it.is_inventoriable).length;
+    expect(stockOutCount).toBe(3); // Antibiótico + Jeringa + Guantes
   });
 });

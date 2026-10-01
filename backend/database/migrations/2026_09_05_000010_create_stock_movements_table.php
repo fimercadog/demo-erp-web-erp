@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type'); // in | out | adjustment
             // Firmado: "in"/adjustment positivo suma, "out" resta. El stock
             // disponible es SUM(quantity) por producto+bodega, sin tabla aparte.
-            $table->integer('quantity');
+            $table->decimal('quantity', 12, 4);
             $table->string('reason')->nullable();
             // Origen simple del movimiento (p.ej. "purchase_order:12", "order:7").
             // No es una relacion polimorfica real: es solo texto de referencia

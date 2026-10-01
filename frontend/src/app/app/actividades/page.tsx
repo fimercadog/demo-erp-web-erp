@@ -8,10 +8,10 @@ import { ActivityRow } from "@/lib/types";
 
 const columns: AppColumnDef<ActivityRow>[] = [
   { accessorKey: "subject", header: "Asunto" },
-  { header: "Tipo", cell: ({ row }) => <StatusBadge status="secondary" label={ACTIVITY_TYPE_LABEL[row.original.type] ?? row.original.type} /> },
+  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type} label={ACTIVITY_TYPE_LABEL[row.original.type] ?? row.original.type} /> },
   { header: "Cliente", cell: ({ row }) => row.original.client?.name ?? "—" },
   dateColumn<ActivityRow>("due_date", "Vencimiento"),
-  { header: "Completada", cell: ({ row }) => <StatusBadge status={row.original.completed ? "success" : "warning"} label={row.original.completed ? "Si" : "No"} /> },
+  { header: "Completada", cell: ({ row }) => <StatusBadge status={row.original.completed ? "active" : "inactive"} label={row.original.completed ? "Sí" : "No"} /> },
 ];
 
 export default function ActivitiesPage() {

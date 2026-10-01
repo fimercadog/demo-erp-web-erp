@@ -10,7 +10,7 @@ const columns: AppColumnDef<Unit>[] = [
   { accessorKey: "name", header: "Nombre" },
   { header: "Abreviatura", cell: ({ row }) => row.original.abbreviation ?? "—" },
   { header: "Productos", cell: ({ row }) => row.original.products_count ?? 0 },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activa" : "Inactiva"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

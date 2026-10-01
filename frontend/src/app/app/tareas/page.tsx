@@ -9,7 +9,7 @@ import { ActivityRow } from "@/lib/types";
 
 const columns: AppColumnDef<ActivityRow>[] = [
   { accessorKey: "subject", header: "Asunto" },
-  { header: "Tipo", cell: ({ row }) => <StatusBadge status="secondary" label={ACTIVITY_TYPE_LABEL[row.original.type] ?? row.original.type} /> },
+  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type} label={ACTIVITY_TYPE_LABEL[row.original.type] ?? row.original.type} /> },
   { header: "Cliente", cell: ({ row }) => row.original.client?.name ?? "—" },
   dateColumn<ActivityRow>("due_date", "Vencimiento"),
 ];

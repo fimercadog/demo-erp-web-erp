@@ -8,7 +8,7 @@ import { CashRegister } from "@/lib/types";
 
 const columns: AppColumnDef<CashRegister>[] = [
   { header: "Nombre", accessorKey: "name" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activa" : "Inactiva"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

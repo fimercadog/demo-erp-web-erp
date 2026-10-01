@@ -23,6 +23,8 @@ type ModuleTablePageProps<T extends object & RowWithId> = {
   extraRowActions?: (row: T, refresh: () => void) => React.ReactNode;
   /** false para un recurso solo de alta (p.ej. una bitacora): oculta "Editar" sin afectar el boton de creacion. */
   editable?: boolean;
+  /** Prop Opcional: funcion para determinar si una fila especifica es editable (p.ej. status === 'open'). */
+  isRowEditable?: (row: T) => boolean;
   /** query params fijos que se anexan a cada peticion (p.ej. { completed: 0 }). */
   params?: Record<string, string | number | boolean>;
 };
@@ -38,6 +40,7 @@ export function ModuleTablePage<T extends object & RowWithId>({
   modalDescription,
   extraRowActions,
   editable = true,
+  isRowEditable,
   params,
 }: ModuleTablePageProps<T>) {
   const table = useApiTable<T>(resource, params);
@@ -73,19 +76,22 @@ export function ModuleTablePage<T extends object & RowWithId>({
       {
         id: "actions",
         header: "",
-        cell: ({ row }: { row: { original: T } }) => (
-          <div className="flex justify-end gap-1">
-            {extraRowActions?.(row.original, table.refresh)}
-            {showEdit ? (
-              <Button variant="ghost" size="sm" onClick={() => openEditModal(row.original)}>
-                <Pencil className="h-4 w-4" /> Editar
-              </Button>
-            ) : null}
-          </div>
-        ),
+        cell: ({ row }: { row: { original: T } }) => {
+          const canEditRow = showEdit && (isRowEditable ? isRowEditable(row.original) : true);
+          return (
+            <div className="flex justify-end gap-1">
+              {extraRowActions?.(row.original, table.refresh)}
+              {canEditRow ? (
+                <Button variant="ghost" size="sm" onClick={() => openEditModal(row.original)}>
+                  <Pencil className="h-4 w-4" /> Editar
+                </Button>
+              ) : null}
+            </div>
+          );
+        },
       } satisfies AppColumnDef<T>,
     ];
-  }, [columns, editable, extraRowActions, fields, openEditModal, readOnly, table.refresh]);
+  }, [columns, editable, extraRowActions, fields, isRowEditable, openEditModal, readOnly, table.refresh]);
 
   return (
     <div className="space-y-6">
@@ -124,6 +130,8 @@ export function ModuleTablePage<T extends object & RowWithId>({
         onSearchChange={table.setSearch}
         page={table.page}
         onPageChange={table.setPage}
+        perPage={table.perPage}
+        onPerPageChange={table.setPerPage}
         loading={table.loading}
         error={table.error}
       />

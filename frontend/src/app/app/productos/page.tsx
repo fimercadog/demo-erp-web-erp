@@ -32,14 +32,14 @@ const columns: AppColumnDef<Product>[] = [
     cell: ({ row }) => {
       const stock = row.original.stock_on_hand ?? 0;
       const low = stock < row.original.reorder_level;
-      return <StatusBadge status={low ? "warning" : "success"} label={`${stock}${low ? " (bajo)" : ""}`} />;
+      return <StatusBadge status={low ? "low_stock" : "active"} label={`${stock}${low ? " (bajo)" : ""}`} />;
     },
   },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
   {
-    header: "Catalogo",
+    header: "Catálogo",
     cell: ({ row }) =>
-      row.original.is_public ? <StatusBadge status="info" label="Publico" /> : "—",
+      row.original.is_public ? <StatusBadge status="catalog" label="Público" /> : "—",
   },
 ];
 

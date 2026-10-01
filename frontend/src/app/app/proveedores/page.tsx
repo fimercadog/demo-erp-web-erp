@@ -11,7 +11,7 @@ const columns: AppColumnDef<Supplier>[] = [
   { header: "Contacto", cell: ({ row }) => row.original.contact_name ?? "—" },
   { header: "Correo", cell: ({ row }) => row.original.email ?? "—" },
   { header: "Telefono", cell: ({ row }) => row.original.phone ?? "—" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

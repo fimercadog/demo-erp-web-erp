@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/marketing/legal-page";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 
 export const metadata: Metadata = {
   title: "Terminos y Condiciones",
@@ -11,13 +12,13 @@ export default function TermsPage() {
     <LegalPage
       title="Terminos y Condiciones"
       updated="30 de agosto de 2026"
-      intro="Estos términos regulan el acceso y uso de este sitio web, operado por NOVA IPS, NIT [NIT]. Al navegar el sitio o enviar un formulario aceptas estos términos."
+      intro={`Estos terminos regulan el acceso y uso de este sitio web, operado por [Razon social] (${CLINIC_NAME}), NIT [NIT]. Al navegar el sitio o enviar un formulario aceptas estos terminos.`}
       sections={[
         {
           heading: "1. Objeto del sitio",
           body: [
-            "Este sitio tiene una finalidad informativa: presentar los servicios del centro médico IPS y su equipo asistencial, y permitir solicitar una cita médica o enviar una consulta.",
-            "El acceso al panel privado de gestión de la IPS requiere credenciales asignadas al personal asistencial y administrativo y se rige por su propia política interna; no está dirigido al público general.",
+            "Este sitio tiene una finalidad informativa: presentar los servicios de la clínica y su equipo, y permitir solicitar una cita o enviar una consulta.",
+            "El acceso al panel privado de gestión de la clínica requiere credenciales asignadas al personal y se rige por su propia política interna; no está dirigido al público general.",
           ],
         },
         {

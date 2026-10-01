@@ -13,7 +13,7 @@ class StoreStockMovementRequest extends ApiFormRequest
         return [
             'product_id' => ['required', Rule::exists('products', 'id')->where('company_id', $companyId)],
             'warehouse_id' => ['required', Rule::exists('warehouses', 'id')->where('company_id', $companyId)],
-            'type' => ['required', 'in:in,out,adjustment,COMPRA,VENTA,DEVOLUCION_COMPRA,DEVOLUCION_VENTA,AJUSTE_ENTRADA,AJUSTE_SALIDA,TRASLADO'],
+            'type' => ['required', 'in:in,out,adjustment,COMPRA,VENTA,DEVOLUCION_COMPRA,DEVOLUCION_VENTA,AJUSTE_ENTRADA,AJUSTE_SALIDA,TRASLADO,CONSUMO_CLINICO'],
             'quantity' => ['required', 'integer', 'min:1'],
             'reason' => ['nullable', 'string', 'max:255'],
         ];
@@ -28,7 +28,7 @@ class StoreStockMovementRequest extends ApiFormRequest
     {
         $data = parent::validated($key, $default);
         if (is_array($data)) {
-            if (in_array($data['type'] ?? null, ['out', 'VENTA', 'DEVOLUCION_COMPRA', 'AJUSTE_SALIDA'], true)) {
+            if (in_array($data['type'] ?? null, ['out', 'VENTA', 'DEVOLUCION_COMPRA', 'AJUSTE_SALIDA', 'CONSUMO_CLINICO'], true)) {
                 $data['quantity'] = -abs((int) ($data['quantity'] ?? 0));
             } else {
                 $data['quantity'] = abs((int) ($data['quantity'] ?? 0));
@@ -40,7 +40,7 @@ class StoreStockMovementRequest extends ApiFormRequest
 
     protected function passedValidation(): void
     {
-        if (in_array($this->input('type'), ['out', 'VENTA', 'DEVOLUCION_COMPRA', 'AJUSTE_SALIDA'], true)) {
+        if (in_array($this->input('type'), ['out', 'VENTA', 'DEVOLUCION_COMPRA', 'AJUSTE_SALIDA', 'CONSUMO_CLINICO'], true)) {
             $this->merge(['quantity' => -abs((int) $this->input('quantity'))]);
         } else {
             $this->merge(['quantity' => abs((int) $this->input('quantity'))]);

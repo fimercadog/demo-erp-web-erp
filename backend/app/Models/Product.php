@@ -62,10 +62,12 @@ class Product extends Model
     }
 
     /** Existencia actual = suma de movimientos, sin tabla de stock aparte. */
-    public function stockOnHand(?int $warehouseId = null): int
+    public function stockOnHand(?int $warehouseId = null): int|float
     {
-        return (int) $this->stockMovements()
+        $sum = (float) $this->stockMovements()
             ->when($warehouseId, fn ($q) => $q->where('warehouse_id', $warehouseId))
             ->sum('quantity');
+
+        return fmod($sum, 1) == 0.0 ? (int) $sum : $sum;
     }
 }

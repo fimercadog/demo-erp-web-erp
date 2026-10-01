@@ -65,7 +65,7 @@ export default function CalendarPage() {
                   <span className="w-24 shrink-0 text-xs tabular-nums text-muted-foreground">
                     {new Date(`${a.due_date}T00:00:00`).toLocaleDateString("es-CO", { day: "2-digit", month: "short" })}
                   </span>
-                  <StatusBadge status="secondary" label={ACTIVITY_TYPE_LABEL[a.type] ?? a.type} className="shrink-0" />
+                  <StatusBadge status={a.type} label={ACTIVITY_TYPE_LABEL[a.type] ?? a.type} className="shrink-0" />
                   <span className="min-w-0 flex-1 truncate text-sm font-medium">{a.subject}</span>
                   <span className="shrink-0 text-xs text-muted-foreground">{a.client?.name ?? ""}</span>
                 </div>

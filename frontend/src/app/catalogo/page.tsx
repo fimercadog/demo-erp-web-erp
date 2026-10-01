@@ -91,7 +91,7 @@ export default function CatalogoPage() {
         }
       />
 
-      <Section className="pt-4 sm:pt-0">
+      <Section className="bg-[#f9fafb] pt-4 sm:pt-0">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
           <div className="flex flex-wrap gap-2.5">
             <button

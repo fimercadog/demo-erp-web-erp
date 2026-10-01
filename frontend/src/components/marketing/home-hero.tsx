@@ -1,66 +1,66 @@
 import Image from "next/image";
 import { CtaLink } from "@/components/marketing/cta-link";
-import { FloatingContactCard } from "@/components/marketing/floating-contact-card";
+import { CLINIC_SHORT_NAME } from "@/components/marketing/clinic-brand";
 import { Reveal } from "@/components/marketing/reveal";
-import { IPS_CONFIG } from "@/lib/ips-config";
 
 /**
- * Hero Principal de NOVA IPS.
- * Presenta fotografía photorealista de recepción médica, llamada a la acción clara para agendamiento de citas
- * y servicios asistenciales con lenguaje regulatorio neutro.
+ * Hero de Home al estilo del pack Divi "Veterinarian": foto full-bleed con
+ * degradé oscuro para legibilidad, wordmark grande, dos botones píldora, y
+ * una tarjeta de contacto flotante superpuesta sobre el borde inferior de la
+ * foto (mismo patrón que la referencia: bloque blanco "Contact Us Anytime,
+ * 7 days a Week" montado sobre el hero).
  */
 export function HomeHero() {
   return (
-    <section className="relative isolate">
-      <div className="relative h-[620px] w-full overflow-hidden sm:h-[700px] lg:h-[780px]">
+    <section className="relative isolate bg-[#f9fafb]">
+      <div className="relative min-h-screen w-full overflow-hidden">
+        {/* Foto: fade + zoom muy suave (arranca en 1.05x y se asienta) --
+            arranca primero, todo lo demas entra encima despues. */}
         <Reveal mount direction="zoom-out" duration={1.1} className="absolute inset-0">
           <Image
-            src="/gallery/ips/hero_ips.jpg"
-            alt="Recepción y equipo médico de NOVA IPS en instalaciones de atención integral"
+            src="/gallery/hero-bulldog-exam.jpg"
+            alt="Veterinario examinando a un bulldog en la camilla de consulta"
             fill
             priority
             sizes="100vw"
             className="object-cover"
           />
         </Reveal>
-
-        {/* Overlay Navy / Sky médico para alto contraste editorial */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/65 to-slate-900/20" />
+        {/* Overlay calido (no navy/frio): el hero real usa un duotono tostado/beige
+            sobre la foto, no un scrim oscuro -- getComputedStyle confirmo texto
+            blanco encima de ese tono calido, no de negro. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#241a13]/80 via-[#3d2f26]/40 to-[#3d2f26]/5" />
 
         <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
+          <div className="max-w-xl">
             <Reveal mount delay={0.25}>
-              <span className="inline-block rounded-md bg-sky-500/20 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.22em] text-sky-300 backdrop-blur-md">
-                {IPS_CONFIG.brand.descriptor}
-              </span>
-              <h1 className="mt-4 text-5xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Demo <span className="text-sky-400">IPS</span>
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/75">Clínica veterinaria</p>
+              <h1 className="mt-4 text-6xl font-extrabold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-8xl">
+                {CLINIC_SHORT_NAME}
               </h1>
             </Reveal>
-
             <Reveal mount delay={0.38}>
-              <p className="mt-5 text-xl font-medium leading-relaxed text-slate-200">
-                {IPS_CONFIG.brand.tagline}
-              </p>
-              <p className="mt-2 text-sm text-slate-300">
-                Consulta Externa · Pediatría · Atención Prioritaria · Laboratorio Clínico · Especialidades
+              <p className="mt-6 max-w-md text-lg leading-8 text-white/85">
+                Cuidado veterinario cercano, de la consulta a la urgencia — un mismo equipo que conoce a tu mascota
+                desde la primera visita.
               </p>
             </Reveal>
-
-            <div className="mt-9 flex flex-wrap gap-4">
+            {/* Botones con stagger -- entran despues del texto, uno tras otro. */}
+            <div className="mt-9 flex flex-wrap gap-3">
               <Reveal mount delay={0.52}>
-                <CtaLink href="/agendar-cita" variant="cta" className="bg-sky-600 px-7 py-3.5 text-base font-bold text-white hover:bg-sky-700">
-                  Agendar Cita Médica
+                <CtaLink href="/agendar-cita" variant="cta">
+                  Agendar cita
                 </CtaLink>
               </Reveal>
-
+              {/* Pastilla navy solida -- estilo real de "View All Services" del hero del
+                  live-demo (modulo de texto con fondo navy, no el naranja de .et_pb_button). */}
               <Reveal mount delay={0.62}>
                 <CtaLink
                   href="/servicios"
                   variant="default"
-                  className="bg-slate-900/90 px-7 py-3.5 text-base font-semibold text-white shadow-xl hover:bg-slate-800"
+                  className="shadow-[0_12px_30px_-6px_rgb(0_0_0/0.45)]"
                 >
-                  Ver Especialidades
+                  Ver todos los servicios
                 </CtaLink>
               </Reveal>
             </div>
@@ -68,9 +68,6 @@ export function HomeHero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto -mt-16 max-w-5xl px-4 sm:-mt-20 sm:px-6 lg:px-8">
-        <FloatingContactCard mount delay={0.72} />
-      </div>
     </section>
   );
 }

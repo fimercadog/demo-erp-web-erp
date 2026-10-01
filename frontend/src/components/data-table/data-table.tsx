@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { api, PaginatedResponse } from "@/lib/api";
 import { AppColumnDef } from "@/lib/table-types";
 
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
+
 type DataTableProps<TData extends object> = {
   columns: AppColumnDef<TData>[];
   data?: PaginatedResponse<TData>;
@@ -20,6 +22,8 @@ type DataTableProps<TData extends object> = {
   onSearchChange: (value: string) => void;
   page: number;
   onPageChange: (page: number) => void;
+  perPage?: number;
+  onPerPageChange?: (perPage: number) => void;
   exportBaseUrl?: string;
 };
 
@@ -32,6 +36,8 @@ export function DataTable<TData extends object>({
   onSearchChange,
   page,
   onPageChange,
+  perPage = 10,
+  onPerPageChange,
   exportBaseUrl,
 }: DataTableProps<TData>) {
   const table = useReactTable<TData>({
@@ -135,7 +141,7 @@ export function DataTable<TData extends object>({
                 </tr>
               ) : rows.length ? (
                 rows.map((row, rowIndex) => (
-                  <tr key={row.id} className="border-t border-border">
+                  <tr key={row.id} className={`border-t border-border ${rowIndex % 2 === 1 ? "bg-muted/50" : ""}`}>
                     <td className="w-12 px-3 py-3 text-right align-middle tabular-nums text-muted-foreground">
                       {firstRowNumber + rowIndex}
                     </td>
@@ -156,11 +162,25 @@ export function DataTable<TData extends object>({
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
         <span>{data?.meta?.total ?? 0} registros</span>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {onPerPageChange && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs">Filas:</span>
+              <select
+                value={perPage}
+                onChange={(e) => onPerPageChange(Number(e.target.value))}
+                className="h-8 rounded-md border border-border bg-card px-2 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+              >
+                {PAGE_SIZE_OPTIONS.map((n) => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
+              </select>
+            </div>
+          )}
           <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>Anterior</Button>
-          <span>Pagina {data?.meta?.current_page ?? page} de {data?.meta?.last_page ?? 1}</span>
+          <span>Pág. {data?.meta?.current_page ?? page} / {data?.meta?.last_page ?? 1}</span>
           <Button variant="outline" size="sm" disabled={!data?.meta || page >= data.meta.last_page} onClick={() => onPageChange(page + 1)}>Siguiente</Button>
         </div>
       </div>

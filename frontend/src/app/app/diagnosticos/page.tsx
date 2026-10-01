@@ -7,21 +7,14 @@ import { AppColumnDef } from "@/lib/table-types";
 import { Diagnosis } from "@/lib/types";
 
 const columns: AppColumnDef<Diagnosis>[] = [
-  {
-    header: "Código CIE-10",
-    cell: ({ row }) => (
-      <span className="inline-flex items-center rounded-md bg-primary/10 px-2.5 py-1 text-xs font-mono font-bold text-primary border border-primary/20">
-        {row.original.code || "S/C"}
-      </span>
-    ),
-  },
-  { accessorKey: "name", header: "Diagnóstico Clínico" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Código", cell: ({ row }) => row.original.code ?? "—" },
+  { accessorKey: "name", header: "Diagnóstico" },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [
-  { name: "code", label: "Código CIE-10", required: true, placeholder: "Ej. A09.9, I10, J06.9, M54.5" },
-  { name: "name", label: "Nombre / Descripción del Diagnóstico", required: true, placeholder: "Ej. Gastroenteritis y colitis de origen no especificado" },
+  { name: "code", label: "Código", omitWhenEmpty: true },
+  { name: "name", label: "Diagnóstico", required: true },
   {
     name: "status",
     label: "Estado",
@@ -37,12 +30,12 @@ const fields: CrudField[] = [
 export default function DiagnosesPage() {
   return (
     <ModuleTablePage<Diagnosis>
-      title="Diagnósticos CIE-10"
-      description="Catálogo de la Clasificación Internacional de Enfermedades (CIE-10) para el registro asistencial y la Historia Clínica SOAP."
+      title="Diagnósticos"
+      description="Catálogo de diagnósticos para asociar a las consultas."
       resource="/diagnoses"
       columns={columns}
       fields={fields}
-      actionLabel="Nuevo diagnóstico CIE-10"
+      actionLabel="Nuevo diagnóstico"
     />
   );
 }

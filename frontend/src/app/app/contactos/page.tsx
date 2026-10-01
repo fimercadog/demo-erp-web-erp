@@ -13,7 +13,7 @@ const columns: AppColumnDef<Contact>[] = [
   { header: "Cliente", cell: ({ row }) => row.original.client ?? "—" },
   { header: "Correo", cell: ({ row }) => row.original.email ?? "—" },
   { header: "Telefono", cell: ({ row }) => row.original.phone ?? "—" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [

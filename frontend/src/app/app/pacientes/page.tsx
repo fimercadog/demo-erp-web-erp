@@ -7,93 +7,52 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { AppColumnDef } from "@/lib/table-types";
 import { Patient } from "@/lib/types";
 
-const SEX_LABEL: Record<string, string> = {
-  male: "Masculino",
-  female: "Femenino",
-  other: "Otro",
-  unknown: "Sin dato",
-};
+const SEX_LABEL: Record<string, string> = { male: "Macho", female: "Hembra", unknown: "Sin dato" };
 
 const columns: AppColumnDef<Patient>[] = [
   {
-    header: "Documento",
-    cell: ({ row }) => (
-      <span className="font-mono text-xs font-medium">
-        {row.original.document_number
-          ? `${row.original.document_type || "CC"} ${row.original.document_number}`
-          : "—"}
-      </span>
-    ),
-  },
-  {
-    header: "Paciente",
+    header: "Nombre",
     cell: ({ row }) => (
       <Link href={`/app/pacientes/${row.original.id}`} className="font-medium text-primary hover:underline">
         {row.original.name}
       </Link>
     ),
   },
-  { header: "EPS / Aseguradora", cell: ({ row }) => row.original.eps || "—" },
-  { header: "Grupo RH", cell: ({ row }) => row.original.blood_type || "—" },
-  { header: "Teléfono", cell: ({ row }) => row.original.phone || "—" },
+  { header: "Propietario", cell: ({ row }) => row.original.client ?? "—" },
+  { header: "Especie / raza", cell: ({ row }) => [row.original.species, row.original.breed].filter(Boolean).join(" · ") || "—" },
   { header: "Sexo", cell: ({ row }) => SEX_LABEL[row.original.sex] ?? row.original.sex },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const fields: CrudField[] = [
-  {
-    name: "document_type",
-    label: "Tipo de documento",
-    type: "select",
-    options: [
-      { label: "Cédula de Ciudadanía (CC)", value: "CC" },
-      { label: "Cédula de Extranjería (CE)", value: "CE" },
-      { label: "Tarjeta de Identidad (TI)", value: "TI" },
-      { label: "Pasaporte (PA)", value: "PA" },
-      { label: "Registro Civil (RC)", value: "RC" },
-      { label: "Permiso Especial (PEP)", value: "PEP" },
-      { label: "NIT", value: "NIT" },
-    ],
-    omitWhenEmpty: true,
-  },
-  { name: "document_number", label: "Número de documento", omitWhenEmpty: true },
-  { name: "name", label: "Nombre completo del paciente", required: true },
+  { name: "client_id", label: "Propietario", type: "select", optionsResource: "/clients", required: true },
+  { name: "name", label: "Nombre", required: true },
+  { name: "species_id", label: "Especie", type: "select", optionsResource: "/species", required: true },
+  { name: "breed_id", label: "Raza", type: "select", optionsResource: "/breeds", omitWhenEmpty: true },
   {
     name: "sex",
-    label: "Sexo / Género",
+    label: "Sexo",
     type: "select",
     required: true,
     options: [
-      { label: "Masculino", value: "male" },
-      { label: "Femenino", value: "female" },
-      { label: "Otro", value: "other" },
+      { label: "Macho", value: "male" },
+      { label: "Hembra", value: "female" },
       { label: "Sin dato", value: "unknown" },
     ],
   },
   { name: "birth_date", label: "Fecha de nacimiento", type: "date", omitWhenEmpty: true },
+  { name: "weight", label: "Peso (kg)", type: "number", step: 0.01, min: 0, omitWhenEmpty: true },
+  { name: "microchip", label: "Microchip", omitWhenEmpty: true },
   {
-    name: "blood_type",
-    label: "Grupo Sanguíneo / RH",
+    name: "sterilized",
+    label: "Esterilizado",
     type: "select",
     options: [
-      { label: "O+", value: "O+" },
-      { label: "O-", value: "O-" },
-      { label: "A+", value: "A+" },
-      { label: "A-", value: "A-" },
-      { label: "B+", value: "B+" },
-      { label: "B-", value: "B-" },
-      { label: "AB+", value: "AB+" },
-      { label: "AB-", value: "AB-" },
+      { label: "No", value: "0" },
+      { label: "Sí", value: "1" },
     ],
     omitWhenEmpty: true,
   },
-  { name: "eps", label: "EPS / Entidad de Salud", omitWhenEmpty: true },
-  { name: "phone", label: "Teléfono de contacto", omitWhenEmpty: true },
-  { name: "email", label: "Correo electrónico", omitWhenEmpty: true },
-  { name: "address", label: "Dirección de residencia", omitWhenEmpty: true },
-  { name: "emergency_contact_name", label: "Contacto de emergencia (Nombre)", omitWhenEmpty: true },
-  { name: "emergency_contact_phone", label: "Contacto de emergencia (Teléfono)", omitWhenEmpty: true },
-  { name: "client_id", label: "Titular / Responsable (Opcional)", type: "select", optionsResource: "/clients", omitWhenEmpty: true },
   {
     name: "status",
     label: "Estado",
@@ -109,13 +68,13 @@ const fields: CrudField[] = [
 export default function PatientsPage() {
   return (
     <ModuleTablePage<Patient>
-      title="Directorio de Pacientes IPS"
-      description="Historias clínicas e información asistencial de pacientes humanos."
+      title="Pacientes"
+      description="Mascotas atendidas, cada una ligada a su propietario."
       resource="/patients"
       columns={columns}
       fields={fields}
       actionLabel="Nuevo paciente"
-      modalDescription="Registro completo del paciente humano en la IPS."
+      modalDescription="El propietario es un cliente de la clínica."
     />
   );
 }

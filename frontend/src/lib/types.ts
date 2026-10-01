@@ -352,7 +352,7 @@ export type AppUser = {
   roles: string[];
 };
 
-/* ---- Módulos Clínicos IPS ---- */
+/* ---- Vertical veterinaria ---- */
 
 export type Species = {
   id: number;
@@ -425,8 +425,6 @@ export type Prescription = {
   patient?: string | null;
   vet_id?: number | null;
   vet?: string | null;
-  practitioner_id?: number | null;
-  practitioner?: string | null;
   notes?: string | null;
   created_at?: string;
   items?: PrescriptionItem[];
@@ -436,13 +434,14 @@ export type Procedure = {
   id: number;
   patient_id: number;
   patient?: string | null;
+  consultation_id?: number | null;
   service_id?: number | null;
   service?: string | null;
   vet_id?: number | null;
   vet?: string | null;
-  practitioner_id?: number | null;
-  practitioner?: string | null;
   type: string;
+  price?: number;
+  status?: string;
   performed_at: string;
   notes?: string | null;
   consent_document_url?: string | null;
@@ -458,8 +457,6 @@ export type ClinicalApplication = {
   consultation_id?: number | null;
   vet_id?: number | null;
   vet?: string | null;
-  practitioner_id?: number | null;
-  practitioner?: string | null;
   stock_movement_id?: number | null;
   name: string;
   applied_at: string;
@@ -468,15 +465,53 @@ export type ClinicalApplication = {
   next_due_at?: string | null;
 };
 
+export type ConsultationItem = {
+  id: number;
+  consultation_id: number;
+  item_type: "service" | "procedure" | "medication" | "supply" | "product";
+  product_id?: number | null;
+  product?: string | null;
+  service_id?: number | null;
+  service?: string | null;
+  procedure_id?: number | null;
+  name: string;
+  quantity: number;
+  unit_price: number;
+  unit_cost: number;
+  is_billable: boolean;
+  is_inventoriable: boolean;
+  line_total?: number;
+  stock_movement_id?: number | null;
+  notes?: string | null;
+  created_at?: string;
+};
+
 export type Consultation = {
   id: number;
   patient_id: number;
-  patient?: string | null;
+  patient?: any;
   appointment_id?: number | null;
   vet_id?: number | null;
   vet?: string | null;
-  practitioner_id?: number | null;
-  practitioner?: string | null;
+  service_id?: number | null;
+  service?: string | null;
+  price?: number;
+  status: "open" | "completed" | "cancelled";
+  invoice_id?: number | null;
+  invoice?: {
+    id: number;
+    number: string;
+    status: string;
+    total: number;
+    account_receivable?: {
+      id: number;
+      balance: number;
+      status: string;
+    } | null;
+  } | null;
+  warehouse_id?: number | null;
+  warehouse?: string | null;
+  finalized_at?: string | null;
   date: string;
   reason: string;
   weight?: number | string | null;
@@ -485,33 +520,24 @@ export type Consultation = {
   objective?: string | null;
   assessment?: string | null;
   plan?: string | null;
+  diagnoses?: { id: number; name: string; code?: string }[];
+  items?: ConsultationItem[];
   created_at?: string;
 };
 
 export type Patient = {
   id: number;
   name: string;
-  document_type?: string | null;
-  document_number?: string | null;
-  first_name?: string | null;
-  last_name?: string | null;
-  sex: "male" | "female" | "other" | "unknown";
+  sex: "male" | "female" | "unknown";
   birth_date?: string | null;
-  blood_type?: string | null;
-  eps?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  address?: string | null;
-  emergency_contact_name?: string | null;
-  emergency_contact_phone?: string | null;
   weight?: number | string | null;
   microchip?: string | null;
-  sterilized?: boolean;
+  sterilized: boolean;
   photo_url?: string | null;
   status: string;
-  client_id?: number | null;
+  client_id: number;
   client?: string | null;
-  species_id?: number | null;
+  species_id: number;
   species?: string | null;
   breed_id?: number | null;
   breed?: string | null;

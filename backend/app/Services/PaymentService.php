@@ -32,6 +32,30 @@ class PaymentService
                 throw ValidationException::withMessages(['amount' => 'El valor del pago debe ser mayor a cero y no superar el saldo.']);
             }
 
+            $method = $data['method'] ?? 'cash';
+            $cashSessionId = ! empty($data['cash_session_id']) ? (int) $data['cash_session_id'] : null;
+
+            if ($method === 'cash' && ! $cashSessionId) {
+                throw ValidationException::withMessages([
+                    'cash_session_id' => 'Los pagos en efectivo requieren obligatoriamente una sesión de caja abierta.',
+                ]);
+            }
+
+            $session = null;
+            if ($cashSessionId) {
+                $session = CashSession::query()
+                    ->where('company_id', $companyId)
+                    ->where('status', 'open')
+                    ->lockForUpdate()
+                    ->find($cashSessionId);
+
+                if (! $session) {
+                    throw ValidationException::withMessages([
+                        'cash_session_id' => 'La sesión de caja no existe, no está abierta o pertenece a otra empresa.',
+                    ]);
+                }
+            }
+
             $direction = $account instanceof AccountReceivable ? 'in' : 'out';
             $payment = Payment::create([
                 'company_id' => $companyId,
@@ -39,22 +63,16 @@ class PaymentService
                 'direction' => $direction,
                 'paid_at' => $data['paid_at'] ?? now()->toDateString(),
                 'amount' => $amount,
-                'method' => $data['method'] ?? 'cash',
+                'method' => $method,
                 'reference' => $data['reference'] ?? null,
                 'notes' => $data['notes'] ?? null,
                 'payable_type' => $account::class,
                 'payable_id' => $account->id,
-                'cash_session_id' => $data['cash_session_id'] ?? null,
+                'cash_session_id' => $cashSessionId,
                 'idempotency_key' => $data['idempotency_key'] ?? null,
             ]);
 
-            if (! empty($data['cash_session_id'])) {
-                $session = CashSession::query()
-                    ->where('company_id', $companyId)
-                    ->where('status', 'open')
-                    ->lockForUpdate()
-                    ->findOrFail($data['cash_session_id']);
-
+            if ($session) {
                 $movement = CashMovement::create([
                     'company_id' => $companyId,
                     'cash_session_id' => $session->id,

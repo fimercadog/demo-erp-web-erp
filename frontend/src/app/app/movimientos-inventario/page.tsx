@@ -22,7 +22,7 @@ const TYPE_LABEL: Record<string, string> = {
 const columns: AppColumnDef<StockMovement>[] = [
   { header: "Producto", cell: ({ row }) => row.original.product?.name ?? `#${row.original.product_id}` },
   { header: "Bodega", cell: ({ row }) => row.original.warehouse?.name ?? `#${row.original.warehouse_id}` },
-  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type === "in" || row.original.type === "COMPRA" || row.original.type === "AJUSTE_ENTRADA" ? "success" : "warning"} label={TYPE_LABEL[row.original.type] ?? row.original.type} /> },
+  { header: "Tipo", cell: ({ row }) => <StatusBadge status={row.original.type} label={TYPE_LABEL[row.original.type] ?? row.original.type} /> },
   { header: "Cantidad", cell: ({ row }) => row.original.quantity },
   { header: "Motivo", cell: ({ row }) => row.original.reason ?? "—" },
   dateColumn<StockMovement>("created_at", "Fecha"),

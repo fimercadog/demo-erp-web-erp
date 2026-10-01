@@ -13,7 +13,7 @@ const columns: AppColumnDef<AppUser>[] = [
   { accessorKey: "name", header: "Nombre" },
   { accessorKey: "email", header: "Correo" },
   { header: "Roles", cell: ({ row }) => row.original.roles?.join(", ") || "Sin rol" },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "active" ? "Activo" : "Inactivo"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
 ];
 
 const baseFields: CrudField[] = [

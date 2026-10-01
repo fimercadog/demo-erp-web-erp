@@ -113,32 +113,4 @@ class ObservabilityService
         Log::error('Error interno no controlado (500)', $context);
     }
 
-    /**
-     * Construye la estructura DTO para reportes de soporte técnico remoto.
-     *
-     * @param  array<string, mixed>  $extraContext
-     * @return array<string, mixed>
-     */
-    public function buildSupportPayload(Request $request, ?string $message = null, array $extraContext = []): array
-    {
-        $context = $this->buildContext($request, null, []);
-
-        return [
-            'request_id' => $context['request_id'],
-            'user_id' => $context['user_id'],
-            'company_id' => $context['company_id'],
-            'module' => $context['module'],
-            'url' => $context['url'],
-            'timestamp' => now()->toIso8601String(),
-            'environment' => config('app.env', 'production'),
-            'app_version' => config('app.version', '1.0.0'),
-            'context' => [
-                'method' => $context['method'],
-                'ip' => $context['ip'],
-                'user_agent' => $context['user_agent'],
-            ],
-            'feedback_message' => $message,
-            'meta' => $this->sanitizer->sanitize($extraContext),
-        ];
-    }
 }

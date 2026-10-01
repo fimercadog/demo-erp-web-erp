@@ -22,9 +22,9 @@ const columns: AppColumnDef<Quote>[] = [
     header: "Origen",
     cell: ({ row }) =>
       row.original.source === "catalog" ? (
-        <StatusBadge status="info" label="Sitio web" />
+        <StatusBadge status="catalog" label="Sitio web" />
       ) : (
-        <StatusBadge status="secondary" label="Interna" />
+        <StatusBadge status="internal" label="Interna" />
       ),
   },
   { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={STATUS_LABEL[row.original.status]} /> },

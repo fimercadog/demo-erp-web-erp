@@ -1,85 +1,77 @@
 import Link from "next/link";
-import { Clock, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
-import { ClinicWordmark } from "@/components/marketing/clinic-brand";
-import { IPS_CONFIG } from "@/lib/ips-config";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { ClinicWordmark, CLINIC_NAME } from "@/components/marketing/clinic-brand";
 
 const columns: { title: string; links: [string, string][] }[] = [
   {
-    title: "Servicios IPS",
+    title: "Clínica",
     links: [
-      ["Consulta Medicina General", "/servicios"],
-      ["Pediatría & Neonatología", "/servicios"],
-      ["Laboratorio Clínico", "/servicios"],
-      ["Atención Prioritaria / Triage", "/urgencias"],
-      ["Cardiología & EKG", "/servicios"],
-      ["Imágenes Diagnósticas", "/servicios"],
+      ["Servicios", "/servicios"],
+      ["Equipo veterinario", "/equipo"],
+      ["Urgencias", "/urgencias"],
+      ["Nosotros", "/nosotros"],
+      ["Preguntas frecuentes", "/preguntas-frecuentes"],
+      ["Testimonios", "/testimonios"],
     ],
   },
   {
-    title: "Institucional",
+    title: "Recursos",
     links: [
-      ["Cuerpo Médico Especialista", "/equipo"],
-      ["Nuestras Sedes (Demo)", "/nosotros"],
-      ["Agendar Cita Médica", "/agendar-cita"],
-      ["Preguntas Frecuentes", "/preguntas-frecuentes"],
-      ["Portal ERP Asistencial", "/login"],
+      ["Blog", "/blog"],
+      ["Agendar cita", "/agendar-cita"],
+      ["Contacto", "/contacto"],
+      ["Acceso al panel", "/login"],
     ],
   },
   {
-    title: "Marco Institucional & Habilitación",
+    title: "Legal",
     links: [
-      ["Información Institucional", "/nosotros"],
-      ["Política de Protección de Datos", "/privacidad"],
-      ["Términos de Atención Médica", "/terminos"],
+      ["Política de datos", "/privacidad"],
+      ["Términos y condiciones", "/terminos"],
     ],
   },
 ];
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t border-slate-200 bg-slate-900 text-slate-100 dark:border-slate-800">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
-        <div className="max-w-sm space-y-4">
+    <footer className="border-t border-border bg-background">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:px-8">
+        <div className="max-w-xs">
           <ClinicWordmark />
-          <p className="text-sm leading-relaxed text-slate-300">
-            {IPS_CONFIG.brand.tagline}
+          <p className="mt-4 text-sm leading-6 text-muted-foreground">
+            Atención veterinaria integral para tu mascota: consulta, vacunación, cirugía y urgencias, con un equipo
+            que la conoce desde la primera visita.
           </p>
-          <div className="rounded-xl border border-sky-500/20 bg-sky-950/40 p-3 text-xs text-sky-200">
-            <p className="flex items-center gap-1.5 font-bold">
-              <ShieldCheck className="size-4 text-sky-400" />
-              {IPS_CONFIG.brand.accreditation}
-            </p>
-          </div>
-          <ul className="space-y-2 text-xs text-slate-400">
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-sky-400" />
-              {IPS_CONFIG.contact.address}
+          <ul className="mt-5 space-y-2.5 text-sm text-foreground/80">
+            <li className="flex items-start gap-2.5">
+              <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
+              Calle 93 #14-20, Bogotá
             </li>
-            <li className="flex items-center gap-2">
-              <Phone className="size-4 shrink-0 text-sky-400" />
-              PBX: {IPS_CONFIG.contact.phoneDisplay}
+            <li className="flex items-center gap-2.5">
+              <Phone className="size-4 shrink-0 text-primary" />
+              +57 601 555 0188
             </li>
-            <li className="flex items-center gap-2">
-              <Mail className="size-4 shrink-0 text-sky-400" />
-              {IPS_CONFIG.contact.email}
+            <li className="flex items-center gap-2.5">
+              <Mail className="size-4 shrink-0 text-primary" />
+              recepcion@vetlosandes.co
             </li>
-            <li className="flex items-start gap-2">
-              <Clock className="mt-0.5 size-4 shrink-0 text-sky-400" />
-              {IPS_CONFIG.contact.scheduleEmergency}
+            <li className="flex items-start gap-2.5">
+              <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
+              Lun a sáb, 8:00 a 19:00 · Urgencias 24/7
             </li>
           </ul>
         </div>
 
         {columns.map((col) => (
           <nav key={col.title} aria-label={col.title}>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-400">{col.title}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">{col.title}</p>
             <ul className="mt-4 space-y-2.5">
               {col.links.map(([label, href]) => (
-                <li key={label}>
+                <li key={href}>
                   <Link
                     href={href}
-                    {...(href.startsWith("http") || href === "/login" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="text-sm text-slate-300 transition-colors hover:text-sky-400"
+                    {...(href === "/login" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="text-sm text-foreground/80 transition-colors hover:text-primary"
                   >
                     {label}
                   </Link>
@@ -90,9 +82,9 @@ export function MarketingFooter() {
         ))}
       </div>
 
-      <div className="border-t border-slate-800 bg-slate-950 py-5 text-center text-xs text-slate-400">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          © {new Date().getFullYear()} {IPS_CONFIG.brand.name}. Prestador de Servicios de Salud (Datos Institucionales & Habilitación Configurables).
+      <div className="bg-ink text-ink-foreground">
+        <div className="mx-auto max-w-7xl px-4 py-5 text-xs text-white/60 sm:px-6 lg:px-8">
+          © {new Date().getFullYear()} {CLINIC_NAME}.
         </div>
       </div>
     </footer>

@@ -6,6 +6,7 @@ import { FloatingContactCard } from "@/components/marketing/floating-contact-car
 import { GradientBlob } from "@/components/marketing/gradient-blob";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
 import { faqs } from "@/components/marketing/marketing-data";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 import { Section, SectionHeading } from "@/components/marketing/marketing-ui";
 import { container } from "@/components/marketing/page-hero";
 import { Reveal } from "@/components/marketing/reveal";
@@ -48,7 +49,7 @@ export default function ContactPage() {
         <FloatingContactCard title="Escribinos cuando quieras" />
       </div>
 
-      <Section>
+      <Section className="bg-[#f9fafb]">
         <Reveal>
           <h2 className="text-center text-2xl font-extrabold tracking-tight sm:text-3xl">Dejanos tu mensaje</h2>
         </Reveal>
@@ -74,7 +75,7 @@ export default function ContactPage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
-              title="Ubicación de NOVA IPS en Google Maps"
+              title={`Ubicación de ${CLINIC_NAME} en Google Maps`}
               className="size-full"
             />
           </div>

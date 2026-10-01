@@ -8,7 +8,7 @@ import { CashSession } from "@/lib/types";
 
 const columns: AppColumnDef<CashSession>[] = [
   { header: "Caja", cell: ({ row }) => row.original.register?.name ?? `#${row.original.cash_register_id}` },
-  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} label={row.original.status === "open" ? "Abierta" : "Cerrada"} /> },
+  { header: "Estado", cell: ({ row }) => <StatusBadge status={row.original.status} /> },
   { header: "Inicial", cell: ({ row }) => `$${Number(row.original.opening_amount).toLocaleString("es-CO")}` },
   { header: "Esperado", cell: ({ row }) => `$${Number(row.original.expected_amount).toLocaleString("es-CO")}` },
   { header: "Diferencia", cell: ({ row }) => row.original.difference == null ? "—" : `$${Number(row.original.difference).toLocaleString("es-CO")}` },

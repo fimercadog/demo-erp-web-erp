@@ -66,8 +66,15 @@ use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WarehouseController;
+use App\Http\Controllers\Api\WhatsAppWebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// Webhook WhatsApp Cloud API
+Route::prefix('webhooks/whatsapp')->group(function (): void {
+    Route::get('/', [WhatsAppWebhookController::class, 'verify']);
+    Route::post('/', [WhatsAppWebhookController::class, 'handle']);
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -275,6 +282,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/patients/{id}/restore', [PatientController::class, 'restore'])->middleware('can:patients.manage')->whereNumber('id');
 
     Route::apiResource('consultations', ConsultationController::class)->middleware('can:medical_records.manage');
+    Route::post('/consultations/{id}/items', [ConsultationController::class, 'addItem'])->middleware('can:medical_records.manage')->whereNumber('id');
+    Route::delete('/consultations/{id}/items/{item}', [ConsultationController::class, 'removeItem'])->middleware('can:medical_records.manage')->whereNumber('id');
+    Route::post('/consultations/{id}/finalize', [ConsultationController::class, 'finalize'])->middleware('can:medical_records.manage')->whereNumber('id');
     Route::post('/consultations/{id}/restore', [ConsultationController::class, 'restore'])->middleware('can:medical_records.manage')->whereNumber('id');
 
     Route::get('/clinical-applications/due', [ClinicalApplicationController::class, 'due'])->middleware('can:vaccinations.manage');

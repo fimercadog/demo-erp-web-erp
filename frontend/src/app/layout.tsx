@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Open_Sans, Poppins, Roboto, Roboto_Mono } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -40,22 +41,22 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "NOVA IPS | Centro Médico & Servicios de Salud Humana",
-    template: "%s | NOVA IPS",
+    default: `${CLINIC_NAME} | Veterinaria en Bogotá`,
+    template: `%s | ${CLINIC_NAME}`,
   },
   description:
-    "IPS de salud humana en Bogotá: consulta médica general, especialidades, vacunación, laboratorio clínico y atención priorizada. Agendá tu cita médica online o por WhatsApp.",
+    "Clínica veterinaria en Bogotá: consulta general, vacunación, cirugía, laboratorio clínico y urgencias para perros, gatos y otras mascotas. Agendá tu cita online o por WhatsApp.",
   openGraph: {
-    title: "NOVA IPS — Centro Médico & Especialidades en Bogotá",
-    description: "Consulta médica general, especialidades, inmunización y procedimientos ambulatorios con historia clínica digital por paciente.",
+    title: `${CLINIC_NAME} — Veterinaria en Bogotá`,
+    description: "Consulta, vacunación, cirugía y urgencias para tu mascota, con historia clínica digital por paciente.",
     type: "website",
     locale: "es_CO",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NOVA IPS — Centro Médico & Especialidades en Bogotá",
-    description: "Consulta médica, inmunización, laboratorio y atención prioritaria.",
+    title: `${CLINIC_NAME} — Veterinaria en Bogotá`,
+    description: "Consulta, vacunación, cirugía y urgencias para tu mascota.",
   },
 };
 

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { AppointmentCta } from "@/components/marketing/appointment-cta";
 import { container } from "@/components/marketing/page-hero";
 import { CtaLink } from "@/components/marketing/cta-link";
+import { CLINIC_NAME } from "@/components/marketing/clinic-brand";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
 import { stats, team } from "@/components/marketing/marketing-data";
 import { Section, SectionHeading } from "@/components/marketing/marketing-ui";
@@ -26,14 +27,14 @@ export default function AboutPage() {
           texto, CTAs, ilustracion protagonista a la derecha sobre blob organico. */}
       <SplitHero
         eyebrow="Nosotros"
-        title="Un centro médico de vanguardia con atención cercana y humana"
-        lead="NOVA IPS nació para que cada paciente y su familia cuenten con un equipo médico especializado que los acompañe en cada etapa de su vida."
+        title="Una clínica de barrio, con el equipamiento de una grande"
+        lead={`${CLINIC_NAME} nació para que cada mascota tenga un equipo veterinario que la conozca de verdad, visita tras visita — no una cara distinta cada vez.`}
         image="/gallery/illustrations/illustration-2.png"
-        imageAlt="Médico especialista en consulta médica"
+        imageAlt="Veterinario con estetoscopio examinando a un gato"
         actions={
           <>
             <CtaLink href="/equipo" variant="cta">
-              Conocer al equipo médico
+              Conocer al equipo
             </CtaLink>
             <CtaLink href={WHATSAPP_URL} variant="outline">
               Escribinos por WhatsApp
@@ -42,8 +43,9 @@ export default function AboutPage() {
         }
       />
 
-      {/* Tira de 3 iconos plana, sin tarjeta flotante */}
-      <Section className="pb-0">
+      {/* Tira de 3 iconos plana, sin tarjeta flotante -- a diferencia del grid de
+          "All Vet Services" de Services, el de About va directo sobre blanco. */}
+      <Section className="bg-[#f9fafb] pb-0">
         <div className="grid gap-x-10 gap-y-10 sm:grid-cols-3">
           {values.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.08}>
@@ -55,14 +57,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section>
+      <Section className="bg-section-cream">
         <PhotoFeatureStack
           image="/gallery/pet-7.jpg"
-          imageAlt="Médico del equipo en consulta médica"
+          imageAlt="Veterinario del equipo revisando a un bulldog en consulta"
           features={[
-            { title: "Más de una década", text: "Iniciamos como un consultorio médico de atención general; hoy contamos con instalaciones modernas, laboratorio clínico y salas de procedimientos ambulatorios." },
-            { title: "Atención personalizada", text: "Cada consulta se agenda con el tiempo adecuado para una valoración integral e historia clínica completa." },
-            { title: "El mismo equipo siempre", text: "Médicos especialistas de planta que conocen la historia clínica de cada paciente y su núcleo familiar." },
+            { title: "Más de una década", text: "Empezamos como una consulta pequeña de barrio; hoy tenemos consultorios equipados, laboratorio propio y quirófano." },
+            { title: "Pocas mascotas, no muchas apuradas", text: "Cada consulta tiene el tiempo que necesita, y cada historia clínica queda registrada." },
+            { title: "El mismo equipo siempre", text: "Conocemos a cada paciente por su nombre y a cada propietario por el suyo." },
           ]}
         />
       </Section>
@@ -70,38 +72,43 @@ export default function AboutPage() {
       <OffsetBlobBlock
         title="Nuestra misión y valores"
         image="/gallery/pet-8.jpg"
-        imageAlt="Procedimiento médico asistencial"
+        imageAlt="Procedimiento veterinario con instrumental de precisión"
         actions={
           <CtaLink href="/servicios" variant="cta">
-            Ver servicios médicos
+            Ver servicios
           </CtaLink>
         }
       >
         <ul className="mt-2 space-y-3 text-sm leading-6">
           <li>
-            <strong className="font-bold">Trato humano.</strong> Explicamos cada diagnóstico y tratamiento con claridad y empatía.
+            <strong className="font-bold">Trato cercano.</strong> Explicamos cada diagnóstico con tiempo, no de
+            pasada.
           </li>
           <li>
-            <strong className="font-bold">Medicina basada en la evidencia.</strong> Diagnósticos rigurosos, guías de práctica clínica y seguimiento continuo.
+            <strong className="font-bold">Medicina responsable.</strong> Ningún procedimiento sin explicar el
+            porqué ni presupuesto previo.
           </li>
           <li>
-            <strong className="font-bold">Innovación digital.</strong> Historia clínica digital integrada y resultados de laboratorio en línea.
+            <strong className="font-bold">Mejora continua.</strong> Historia clínica digital y laboratorio propio.
           </li>
         </ul>
       </OffsetBlobBlock>
 
-      {/* Parrafo ancho de storytelling */}
-      <Section className="pt-0">
+      {/* Parrafo ancho de storytelling -- patron "quienes somos" de About en el
+          pack (bloque de texto grande, no una lista de bullets). */}
+      <Section className="bg-[#f9fafb] pt-0">
         <Reveal>
           <div className={`${container} max-w-3xl space-y-5 text-base leading-8 text-muted-foreground`}>
             <p>
-              NOVA IPS nació con el propósito de brindar una atención médica integral, oportuna y personalizada.
-              Más de una década después, contamos con consultorios especializados, laboratorio clínico certificado y salas
-              de procedimientos ambulatorios, manteniendo nuestro compromiso con la salud y bienestar de cada paciente.
+              {CLINIC_NAME} empezó como un consultorio pequeño de barrio, con un solo veterinario
+              y una sala de espera compartida con la recepción. Más de una década después, seguimos en el mismo
+              barrio — pero con consultorios equipados, laboratorio propio y quirófano, sin haber perdido de vista
+              lo que nos trajo hasta acá: conocer a cada mascota por su nombre.
             </p>
             <p>
-              Trabajamos con profesionales de la salud capacitados y con historia clínica digital unificada, permitiendo que
-              cada consulta — ya sea de prevención, control o atención prioritaria — se construya sobre el historial clínico del paciente.
+              Esa cercanía es una decisión, no un accidente de tamaño. Trabajamos con veterinarios de planta, no
+              rotativos, y con historia clínica digital por paciente, para que cada visita — sea un control de
+              rutina o una urgencia — parta de lo que ya sabemos de tu mascota, no de cero.
             </p>
           </div>
         </Reveal>

@@ -16,7 +16,7 @@ class ErpTotals
         $tax = 0.0;
 
         foreach ($items as $item) {
-            $quantity = (int) $item['quantity'];
+            $quantity = (float) $item['quantity'];
             $unit = (float) ($item['unit_price'] ?? $item['unit_cost'] ?? 0);
             $lineDiscount = (float) ($item['discount'] ?? 0);
             $lineTax = (float) ($item['tax'] ?? 0);

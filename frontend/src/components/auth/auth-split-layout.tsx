@@ -1,50 +1,66 @@
-import { Check, Hospital, ShieldCheck } from "lucide-react";
+import { Stethoscope, CalendarDays, Syringe, Package } from "lucide-react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClinicWordmark } from "@/components/marketing/clinic-brand";
-import { IPS_CONFIG } from "@/lib/ips-config";
 
-const points = [
-  "Gestión de Historias Clínicas digitales y atenciones",
-  "Agenda médica centralizada por especialidad y consultorio",
-  "Kardex de farmacia hospitalaria e insumos",
-  "Facturación electrónica, RIPS y Cuentas Médicas",
+const features = [
+  {
+    icon: Stethoscope,
+    title: "Consulta veterinaria",
+    desc: "Historia clínica completa, diagnósticos, recetas y seguimiento.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Agenda inteligente",
+    desc: "Citas online en tiempo real, por profesional y consultorio.",
+  },
+  {
+    icon: Syringe,
+    title: "Vacunas y preventivos",
+    desc: "Control de esquemas con recordatorios automáticos.",
+  },
+  {
+    icon: Package,
+    title: "Farmacia e inventario",
+    desc: "Stock, alertas de reorden y reportes clínicos integrados.",
+  },
 ];
 
 export function AuthSplitLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <main className="site-theme grid min-h-screen bg-slate-50 text-slate-900 lg:grid-cols-2 dark:bg-slate-950 dark:text-slate-100">
-        <section className="relative isolate hidden overflow-hidden bg-slate-900 px-12 py-16 text-white lg:flex lg:flex-col lg:justify-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950 opacity-90" />
-          <div className="relative z-10 max-w-lg">
-            <span className="flex size-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400">
-              <Hospital className="size-6" />
-            </span>
-            <span className="mt-4 inline-block rounded bg-sky-500/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sky-300">
-              NOVA IPS · Portal Asistencial (Demo)
-            </span>
-            <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white">
-              Gestión Clínica & ERP Hospitalario Unificado
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-300">
-              Acceso seguro para cuerpo médico, admisiones, facturación electrónica, RIPS y cuentas médicas.
-            </p>
-            <ul className="mt-8 space-y-3.5">
-              {points.map((p) => (
-                <li key={p} className="flex items-center gap-3 text-sm font-semibold text-slate-200">
-                  <Check className="size-4 shrink-0 text-sky-400" /> {p}
-                </li>
+      <main className="site-theme grid min-h-screen bg-background text-foreground lg:grid-cols-2">
+
+        {/* ── panel izquierdo — mismo lenguaje visual que el sitio público ── */}
+        <section className="hidden overflow-hidden border-r border-border bg-muted px-12 py-16 lg:flex lg:flex-col lg:justify-center">
+          <ClinicWordmark className="mb-10" />
+
+          <h2 className="text-3xl font-extrabold leading-snug tracking-tight text-foreground">
+            Toda la clínica en una sola plataforma
+          </h2>
+          <p className="mt-3 text-base leading-7 text-muted-foreground">
+            Gestión de pacientes, agenda, historia clínica, farmacia y reportes — todo conectado.
+          </p>
+
+          {/* grid de servicios — mismo estilo que la sección de servicios del sitio */}
+          <div className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="grid grid-cols-2 gap-5">
+              {features.map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="flex flex-col gap-3">
+                  <span className="flex size-11 items-center justify-center rounded-xl bg-secondary text-primary">
+                    <Icon className="size-5" strokeWidth={1.6} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{title}</p>
+                    <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{desc}</p>
+                  </div>
+                </div>
               ))}
-            </ul>
-            <div className="mt-10 rounded-xl border border-slate-800 bg-slate-950/60 p-4 text-xs text-slate-400">
-              <p className="flex items-center gap-2 font-semibold text-slate-300">
-                <ShieldCheck className="size-4 text-sky-400" />
-                {IPS_CONFIG.brand.accreditation}
-              </p>
             </div>
           </div>
         </section>
-        <section className="flex items-center justify-center bg-white px-4 py-12 sm:px-6 dark:bg-slate-900">
+
+        {/* ── panel derecho — formulario ── */}
+        <section className="flex items-center justify-center bg-background px-4 py-12 sm:px-6">
           <div className="w-full max-w-md">
             <ClinicWordmark className="mb-8 justify-center" />
             {children}
